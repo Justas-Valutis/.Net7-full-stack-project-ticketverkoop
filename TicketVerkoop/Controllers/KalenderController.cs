@@ -24,7 +24,7 @@ namespace TicketVerkoop.Controllers
             this.mapper = mapper;
         }
 
-        public async Task<IActionResult> Kalender()
+        public async Task<IActionResult> Index()
         {
             ViewBag.lstStadiums = new SelectList(await stadiumService.GetAll(), "StadiumId", "Naam");
             try 
@@ -42,11 +42,11 @@ namespace TicketVerkoop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Kalender(int? StadiumId)
+        public async Task<IActionResult> Index(int? StadiumId)
         {
             if (StadiumId == null)
             {
-                return await Kalender();
+                return await Index();
             }
 
             try
