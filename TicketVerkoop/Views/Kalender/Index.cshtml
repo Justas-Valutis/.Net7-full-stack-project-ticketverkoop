@@ -16,10 +16,10 @@
                     <label for="StadiumId" class="control-label">Filter op een Stadium</label>
                 </p>
                 <p>
-                <select name="StadiumId" id="Id"
-                        asp-items="@ViewBag.lstStadiums">
-                    <option>Kies een stadium</option>
-                </select>
+                    <select name="StadiumId" id="Id"
+                            asp-items="@ViewBag.lstStadiums">
+                        <option>Kies een stadium</option>
+                    </select>
                 </p>
             </div>
 
@@ -32,9 +32,9 @@
 </div>
 
 
-@* 
+@*
                 @Html.DisplayNameFor(model => model.Datum)
-  
+
                 @Html.DisplayNameFor(model => model.StadiumNaam)
 
                 @Html.DisplayNameFor(model => model.ThuisPloegNaam)
@@ -42,27 +42,27 @@
                 @Html.DisplayNameFor(model => model.UitPloegNaam) *@
 
 @if (Model != null)
-{ 
+    {
     <div class="row">
         @foreach (var item in Model)
-        {
+            {
             @await Html.PartialAsync("_MatchPartialView", item)
-        }
+            }
     </div>
-} 
-else 
-{
-  <p>No data found</p>  
-}
-
-   @section scripts
-    {
-    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <script>
-         //oplossen via jQuery
-         $("#Id").on("change", () => {
-            $("form").trigger("submit");
-          });
-</script>
     }
+else
+    {
+    <p>No data found</p>
+    }
+
+@section scripts
+   {
+    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        //oplossen via jQuery
+        $("#Id").on("change", () => {
+            $("form").trigger("submit");
+        });
+    </script>
+}
 
