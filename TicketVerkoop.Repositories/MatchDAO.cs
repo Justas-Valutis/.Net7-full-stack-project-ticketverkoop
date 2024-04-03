@@ -30,6 +30,20 @@ public class MatchDAO : IDAO<Match>
             throw new Exception("ERROR IN DAO" + ex.Message);
         }
     }
+
+    public async Task<IEnumerable<Match>?> GetMatchByStadiumId(int Id)
+    {
+        try
+        {
+            return await _dbContext.Matches.Where(s => s.StadiumId == Id).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
+        }
+
+    }
     public async Task Add(Match entity)
     {
         _dbContext.Add(entity).State = EntityState.Added;
@@ -58,4 +72,5 @@ public class MatchDAO : IDAO<Match>
     {
         throw new NotImplementedException();
     }
+
 }

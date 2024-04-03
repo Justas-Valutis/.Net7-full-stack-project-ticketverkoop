@@ -12,7 +12,17 @@ public class MatchService : IService<Match>
     {
         matchDAO = _matchDAO;
     }
-    public Task AddA(Match entity)
+    public async Task<IEnumerable<Match>?> GetAll()
+    {
+        return await matchDAO.GetAll();
+    }
+
+    public async Task<IEnumerable<Match>?> GetMatchByStadiumId(int Id)
+    {
+        return await matchDAO.GetMatchByStadiumId(Id);
+    }
+
+    public Task Add(Match entity)
     {
         throw new NotImplementedException();
     }
@@ -32,13 +42,9 @@ public class MatchService : IService<Match>
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Match>?> GetAll()
-    {
-        return await matchDAO.GetAll();
-    }
-
     public Task Update(Match entity)
     {
         throw new NotImplementedException();
     }
+
 }

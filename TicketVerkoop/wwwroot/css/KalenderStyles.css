@@ -1,0 +1,14 @@
+﻿#submitBTN {
+    display: none;
+}
+
+#matchInfoBar {
+    width: 100%;
+    background-color: lightgray;
+    border: none;
+}
+
+#tshirt-logo {
+    max-height: 100px;
+    max-width: 100px;
+}

@@ -10,7 +10,9 @@ namespace TicketVerkoop.Services.Interfaces
     {
         Task<IEnumerable<T>?> GetAll();
         Task<T?> FindById(int Id);
-        Task AddA(T entity);
+
+        Task<IEnumerable<T>?> GetMatchByStadiumId(int Id);
+        Task Add(T entity);
         Task Delete(T entity);
 
         Task Update (T entity);

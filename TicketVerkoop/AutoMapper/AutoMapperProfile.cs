@@ -8,7 +8,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        //Automapping for match
+        //--------- Match ---------------
         CreateMap<Match, MatchVM>()
             .ForMember(dest => dest.StadiumNaam, 
             opts => opts.MapFrom(src => src.Stadium.Naam))
@@ -17,5 +17,9 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.UitPloegNaam,
             opts => opts.MapFrom(src => src.PloegUit.Naam));
         CreateMap<MatchVM, Match>();
+
+        //--------- Stadium ---------------
+        CreateMap<Stadium, StadiumVM>();
+        CreateMap<StadiumVM, Stadium>();
     }
 }

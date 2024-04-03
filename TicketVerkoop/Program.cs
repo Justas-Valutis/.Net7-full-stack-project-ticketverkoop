@@ -24,6 +24,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IService<Match>, MatchService>();
 builder.Services.AddTransient<IDAO<Match>, MatchDAO>();
 
+builder.Services.AddTransient<IService<Stadium>, StadiumService>();
+builder.Services.AddTransient<IDAO<Stadium>, StadiumDAO>();
+
 //Automapper
 builder.Services.AddAutoMapper(typeof(Program));
 

@@ -10,6 +10,7 @@ namespace TicketVerkoop.Repositories.Interfaces
     {
         Task<IEnumerable<T>?> GetAll();
         Task<T?> FindById(int Id);
+        Task<IEnumerable<T>?> GetMatchByStadiumId(int Id);
         Task Add(T entity);
         Task Delete(T entity);
 

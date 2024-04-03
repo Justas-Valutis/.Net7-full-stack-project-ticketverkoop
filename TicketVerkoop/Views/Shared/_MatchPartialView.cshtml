@@ -1,0 +1,52 @@
+﻿@model TicketVerkoop.ViewModels.MatchVM
+
+
+<div class="row col-12" id="matchInfoBar">
+    <div class="col-md-2">
+        <p>Datum</p>
+    </div>
+
+    <div class="col-md-2">
+        <p>Stadium</p>
+    </div>
+
+    <div class="col-md-2">
+       <p>Thuis ploeg</p>
+    </div>
+
+    <div class="col-md-3">
+        <p>Match</p>
+    </div>
+
+    <div class="col-md-2">
+       <p>Uit ploeg</p>    
+   </div>
+</div>
+
+<div class="row">
+
+
+
+    <div class="col-md-2">
+        <p>@Html.DisplayFor(model => model.Datum)</p>
+    </div>
+
+   <div class="col-md-2">
+        <p>@Html.DisplayFor(model => model.StadiumNaam)</p>
+   </div>
+    
+    <div class="col-md-2">
+        <img id="tshirt-logo" src="/images/t-shirt-logo.jpg" />
+    </div>
+
+    <div class="col-md-3">
+        <span>@Html.DisplayFor(model => model.ThuisPloegNaam)</span>
+        <span> vs </span>
+        <span> @Html.DisplayFor(model => model.UitPloegNaam)</span>
+    </div>
+
+    <div class="col-md-2">
+        <img id="tshirt-logo" src="/images/t-shirt-logo.jpg" />
+    </div>
+
+</div>

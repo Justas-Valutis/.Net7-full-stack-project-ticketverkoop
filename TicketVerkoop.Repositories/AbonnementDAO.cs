@@ -48,4 +48,9 @@ public class AbonnementDAO : IDAO<Abonnement>
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<Abonnement>?> GetMatchByStadiumId(int Id)
+    {
+        throw new NotImplementedException();
+    }
 }
