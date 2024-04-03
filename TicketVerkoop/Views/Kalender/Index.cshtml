@@ -18,7 +18,7 @@
                 <p>
                 <select name="StadiumId" id="Id"
                         asp-items="@ViewBag.lstStadiums">
-                    <option>Kies een ploeg</option>
+                    <option>Kies een stadium</option>
                 </select>
                 </p>
             </div>
@@ -42,20 +42,17 @@
                 @Html.DisplayNameFor(model => model.UitPloegNaam) *@
 
 @if (Model != null)
-{
-    
+{ 
     <div class="row">
-        
         @foreach (var item in Model)
         {
             @await Html.PartialAsync("_MatchPartialView", item)
         }
     </div>
-
-} else {
-
-  <p>Test</p>  
-
+} 
+else 
+{
+  <p>No data found</p>  
 }
 
    @section scripts

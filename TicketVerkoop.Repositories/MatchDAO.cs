@@ -35,7 +35,11 @@ public class MatchDAO : IDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(s => s.StadiumId == Id).ToListAsync();
+            return await _dbContext.Matches.Where(s => s.StadiumId == Id)
+                .Include(s => s.Stadium)
+                .Include(t => t.PloegThuis)
+                .Include(t => t.PloegUit)
+                .ToListAsync();
         }
         catch (Exception ex)
         {
