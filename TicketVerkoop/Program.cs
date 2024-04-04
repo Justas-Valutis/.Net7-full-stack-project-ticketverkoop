@@ -27,6 +27,8 @@ builder.Services.AddTransient<IDAO<Match>, MatchDAO>();
 builder.Services.AddTransient<IService<Stadium>, StadiumService>();
 builder.Services.AddTransient<IDAO<Stadium>, StadiumDAO>();
 
+builder.Services.AddTransient<IService<Ploeg>, PloegService>();
+builder.Services.AddTransient<IDAO<Ploeg>, PloegDAO>();
 //Automapper
 builder.Services.AddAutoMapper(typeof(Program));
 

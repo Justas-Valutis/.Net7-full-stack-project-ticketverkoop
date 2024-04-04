@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TicketVerkoop.Services.Interfaces
 {
     public interface IService<T> where T : class
@@ -12,10 +7,10 @@ namespace TicketVerkoop.Services.Interfaces
         Task<T?> FindById(int Id);
 
         Task<IEnumerable<T>?> GetMatchByStadiumId(int Id);
+        Task<IEnumerable<T>?> GetMatchByPloegId(int Id);
+        Task<IEnumerable<T>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId);
         Task Add(T entity);
         Task Delete(T entity);
-
-        Task Update (T entity);
         Task<T?> Get (int v);
     }
 }

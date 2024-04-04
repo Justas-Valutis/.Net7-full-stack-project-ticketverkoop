@@ -1,6 +1,54 @@
-﻿namespace TicketVerkoop.Services;
+﻿using TicketVerkoop.Domains.Entities;
+using TicketVerkoop.Repositories.Interfaces;
+using TicketVerkoop.Services.Interfaces;
 
-public class PloegService
+namespace TicketVerkoop.Services;
+
+public class PloegService : IService<Ploeg>
 {
+    private IDAO<Ploeg> ploegDAO;
 
+    public PloegService(IDAO<Ploeg> _ploegDAO)
+    {
+        ploegDAO = _ploegDAO;   
+    }
+    public Task Add(Ploeg entity)
+        {
+        throw new NotImplementedException();
+        }
+
+    public Task Delete(Ploeg entity)
+        {
+        throw new NotImplementedException();
+        }
+
+    public Task<Ploeg?> FindById(int Id)
+        {
+        throw new NotImplementedException();
+        }
+
+    public Task<Ploeg?> Get(int v)
+        {
+        throw new NotImplementedException();
+        }
+
+    public async Task<IEnumerable<Ploeg>?> GetAll()
+    {
+        return await ploegDAO.GetAll();
+    }
+
+    public Task<IEnumerable<Ploeg>?> GetMatchByPloegId(int Id)
+        {
+        throw new NotImplementedException();
+        }
+
+    public Task<IEnumerable<Ploeg>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Ploeg>?> GetMatchByStadiumId(int Id)
+        {
+        throw new NotImplementedException();
+        }
 }

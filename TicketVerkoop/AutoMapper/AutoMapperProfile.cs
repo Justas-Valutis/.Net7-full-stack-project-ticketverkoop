@@ -21,5 +21,9 @@ public class AutoMapperProfile : Profile
         //--------- Stadium ---------------
         CreateMap<Stadium, StadiumVM>();
         CreateMap<StadiumVM, Stadium>();
+
+        //--------- Ploeg ---------------
+        CreateMap<Ploeg, PloegVM>();
+        CreateMap<PloegVM, Ploeg>();
+        }
     }
-}

@@ -18,7 +18,7 @@ public class MatchDAO : IDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches
+            return await _dbContext.Matches.Where(d => d.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
@@ -35,7 +35,7 @@ public class MatchDAO : IDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(s => s.StadiumId == Id)
+            return await _dbContext.Matches.Where(s => s.StadiumId == Id && s.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
@@ -46,8 +46,24 @@ public class MatchDAO : IDAO<Match>
             Console.WriteLine(ex.ToString());
             throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
         }
-
     }
+    public async Task<IEnumerable<Match>?> GetMatchByPloegId(int Id)
+    {
+        try
+        {
+            return await _dbContext.Matches.Where(p => p.PloegThuisId == Id || p.PloegUitId == Id && p.Datum >= DateTime.Now)
+                .Include(s => s.Stadium)
+                .Include(t => t.PloegThuis)
+                .Include(t => t.PloegUit)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
+        }
+    }
+
     public async Task Add(Match entity)
     {
         _dbContext.Add(entity).State = EntityState.Added;
@@ -62,6 +78,24 @@ public class MatchDAO : IDAO<Match>
         }
     }
 
+    public async Task<IEnumerable<Match>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId)
+    {
+        try
+        {
+            return await _dbContext.Matches.Where(p => (p.PloegThuisId == PlegId || p.PloegUitId == PlegId) 
+                    && p.StadiumId == StadiumId && p.Datum >= DateTime.Now)
+                .Include(s => s.Stadium)
+                .Include(t => t.PloegThuis)
+                .Include(t => t.PloegUit)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
+        }
+    }
+
     public Task Delete(Match entity)
     {
         throw new NotImplementedException();
@@ -71,10 +105,4 @@ public class MatchDAO : IDAO<Match>
     {
         throw new NotImplementedException();
     }
-
-    public Task Update(Match entity)
-    {
-        throw new NotImplementedException();
-    }
-
 }
