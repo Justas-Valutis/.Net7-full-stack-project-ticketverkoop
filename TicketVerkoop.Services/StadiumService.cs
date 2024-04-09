@@ -38,19 +38,4 @@ public class StadiumService : IService<Stadium>
     {
         throw new NotImplementedException();
     }
-
-    public Task<IEnumerable<Stadium>?> GetMatchByStadiumId(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Stadium>?> GetMatchByPloegId(int Id)
-        {
-        throw new NotImplementedException();
-        }
-
-    public Task<IEnumerable<Stadium>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId)
-    {
-        throw new NotImplementedException();
-    }
 }

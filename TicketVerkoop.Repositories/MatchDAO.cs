@@ -5,7 +5,7 @@ using TicketVerkoop.Repositories.Interfaces;
 
 namespace TicketVerkoop.Repositories;
 
-public class MatchDAO : IDAO<Match>
+public class MatchDAO : IMatchDAO<Match>
 {
     private readonly SoccerDbContext _dbContext;
 

@@ -40,34 +40,4 @@ public class PloegDAO : IDAO<Ploeg>
             throw new Exception("ERROR IN DAO" + ex.Message);
         }
     }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByPloeg(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByPloegId(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByPloegId(int PlegId, int StadiumId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByPloegIdAndStadiumId(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Ploeg>?> GetMatchByStadiumId(int Id)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -21,8 +21,8 @@ builder.Services.AddControllersWithViews();
 
 //----> Dependency Injection
 //syntax services.AddTransient<interface, implType>();
-builder.Services.AddTransient<IService<Match>, MatchService>();
-builder.Services.AddTransient<IDAO<Match>, MatchDAO>();
+builder.Services.AddTransient<IMatchService<Match>, MatchService>();
+builder.Services.AddTransient<IMatchDAO<Match>, MatchDAO>();
 
 builder.Services.AddTransient<IService<Stadium>, StadiumService>();
 builder.Services.AddTransient<IDAO<Stadium>, StadiumDAO>();

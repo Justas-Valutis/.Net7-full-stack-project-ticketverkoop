@@ -12,12 +12,12 @@ namespace TicketVerkoop.Controllers
     public class KalenderController : Controller
     {
 
-        private IService<Match> matchService;
+        private IMatchService<Match> matchService;
         private IService<Stadium> stadiumService;
         private IService<Ploeg> ploegService;
         private readonly IMapper mapper;
 
-        public KalenderController(IService<Match> matchService,
+        public KalenderController(IMatchService<Match> matchService,
             IService<Stadium> stadiumService,
             IService<Ploeg> ploegService,
             IMapper mapper)

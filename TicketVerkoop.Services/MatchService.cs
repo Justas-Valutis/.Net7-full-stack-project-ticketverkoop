@@ -4,11 +4,11 @@ using TicketVerkoop.Services.Interfaces;
 
 namespace TicketVerkoop.Services;
 
-public class MatchService : IService<Match>
+public class MatchService : IMatchService<Match>
 {
-    private IDAO<Match> matchDAO;
+    private IMatchDAO<Match> matchDAO;
 
-    public MatchService(IDAO<Match> _matchDAO)
+    public MatchService(IMatchDAO<Match> _matchDAO)
     {
         matchDAO = _matchDAO;
     }
