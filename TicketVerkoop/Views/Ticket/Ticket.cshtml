@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TicketVerkoop.ViewModels.StadiumVM>
+﻿@model TicketVerkoop.ViewModels.StadiumTicketVM
 
 @{
     ViewData["Title"] = "Ticket";
@@ -6,42 +6,34 @@
 
 <h1>Ticket</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StadiumId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Naam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stad)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StadiumId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stad)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Naam)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Stad)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Rings)
+        </div>
+    </div>
+
+  
+        <div class="row">
+
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.Naam)
+            </div>
+            <div class="col-md-2">
+                @Html.DisplayFor(model => model.Stad)
+            </div>
+            <div class="col-md-2">
+                <select name="RingId" class="Id"
+                        asp-items="@ViewBag.lstRings">
+                    <option>Kies een Ring</option>
+                </select>
+            </div>
+        </div>
+  
+</div>

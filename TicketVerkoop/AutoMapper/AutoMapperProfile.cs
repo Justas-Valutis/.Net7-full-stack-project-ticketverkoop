@@ -34,5 +34,11 @@ public class AutoMapperProfile : Profile
 
         //--------- Voor Swagger ---------------
         CreateMap<Match, MatchSwaggerVM>();
+
+        //--------- Voor Tickets ---------------
+        CreateMap<Stadium, StadiumTicketVM>();
+        CreateMap<StadiumTicketVM, Stadium>();
+
+        CreateMap<Ring, RingVM>();
     }
 }

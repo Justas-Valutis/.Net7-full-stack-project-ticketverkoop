@@ -26,11 +26,13 @@ public class StadiumDAO : IDAO<Stadium>
         }
     }
 
-    public async Task<IEnumerable<Stadium>?> FindById(int Id)
+    public async Task<Stadium?> FindById(int Id)
     {
         try
         {
-            return await _dbContext.Stadia.Where(s => s.StadiumId == Id).ToListAsync();
+            return await _dbContext.Stadia
+                  .Include(r => r.Rings)
+                  .FirstOrDefaultAsync(s => s.StadiumId == Id);
         }
         catch (Exception ex)
         {

@@ -23,7 +23,7 @@ public class PloegDAO : IDAO<Ploeg>
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Ploeg>?> FindById(int Id)
+    public async Task<Ploeg?> FindById(int Id)
     {
         throw new NotImplementedException();
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Services.Interfaces;
@@ -26,8 +27,11 @@ namespace TicketVerkoop.Controllers
                 try
                 {
                     var stadium = await stadiumService.FindById(Convert.ToInt16(stadiumId));
-                    List<StadiumVM> stadiumVM = mapper.Map<List<StadiumVM>>(stadium);
-                    return View(stadiumVM);
+                    StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(stadium);
+
+                    ViewBag.lstRings = new SelectList(stadium.Rings, "RingId", "ZoneLocatie");
+                    //ViewBag.lstSections = new SelectList(stadium.Rings.)
+                    return View(stadiumTicketVM);
                 }
                 catch (Exception ex)
                 {
