@@ -53,6 +53,9 @@ builder.Services.AddTransient<IDAO<Stadium>, StadiumDAO>();
 
 builder.Services.AddTransient<IService<Ploeg>, PloegService>();
 builder.Services.AddTransient<IDAO<Ploeg>, PloegDAO>();
+
+builder.Services.AddTransient<IGetAllByService<Section>, SectionService>();
+builder.Services.AddTransient<IGetAllByDAO<Section>, SectionDAO>();
 //Automapper
 builder.Services.AddAutoMapper(typeof(Program));
 

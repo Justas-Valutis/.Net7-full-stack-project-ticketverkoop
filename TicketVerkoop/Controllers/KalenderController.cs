@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
-using TicketVerkoop.Services;
 using TicketVerkoop.Services.Interfaces;
 using TicketVerkoop.ViewModels;
 

@@ -40,5 +40,12 @@ public class AutoMapperProfile : Profile
         CreateMap<StadiumTicketVM, Stadium>();
 
         CreateMap<Ring, RingVM>();
+        CreateMap<RingVM, Ring>();
+
+        CreateMap<Section, SectionVM>();
+        CreateMap<SectionVM, Section>();
+
+        CreateMap<Zitplaat, ZitPlaatsVM>();
+        CreateMap<ZitPlaatsVM, Zitplaat>();
     }
 }

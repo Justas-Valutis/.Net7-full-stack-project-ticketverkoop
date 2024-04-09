@@ -29,7 +29,7 @@ public class StadiumService : IService<Stadium>
         throw new NotImplementedException();
     }
 
-    public async Task<Stadium?> FindById(int Id)
+    public async Task<Stadium> FindById(int Id)
     {
         return await stadiumDAO.FindById(Id);
     }

@@ -41,28 +41,28 @@
         </form>
     </div>
 
-@if (Model != null)
+    @if (Model != null)
     {
-    <div class="row">
-        @foreach (var item in Model)
-            {
-            @await Html.PartialAsync("_MatchPartialView", item)
-            }
-    </div>
+        <div class="row">
+            @foreach (var item in Model)
+                {
+                    @await Html.PartialAsync("_MatchPartialView", item)
+                }
+        </div>
     }
-else
+    else
     {
-    <p>No data found</p>
+        <p>No data found</p>
     }
 
-@section scripts
-   {
-    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script>
-        //oplossen via jQuery
-        $(".Id").on("change", () => {
-            $("Form").trigger("submit");
-        });
-    </script>
-}
+    @section scripts
+    {
+        <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script>
+            $(".Id").on("change", () => 
+            {
+                $("Form").trigger("submit");
+            });
+        </script>
+    }
 

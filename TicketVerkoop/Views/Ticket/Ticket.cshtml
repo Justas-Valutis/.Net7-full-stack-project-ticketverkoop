@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Ticket";
 }
+<link rel="stylesheet" href="~/css/TicketStyles.css">
 
 <h1>Ticket</h1>
 
 <div class="row">
     <div class="row">
         <div class="col-md-2">
-            @Html.DisplayNameFor(model => model.Naam)
+            Stadium Naam
         </div>
         <div class="col-md-2">
             @Html.DisplayNameFor(model => model.Stad)
@@ -17,23 +18,48 @@
         <div class="col-md-2">
             @Html.DisplayNameFor(model => model.Rings)
         </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Rings.First().Sections.First().SectionId)
+        </div>
     </div>
 
   
         <div class="row">
+            <form asp-action="Ticket" class="row">
+            <input type="hidden" asp-for="@Model.StadiumId" />
+                <div class="col-md-2">
+                    @Html.DisplayFor(model => model.Naam)
+                </div>
+                <div class="col-md-2">
+                    @Html.DisplayFor(model => model.Stad)
+                </div>
+                <div class="col-md-2">
+                    <select name="RingId" class="Id"
+                            asp-items="@ViewBag.lstRings">
+                        <option>Kies een Ring</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="sectionId" class="Id"
+                            asp-items="@ViewBag.lstSections">
+                        <option>Kies een Section</option>
+                    </select>
+                </div>
 
-            <div class="col-md-2">
-                @Html.DisplayFor(model => model.Naam)
+            <div class="form-group" id="submitBTN">
+                <button type="submit" value="Search" class="btn btn-default">Submit</button>
             </div>
-            <div class="col-md-2">
-                @Html.DisplayFor(model => model.Stad)
-            </div>
-            <div class="col-md-2">
-                <select name="RingId" class="Id"
-                        asp-items="@ViewBag.lstRings">
-                    <option>Kies een Ring</option>
-                </select>
-            </div>
+
+            </form>
         </div>
-  
 </div>
+
+@section scripts
+{
+    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(".Id").on("change", () => {
+            $("Form").trigger("submit");
+        });
+    </script>
+}

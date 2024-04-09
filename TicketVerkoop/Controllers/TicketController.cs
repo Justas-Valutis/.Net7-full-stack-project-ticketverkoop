@@ -11,32 +11,34 @@ namespace TicketVerkoop.Controllers
     public class TicketController : Controller
     {
         private IService<Stadium> stadiumService;
+        private IGetAllByService<Section> sectionService;
         private readonly IMapper mapper;
 
-        public TicketController(IService<Stadium> stadiumService, IMapper mapper)
+        public TicketController(IService<Stadium> stadiumService,
+            IGetAllByService<Section> sectionService,
+            IMapper mapper)
         {
             this.stadiumService = stadiumService;
+            this.sectionService = sectionService;
             this.mapper = mapper;
         }
 
-
-        public async Task<IActionResult> Ticket(int? matchID, int? stadiumId)
+  
+        public async Task<IActionResult> Ticket(int? matchID, int? stadiumId, int? RingId, int? sectionId)
         {
-            if (matchID != null && stadiumId != null)
+            try
             {
-                try
-                {
-                    var stadium = await stadiumService.FindById(Convert.ToInt16(stadiumId));
-                    StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(stadium);
+                var stadium = await stadiumService.FindById(Convert.ToInt16(stadiumId));
+                StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(stadium);
+       
+                ViewBag.lstRings = new SelectList(stadium.Rings, "RingId", "ZoneLocatie", RingId);
+                ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "Prijs", sectionId);
 
-                    ViewBag.lstRings = new SelectList(stadium.Rings, "RingId", "ZoneLocatie");
-                    //ViewBag.lstSections = new SelectList(stadium.Rings.)
-                    return View(stadiumTicketVM);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Errorlog " + ex.Message);
-                }
+                return View(stadiumTicketVM);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Errorlog " + ex.Message);
             }
             return View();
         }

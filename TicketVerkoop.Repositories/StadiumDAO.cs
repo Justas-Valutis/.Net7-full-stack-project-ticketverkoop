@@ -32,6 +32,8 @@ public class StadiumDAO : IDAO<Stadium>
         {
             return await _dbContext.Stadia
                   .Include(r => r.Rings)
+                  .ThenInclude(s => s.Sections)
+                  .ThenInclude(z => z.Zitplaats)
                   .FirstOrDefaultAsync(s => s.StadiumId == Id);
         }
         catch (Exception ex)
