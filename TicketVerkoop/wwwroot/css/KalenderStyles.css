@@ -22,7 +22,15 @@
     margin-bottom: 0;
 }
 
-.stadium-match-content {
+.stadium-match-ticket-content {
     display: flex;
     align-items: center;
+}
+
+.centered-text {
+    text-align:center;
+}
+
+.centered-horizontaly {
+    justify-content: center;
 }
