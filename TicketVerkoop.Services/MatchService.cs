@@ -1,4 +1,5 @@
 ﻿using TicketVerkoop.Domains.Entities;
+using TicketVerkoop.Repositories;
 using TicketVerkoop.Repositories.Interfaces;
 using TicketVerkoop.Services.Interfaces;
 
@@ -36,18 +37,14 @@ public class MatchService : IMatchService<Match>
         throw new NotImplementedException();
     }
 
-    public Task Delete(Match entity)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<Match?> FindById(int Id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Match?> Get(int v)
+    public async Task<IEnumerable<Match>?> GetAllWithHistory()
     {
-        throw new NotImplementedException();
+        return await matchDAO.GetAllWithHistory();
+
     }
 }

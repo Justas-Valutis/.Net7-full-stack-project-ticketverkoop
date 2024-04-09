@@ -96,13 +96,16 @@ public class MatchDAO : IMatchDAO<Match>
         }
     }
 
-    public Task Delete(Match entity)
+    public async Task<IEnumerable<Match>?> GetAllWithHistory()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Match?> FindById(int Id)
-    {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbContext.Matches.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
     }
 }

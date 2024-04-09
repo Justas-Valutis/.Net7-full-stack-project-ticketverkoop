@@ -31,5 +31,8 @@ public class AutoMapperProfile : Profile
         //--------- Ploeg ---------------
         CreateMap<Ploeg, PloegVM>();
         CreateMap<PloegVM, Ploeg>();
-        }
+
+        //--------- Voor Swagger ---------------
+        CreateMap<Match, MatchSwaggerVM>();
     }
+}
