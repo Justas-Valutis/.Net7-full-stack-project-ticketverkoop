@@ -15,7 +15,13 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.ThuisPloegNaam,
             opts => opts.MapFrom(src => src.PloegThuis.Naam))
             .ForMember(dest => dest.UitPloegNaam,
-            opts => opts.MapFrom(src => src.PloegUit.Naam));
+            opts => opts.MapFrom(src => src.PloegUit.Naam))
+            .ForMember(dest => dest.Datum,
+            opts => opts.MapFrom(src => src.Datum.ToString("dd/MM/yyyy")))
+            .ForMember(dest => dest.DayOfWeek,
+            opts => opts.MapFrom(src => src.Datum.DayOfWeek))
+            .ForMember(dest => dest.Time,
+            opts => opts.MapFrom(src => src.Datum.ToString("HH:mm")));
         CreateMap<MatchVM, Match>();
 
         //--------- Stadium ---------------

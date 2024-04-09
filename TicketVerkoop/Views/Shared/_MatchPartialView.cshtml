@@ -28,10 +28,12 @@
 
 
     <div class="col-md-2">
-        <p>@Html.DisplayFor(model => model.Datum)</p>
+        <p class="date">@Html.DisplayFor(model => model.Datum)</p>
+        <p class="date">@Html.DisplayFor(model => model.DayOfWeek)</p>
+        <p>@Html.DisplayFor(model => model.Time)</p>
     </div>
 
-   <div class="col-md-2">
+   <div class="col-md-2 stadium-match-content">
         <p>@Html.DisplayFor(model => model.StadiumNaam)</p>
    </div>
     
@@ -39,9 +41,9 @@
         <img id="tshirt-logo" src="/images/t-shirt-logo.jpg" />
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 stadium-match-content">
         <span>@Html.DisplayFor(model => model.ThuisPloegNaam)</span>
-        <span> vs </span>
+        <span>  <img id="ball-logo" src="/images/LogoBall.jpg" /> </span>
         <span> @Html.DisplayFor(model => model.UitPloegNaam)</span>
     </div>
 
