@@ -54,7 +54,7 @@ namespace TicketVerkoop.Controllers
             {
                 if (StadiumId == null && PloegId == null)
                 {
-                return await Index();
+                    return await Index();
                 }
 
                 List<MatchVM> sortedMatches = new List<MatchVM>();

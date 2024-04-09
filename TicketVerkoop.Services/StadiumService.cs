@@ -29,9 +29,9 @@ public class StadiumService : IService<Stadium>
         throw new NotImplementedException();
     }
 
-    public Task<Stadium?> FindById(int Id)
+    public async Task<IEnumerable<Stadium>?> FindById(int Id)
     {
-        throw new NotImplementedException();
+        return await stadiumDAO.FindById(Id);
     }
 
     public Task<Stadium?> Get(int v)

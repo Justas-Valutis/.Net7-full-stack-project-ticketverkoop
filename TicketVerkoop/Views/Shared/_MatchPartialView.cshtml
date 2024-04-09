@@ -1,7 +1,7 @@
 ﻿@model TicketVerkoop.ViewModels.MatchVM
 
 
-<div class="row col-12" id="matchInfoBar">
+<div class="row" id="matchInfoBar">
     <div class="col-md-2">
         <p>Datum</p>
     </div>
@@ -14,7 +14,7 @@
        <p>Thuis ploeg</p>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <p class="centered-text">Match</p>
     </div>
 
@@ -31,10 +31,12 @@
 
 
 
-    <div class="col-md-2">
-        <p class="date">@Html.DisplayFor(model => model.Datum)</p>
-        <p class="date">@Html.DisplayFor(model => model.DayOfWeek)</p>
-        <p>@Html.DisplayFor(model => model.Time)</p>
+    <div class="col-md-2 stadium-match-ticket-content">
+        <div>
+            <p class="date">@Html.DisplayFor(model => model.Datum)</p>
+            <p class="date">@Html.DisplayFor(model => model.DayOfWeek)</p>
+            <p class="date">@Html.DisplayFor(model => model.Time)</p>
+        </div>
     </div>
 
    <div class="col-md-2 stadium-match-ticket-content">
@@ -45,7 +47,7 @@
         <img id="tshirt-logo" src="/images/t-shirt-logo.jpg" />
     </div>
 
-    <div class="col-md-3 stadium-match-ticket-content centered-horizontaly">
+    <div class="col-md-4 stadium-match-ticket-content centered-horizontaly">
         <span>@Html.DisplayFor(model => model.ThuisPloegNaam)</span>
         <span>  <img id="ball-logo" src="/images/ball-logo.jpg" /> </span>
         <span> @Html.DisplayFor(model => model.UitPloegNaam)</span>
@@ -56,7 +58,10 @@
     </div>
 
     <div class="col-md-2 stadium-match-ticket-content centered-horizontaly">
-        <a href="">Buy Tickets</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Ticket" 
+            asp-route-matchID="@Model.MatchId"
+           asp-route-stadiumID="@Model.StadiumId"
+        >Buy Tickets</a>
     </div>
 
 </div>

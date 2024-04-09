@@ -22,7 +22,7 @@ public class PloegService : IService<Ploeg>
         throw new NotImplementedException();
     }
 
-    public Task<Ploeg?> FindById(int Id)
+    public async Task<IEnumerable<Ploeg>?> FindById(int Id)
     {
         throw new NotImplementedException();
     }
@@ -36,4 +36,5 @@ public class PloegService : IService<Ploeg>
     {
         return await ploegDAO.GetAll();
     }
+
 }

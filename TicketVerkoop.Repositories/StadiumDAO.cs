@@ -26,9 +26,17 @@ public class StadiumDAO : IDAO<Stadium>
         }
     }
 
-    public Task<Stadium?> FindById(int Id)
+    public async Task<IEnumerable<Stadium>?> FindById(int Id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbContext.Stadia.Where(s => s.StadiumId == Id).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
     }
 
     public Task Add(Stadium entity)
