@@ -56,6 +56,9 @@ builder.Services.AddTransient<IDAO<Ploeg>, PloegDAO>();
 
 builder.Services.AddTransient<IGetAllByService<Section>, SectionService>();
 builder.Services.AddTransient<IGetAllByDAO<Section>, SectionDAO>();
+
+builder.Services.AddTransient<IService<Bestelling>, BestellingService>();
+builder.Services.AddTransient<IDAO<Bestelling>, BestellingDAO>();
 //Automapper
 builder.Services.AddAutoMapper(typeof(Program));
 
