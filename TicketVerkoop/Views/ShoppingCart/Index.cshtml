@@ -30,7 +30,10 @@
                 <td>@item.aantaZitPlaatsen</td>
                 <td>@item.Prijs Eur</td>
             </tr>
-            total += decimal.Parse(item.Prijs);
+            
+            @if (item.Prijs != null) {
+                total += decimal.Parse(item.Prijs);
+            }
         }
         <tr>
             <td colspan="5"><strong>Total</strong></td>

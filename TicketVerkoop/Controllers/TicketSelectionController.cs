@@ -37,7 +37,7 @@ namespace TicketVerkoop.Controllers
                 if (!string.IsNullOrEmpty(chosenSeatNr) && int.TryParse(chosenSeatNr, out int parsedSeatNr))
                 {
                     stadiumTicketVM.chosenSeatNr = parsedSeatNr;
-                    if (sectionId != null && RingId != null) {
+                    if (sectionId != null && RingId != null && stadiumTicketVM.Sections?.Count > 0)  {
                         stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault(s => s.SectionId == sectionId).Prijs, 2).ToString("N2");
                     }
                     else
