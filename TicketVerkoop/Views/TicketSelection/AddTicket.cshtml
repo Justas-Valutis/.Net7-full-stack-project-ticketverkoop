@@ -64,3 +64,30 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div>
+    <button id="storeInSessionBtn" class="btn btn-primary">Store in Session</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@* @section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#storeInSessionBtn').click(function () {
+                var cartData = {
+                    MatchId: '@Model.MatchId',
+                    StadiumNaam: '@Model.StadiumNaam',
+                    Stad: '@Model.Stad',
+                    ThuisPloegNaam: '@Model.ThuisPloegNaam',
+                    UitPloegNaam: '@Model.UitPloegNaam',
+                    aantaZitPlaatsen: '@Model.aantaZitPlaatsen',
+                    Prijs: '@Model.Prijs',
+                    DateCreated: '@Model.DateCreated'
+                };
+
+                sessionStorage.setItem('CartData', JSON.stringify(cartData));
+                alert('Data stored in session.');
+            });
+        });
+    </script> *@
+}

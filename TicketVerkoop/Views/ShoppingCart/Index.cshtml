@@ -1,0 +1,47 @@
+﻿@model TicketVerkoop.ViewModels.ShoppingCartVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Shopping kaart</h3>
+
+@if (Model != null && Model.Cart != null && Model.Cart.Count > 0)
+{
+    <table>
+        <tr>
+            <th>Stadium Naam</th>
+            <th>Stad</th>
+            <th>Thuis Ploeg Naam</th>
+            <th>Uit Ploeg Naam</th>
+            <th>Aantal Zit Plaatsen</th>
+            <th>Prijs</th>
+        </tr>
+        @{
+            decimal total = 0;
+        }
+        @foreach (var item in Model.Cart)
+        {
+            <tr>
+                <td>@item.StadiumNaam</td>
+                <td>@item.Stad</td>
+                <td>@item.ThuisPloegNaam</td>
+                <td>@item.UitPloegNaam</td>
+                <td>@item.aantaZitPlaatsen</td>
+                <td>@item.Prijs Eur</td>
+            </tr>
+            total += decimal.Parse(item.Prijs);
+        }
+        <tr>
+            <td colspan="5"><strong>Total</strong></td>
+            <td>@total.ToString("0.00") Eur</td>
+        </tr>
+    </table>
+}
+else
+{
+    <p>Your shopping cart is empty.</p>
+}
+
+
+<a asp-controller="Kalender" asp-action="Index"> Kies een match</a>

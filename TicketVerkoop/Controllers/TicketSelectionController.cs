@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
+using TicketVerkoop.Extentions;
 using TicketVerkoop.Services.Interfaces;
 using TicketVerkoop.ViewModels;
 
@@ -37,7 +38,7 @@ namespace TicketVerkoop.Controllers
                 {
                     stadiumTicketVM.chosenSeatNr = parsedSeatNr;
                     if (sectionId != null && RingId != null) {
-                        stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault().Prijs, 2).ToString("N2");
+                        stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault(s => s.SectionId == sectionId).Prijs, 2).ToString("N2");
                     }
                     else
                     {
@@ -74,10 +75,31 @@ namespace TicketVerkoop.Controllers
                 DateCreated = DateTime.Now
             };
 
-            //ShoppingCartVM shoppingCartVM = new ShoppingCartVM();
-            //shoppingCartVM.Cart.Add(CartVM);
+            try { 
+            HttpContext.Session.SetObject("mySession",
+                new SessionVM { Date = DateTime.Now, Company = "Vives" });
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw new Exception("SESSION" + ex.Message);
+            }
+            ShoppingCartVM? shopping;
 
-            return View(CartVM);
+            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
+            {
+                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+            }
+            else
+            {
+                shopping = new ShoppingCartVM();
+                shopping.Cart = new List<CartVM>();
+            }
+            shopping?.Cart?.Add(CartVM);
+            HttpContext.Session.SetObject("ShoppingCart", shopping);
+            return RedirectToAction("Index", "ShoppingCart");
+            //return View(CartVM);
+
         }
+
     }
 }
