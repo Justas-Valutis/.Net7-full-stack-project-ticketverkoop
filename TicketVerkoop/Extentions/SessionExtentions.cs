@@ -1,9 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Beershop24.Extensions
+namespace TicketVerkoop.Extentions
 {
-    public static class SessionExtensions
+    public static class SessionExtentions
     {
         // Extension methods, as the name suggests, are additional methods.
         // Extension methods allow you to inject additional methods

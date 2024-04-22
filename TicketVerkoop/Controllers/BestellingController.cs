@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TicketVerkoop.Extentions;
 using TicketVerkoop.ViewModels;
 
 namespace TicketVerkoop.Controllers
@@ -7,8 +8,8 @@ namespace TicketVerkoop.Controllers
     {
         public IActionResult Index()
         {
-            //BestellingVM? cartList = HttpContext.Session.GetObject<BestellingVM>("ShoppingCart"); 
-            return View();//cartList);
+            BestellingVM? cartList = HttpContext.Session.GetObject<BestellingVM>("ShoppingCart"); 
+            return View(cartList);
         }
     }
 }

@@ -51,6 +51,6 @@ public class BestellingDAO : IDAO<Bestelling>
         {
             Console.WriteLine(ex.ToString());
             throw new Exception("ERROR IN BestellingDAO" + ex.Message);
-}
-
+        }
+    }
 }
