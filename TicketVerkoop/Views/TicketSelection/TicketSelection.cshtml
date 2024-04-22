@@ -60,25 +60,36 @@
                 </div>
 
                 <div class="col-md-1">
-                    <select name="aantalZitPlaatsen" class="">
+                <select name="chosenSeatNr" class="Id" asp-items="@ViewBag.kiesAantalZitplaaatsen">
                         <option>Kies aantal zitplaatsen</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="submitBTN">
                     <button type="submit" value="Search" class="btn btn-default">Submit</button>
                 </div>
-                <div class="form-group" id="">
-                <button type="submit" name="Add to Cart" value="@Url.Action("SearchAction", "ShoppingBag")" class="btn btn-default">
-                    <img src="~/images/shoppingCar.jpg"/>
-                    Add to Cart</button>
-                </div>
             </form>
         </div>
+
+        @if (@Model.TotalePrijs != null) {
+        <div>Totale prijs: @Model.TotalePrijs Eur</div>
+        }
+
+
+    <div class="form-group" id="">
+        <a asp-area="" asp-controller="TicketSelection" asp-action="AddTicket" 
+            asp-route-MatchId="@Model.MatchId"
+            asp-route-Stad="@Model.Stad"
+            asp-route-StadiumNaam="@Model.StadiumNaam"
+            asp-route-ThuisPloegNaam="@Model.ThuisPloegNaam"
+            asp-route-UitPloegNaam="@Model.UitPloegNaam"
+           asp-route-aantalZitPlaatsen="@Model.chosenSeatNr"
+           asp-route-Prijs="@Model.TotalePrijs"
+           class="btn btn-default">
+            <img src="~/images/shoppingCar.jpg" />
+            Add to Cart
+        </a>
+    </div>
 </div>
 
 @section scripts
@@ -87,6 +98,12 @@
     <script>
         $(".Id").on("change", () => {
             $("Form").trigger("submit");
+        });
+
+        $(function () {
+            $("#addToCartBtn").on("click", function () {
+                window.location.href = '@Url.Action("AddTicket", "TicketSelection")';
+            });
         });
     </script>
 }

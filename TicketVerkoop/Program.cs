@@ -43,8 +43,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-//----> Dependency Injection
-//syntax services.AddTransient<interface, implType>();
 builder.Services.AddTransient<IMatchService<Match>, MatchService>();
 builder.Services.AddTransient<IMatchDAO<Match>, MatchDAO>();
 
@@ -59,10 +57,19 @@ builder.Services.AddTransient<IGetAllByDAO<Section>, SectionDAO>();
 
 builder.Services.AddTransient<IService<Bestelling>, BestellingService>();
 builder.Services.AddTransient<IDAO<Bestelling>, BestellingDAO>();
-//Automapper
+
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "Ticket.Verkoop.Session";
+
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

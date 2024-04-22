@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Services.Interfaces;
@@ -24,15 +25,30 @@ namespace TicketVerkoop.Controllers
         }
 
 
-        public async Task<IActionResult> TicketSelection(int matchID, int? RingId, int? sectionId)
+        public async Task<IActionResult> TicketSelection(int matchID, int? RingId, int? sectionId, string? chosenSeatNr)
         {
             try
             {
                 var match = await matchService.FindById(Convert.ToInt16(matchID));
                 StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(match);
 
+                int? chosenSeats = null;
+                if (!string.IsNullOrEmpty(chosenSeatNr) && int.TryParse(chosenSeatNr, out int parsedSeatNr))
+                {
+                    stadiumTicketVM.chosenSeatNr = parsedSeatNr;
+                    if (sectionId != null && RingId != null) {
+                        stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault().Prijs, 2).ToString("N2");
+                    }
+                    else
+                    {
+                        stadiumTicketVM.TotalePrijs = null;
+                    }
+                }
+
                 ViewBag.lstRings = new SelectList(stadiumTicketVM.Rings, "RingId", "ZoneLocatie", RingId);
                 ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "SectionId", sectionId);
+                List<int> numbers = new List<int> { 1, 2, 3, 4 };
+                ViewBag.kiesAantalZitplaaatsen = new SelectList(numbers, selectedValue: stadiumTicketVM.chosenSeatNr);
 
                 return View(stadiumTicketVM);
             }
@@ -41,6 +57,27 @@ namespace TicketVerkoop.Controllers
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
             return View();
+        }
+
+        public IActionResult AddTicket(int MatchId, string StadiumNaam, string Stad, 
+            string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs)
+        {
+            var CartVM = new CartVM
+            {
+                MatchId = MatchId,
+                StadiumNaam = StadiumNaam,
+                Stad = Stad,
+                ThuisPloegNaam = ThuisPloegNaam,
+                UitPloegNaam = UitPloegNaam,
+                Prijs = Prijs,
+                aantaZitPlaatsen = aantalZitPlaatsen,
+                DateCreated = DateTime.Now
+            };
+
+            //ShoppingCartVM shoppingCartVM = new ShoppingCartVM();
+            //shoppingCartVM.Cart.Add(CartVM);
+
+            return View(CartVM);
         }
     }
 }
