@@ -108,4 +108,23 @@ public class MatchDAO : IMatchDAO<Match>
             throw new Exception("ERROR IN DAO" + ex.Message);
         }
     }
+
+    public async Task<Match?> FindById(int Id)
+    {
+        try
+        {
+            return await _dbContext.Matches.Where(m => m.MatchId == Id)
+                .Include(t => t.PloegThuis)
+                .Include(t => t.PloegUit)
+                .Include(s => s.Stadium)
+                .ThenInclude(s => s.Rings)
+                .ThenInclude(r => r.Sections)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
+        }
+    }
 }

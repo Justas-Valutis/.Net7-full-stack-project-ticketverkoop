@@ -1,5 +1,4 @@
 ﻿
-
 namespace TicketVerkoop.Repositories.Interfaces
 {
     public interface IMatchDAO<T> where T : class
@@ -11,5 +10,6 @@ namespace TicketVerkoop.Repositories.Interfaces
         Task<IEnumerable<T>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId);
         Task Add(T entity);
         Task<IEnumerable<T>?> GetAllWithHistory();
+        Task<T?> FindById(int Id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Build.Framework;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.ViewModels;
 
@@ -37,7 +38,21 @@ public class AutoMapperProfile : Profile
 
         //--------- Voor Tickets ---------------
         CreateMap<Stadium, StadiumTicketVM>();
-        CreateMap<StadiumTicketVM, Stadium>();
+
+        CreateMap<Match, StadiumTicketVM>()
+            .ForMember(dest => dest.MatchId,
+            opts => opts.MapFrom(src => src.MatchId))
+            .ForMember(dest => dest.Rings,
+            opts => opts.MapFrom(src => src.Stadium.Rings))
+            .ForMember(dest => dest.Stad,
+            opts => opts.MapFrom(src => src.Stadium.Naam))
+            .ForMember(dest => dest.Sections,
+            opts => opts.MapFrom(src => src.Stadium.Rings.SelectMany(r => r.Sections)))
+            .ForMember(dest => dest.ThuisPloegNaam,
+            opts => opts.MapFrom(src => src.PloegThuis.Naam))
+            .ForMember(dest => dest.UitPloegNaam,
+            opts => opts.MapFrom(src => src.PloegUit.Naam));
+
 
         CreateMap<Ring, RingVM>();
         CreateMap<RingVM, Ring>();

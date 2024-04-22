@@ -1,0 +1,92 @@
+﻿@model TicketVerkoop.ViewModels.StadiumTicketVM
+
+@{
+    ViewData["Title"] = "TicketSelection";
+}
+<link rel="stylesheet" href="~/css/TicketSelectionStyles.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+<h1>Ticket</h1>
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-2">
+            Stadium Naam
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Stad)
+        </div>
+        <div id="matchHeader" class="col-md-3">
+            Match
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.Rings)
+        </div>
+        <div class="col-md-2">
+            Section
+        </div>
+        <div class="col-md-1">
+            Aantal zitplaatsen
+        </div>
+    </div>
+
+  
+        <div class="row">
+            <form asp-action="TicketSelection" class="row">
+                <input type="hidden" asp-for="@Model.MatchId" />
+                <div class="col-md-2">
+                    @Html.DisplayFor(model => model.StadiumNaam)
+                </div>
+                <div class="col-md-2">
+                    @Html.DisplayFor(model => model.Stad)
+                </div>
+    
+                <div class="col-md-3">
+                    @Model.UitPloegNaam vs @Model.ThuisPloegNaam
+                </div>
+
+                <div class="col-md-2">
+                    <select name="RingId" class="Id"
+                            asp-items="@ViewBag.lstRings">
+                        <option>Kies een Ring</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="sectionId" class="Id"
+                            asp-items="@ViewBag.lstSections">
+                        <option>Kies een Section</option>
+                    </select>
+                </div>
+
+                <div class="col-md-1">
+                    <select name="aantalZitPlaatsen" class="">
+                        <option>Kies aantal zitplaatsen</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="submitBTN">
+                    <button type="submit" value="Search" class="btn btn-default">Submit</button>
+                </div>
+                <div class="form-group" id="">
+                <button type="submit" name="Add to Cart" value="@Url.Action("SearchAction", "ShoppingBag")" class="btn btn-default">
+                    <img src="~/images/shoppingCar.jpg"/>
+                    Add to Cart</button>
+                </div>
+            </form>
+        </div>
+</div>
+
+@section scripts
+{
+    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(".Id").on("change", () => {
+            $("Form").trigger("submit");
+        });
+    </script>
+}

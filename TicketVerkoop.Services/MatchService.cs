@@ -36,9 +36,9 @@ public class MatchService : IMatchService<Match>
         throw new NotImplementedException();
     }
 
-    public Task<Match?> FindById(int Id)
+    public async Task<Match?> FindById(int Id)
     {
-        throw new NotImplementedException();
+        return await matchDAO.FindById(Id);
     }
 
     public async Task<IEnumerable<Match>?> GetAllWithHistory()

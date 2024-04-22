@@ -8,31 +8,31 @@ using TicketVerkoop.ViewModels;
 
 namespace TicketVerkoop.Controllers
 {
-    public class TicketController : Controller
+    public class TicketSelectionController : Controller
     {
-        private IService<Stadium> stadiumService;
+        private IMatchService<Match> matchService;
         private IGetAllByService<Section> sectionService;
         private readonly IMapper mapper;
 
-        public TicketController(IService<Stadium> stadiumService,
+        public TicketSelectionController(IMatchService<Match> matchService,
             IGetAllByService<Section> sectionService,
             IMapper mapper)
         {
-            this.stadiumService = stadiumService;
+            this.matchService = matchService;
             this.sectionService = sectionService;
             this.mapper = mapper;
         }
 
   
-        public async Task<IActionResult> Ticket(int? matchID, int? stadiumId, int? RingId, int? sectionId)
+        public async Task<IActionResult> TicketSelection(int matchID, int? RingId, int? sectionId)
         {
             try
-            {
-                var stadium = await stadiumService.FindById(Convert.ToInt16(stadiumId));
-                StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(stadium);
+            { 
+                var match = await matchService.FindById(Convert.ToInt16(matchID));
+                StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(match);
        
-                ViewBag.lstRings = new SelectList(stadium.Rings, "RingId", "ZoneLocatie", RingId);
-                ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "Prijs", sectionId);
+                ViewBag.lstRings = new SelectList(stadiumTicketVM.Rings, "RingId", "ZoneLocatie", RingId);
+                ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "SectionId", sectionId);
 
                 return View(stadiumTicketVM);
             }
