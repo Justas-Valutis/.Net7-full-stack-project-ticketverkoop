@@ -12,7 +12,5 @@
         public string StadiumNaam { get; set; } = null!;
         public string ThuisPloegNaam { get; set; } = null!;
         public string UitPloegNaam { get; set; } = null!;
-
-
     }
 }

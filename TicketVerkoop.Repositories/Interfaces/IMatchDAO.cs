@@ -1,4 +1,8 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TicketVerkoop.Repositories.Interfaces
 {
@@ -11,5 +15,6 @@ namespace TicketVerkoop.Repositories.Interfaces
         Task<IEnumerable<T>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId);
         Task Add(T entity);
         Task<IEnumerable<T>?> GetAllWithHistory();
+        Task<T?> FindById(int Id);
     }
 }

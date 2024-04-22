@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using TicketVerkoop.Domains.Data;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Repositories.Interfaces;
@@ -70,7 +71,7 @@ public class MatchDAO : IMatchDAO<Match>
         try
         {
             await _dbContext.SaveChangesAsync();
-        } 
+        }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
@@ -82,7 +83,7 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(p => (p.PloegThuisId == PlegId || p.PloegUitId == PlegId) 
+            return await _dbContext.Matches.Where(p => (p.PloegThuisId == PlegId || p.PloegUitId == PlegId)
                     && p.StadiumId == StadiumId && p.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
@@ -106,6 +107,25 @@ public class MatchDAO : IMatchDAO<Match>
         {
             Console.WriteLine(ex.ToString());
             throw new Exception("ERROR IN DAO" + ex.Message);
+        }
+    }
+
+    public async Task<Match?> FindById(int Id)
+    {
+        try
+        {
+            return await _dbContext.Matches.Where(m => m.MatchId == Id)
+                .Include(t => t.PloegThuis)
+                .Include(t => t.PloegUit)
+                .Include(s => s.Stadium)
+                .ThenInclude(s => s.Rings)
+                .ThenInclude(r => r.Sections)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
         }
     }
 }
