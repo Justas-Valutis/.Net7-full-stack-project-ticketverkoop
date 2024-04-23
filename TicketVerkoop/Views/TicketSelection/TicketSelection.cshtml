@@ -47,13 +47,13 @@
                 </div>
 
                 <div class="col-md-2">
-                    <select name="RingId" class="Id"
+                <select name="RingId" class="Id" id="RingId"
                             asp-items="@ViewBag.lstRings">
                         <option>Kies een Ring</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select name="sectionId" class="Id"
+                <select name="sectionId" class="Id" id="sectionId"
                             asp-items="@ViewBag.lstSections">
                         <option>Kies een Section</option>
                     </select>
@@ -104,6 +104,10 @@
             $("#addToCartBtn").on("click", function () {
                 window.location.href = '@Url.Action("AddTicket", "TicketSelection")';
             });
+        });
+
+        $("#RingId").on("change", function () {
+            $("#sectionId").val(null).trigger("change"); // Reset sectionId to null and trigger change event
         });
     </script>
 }

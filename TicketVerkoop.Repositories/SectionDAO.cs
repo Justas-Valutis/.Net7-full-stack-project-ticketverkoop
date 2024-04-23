@@ -18,7 +18,7 @@ public class SectionDAO : IGetAllByDAO<Section>
     {
         try
         {
-            return await _dbContext.Sections.Where(s => s.SectionId == Id)
+            return await _dbContext.Sections.Where(s => s.RingId == Id)
                 .ToListAsync();
         }
         catch (Exception ex)

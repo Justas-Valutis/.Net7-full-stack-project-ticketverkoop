@@ -28,16 +28,17 @@ namespace TicketVerkoop.Controllers
 
         public async Task<IActionResult> TicketSelection(int matchID, int? RingId, int? sectionId, string? chosenSeatNr)
         {
+
             try
             {
                 var match = await matchService.FindById(Convert.ToInt16(matchID));
                 StadiumTicketVM stadiumTicketVM = mapper.Map<StadiumTicketVM>(match);
-
+                stadiumTicketVM.TotalePrijs = null;
                 int? chosenSeats = null;
                 if (!string.IsNullOrEmpty(chosenSeatNr) && int.TryParse(chosenSeatNr, out int parsedSeatNr))
                 {
                     stadiumTicketVM.chosenSeatNr = parsedSeatNr;
-                    if (sectionId != null && RingId != null && stadiumTicketVM.Sections?.Count > 0)  {
+                    if (sectionId != null && RingId != null)  {
                         stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault(s => s.SectionId == sectionId).Prijs, 2).ToString("N2");
                     }
                     else
