@@ -64,6 +64,7 @@ namespace TicketVerkoop.Controllers
         public IActionResult AddTicket(int MatchId, string StadiumNaam, string Stad, 
             string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs)
         {
+
             var CartVM = new CartVM
             {
                 MatchId = MatchId,

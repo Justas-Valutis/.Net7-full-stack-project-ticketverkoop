@@ -44,7 +44,7 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.Rings,
             opts => opts.MapFrom(src => src.Stadium.Rings))
             .ForMember(dest => dest.Stad,
-            opts => opts.MapFrom(src => src.Stadium.Naam))
+            opts => opts.MapFrom(src => src.Stadium.Stad))
             .ForMember(dest => dest.Sections,
             opts => opts.MapFrom(src => src.Stadium.Rings.SelectMany(r => r.Sections)))
             .ForMember(dest => dest.ThuisPloegNaam,
