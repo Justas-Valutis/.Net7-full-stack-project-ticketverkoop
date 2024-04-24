@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketVerkoop", "TicketVerkoop\TicketVerkoop.csproj", "{01FCF72E-BA92-4ECC-96F8-5A565E4CE053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketVerkoop", "TicketVerkoop\TicketVerkoop.csproj", "{01FCF72E-BA92-4ECC-96F8-5A565E4CE053}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketVerkoop.Domains", "TicketVerkoop.Domains\TicketVerkoop.Domains.csproj", "{198C6ED2-FA02-44D8-AD59-31125CC6F5C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketVerkoop.Domains", "TicketVerkoop.Domains\TicketVerkoop.Domains.csproj", "{198C6ED2-FA02-44D8-AD59-31125CC6F5C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketVerkoop.Services", "TicketVerkoop.Services\TicketVerkoop.Services.csproj", "{AE391D5A-1192-4920-B1DC-FC52AA1527D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketVerkoop.Services", "TicketVerkoop.Services\TicketVerkoop.Services.csproj", "{AE391D5A-1192-4920-B1DC-FC52AA1527D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketVerkoop.Repositories", "TicketVerkoop.Repositories\TicketVerkoop.Repositories.csproj", "{CEFD37BE-DB32-43D2-936E-463DC9F310BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketVerkoop.Repositories", "TicketVerkoop.Repositories\TicketVerkoop.Repositories.csproj", "{CEFD37BE-DB32-43D2-936E-463DC9F310BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketVerkoop.Util", "TicketVerkoop.Util\TicketVerkoop.Util.csproj", "{D16CFD80-20D3-4989-A495-172D80A2F020}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CEFD37BE-DB32-43D2-936E-463DC9F310BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEFD37BE-DB32-43D2-936E-463DC9F310BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEFD37BE-DB32-43D2-936E-463DC9F310BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D16CFD80-20D3-4989-A495-172D80A2F020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16CFD80-20D3-4989-A495-172D80A2F020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16CFD80-20D3-4989-A495-172D80A2F020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16CFD80-20D3-4989-A495-172D80A2F020}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
