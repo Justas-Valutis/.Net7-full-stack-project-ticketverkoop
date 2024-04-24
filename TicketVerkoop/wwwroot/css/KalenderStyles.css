@@ -34,3 +34,15 @@
 .centered-horizontaly {
     justify-content: center;
 }
+
+div .stadium-match-ticket-content #stadiumCOL {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    column-gap:1px;
+}
+
+#stadiumCOL > * {
+    margin: 0;
+    padding: 0;
+}

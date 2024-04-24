@@ -40,7 +40,13 @@
     </div>
 
    <div class="col-md-2 stadium-match-ticket-content">
-        <p>@Html.DisplayFor(model => model.StadiumNaam)</p>
+        <div id="stadiumCOL">
+            <p>@Html.DisplayFor(model => model.StadiumNaam)</p>
+            <a asp-area="" asp-controller="Stadium" asp-action="Index"
+               asp-route-stadiumID="@Model.StadiumId">
+                More about stadium
+            </a>
+        </div>
    </div>
     
     <div class="col-md-1">
@@ -59,7 +65,8 @@
 
     <div class="col-md-2 stadium-match-ticket-content centered-horizontaly">
         <a class="nav-link text-dark" asp-area="" asp-controller="TicketSelection" asp-action="TicketSelection"
-           asp-route-matchID="@Model.MatchId" asp-route-ThuisPloegNaam="@Model.ThuisPloegNaam">Buy Tickets</a>
+           asp-route-matchID="@Model.MatchId" asp-route-ThuisPloegNaam="@Model.ThuisPloegNaam">Buy Tickets
+       </a>
     </div>
 
 </div>
