@@ -36,34 +36,34 @@ namespace TicketVerkoop.Util.PDF
 
                 // Tabel voor producten
                 iText.Layout.Element.Table table = new iText.Layout.Element.Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
-                //table.AddHeaderCell("Match");
-                //table.AddHeaderCell("Zitplaats");
-                //table.AddHeaderCell("Abonnement");
-                //table.AddHeaderCell("Ploeg");
+                table.AddHeaderCell("Match");
+                table.AddHeaderCell("Zitplaats");
+                table.AddHeaderCell("Abonnement");
+                table.AddHeaderCell("Ploeg");
                 table.AddHeaderCell("Stadium");
-                //table.AddHeaderCell("Besteldatum");
+                table.AddHeaderCell("Besteldatum");
                 table.AddHeaderCell("Prijs");
-                //decimal totalPrice = 0;
+                decimal totalPrice = 0;
                 foreach (var ticket in bestellings)
                 {
-                    //table.AddCell(ticket.Ticket.Match);
-                    //table.AddCell(ticket.Ticket.Zitplaats);
-                    //table.AddCell(ticket.Abonnement);
-                    //table.AddCell(ticket.Abonnement.Ploeg);
-                    table.AddCell(ticket.Abonnement.Ploeg.ThuisStadium.Naam);
-                    //table.AddCell(ticket.BestelDatum);
+                    table.AddCell(ticket.Ticket.Match.ToString());
+                    table.AddCell(ticket.Ticket.Zitplaats.ToString());
+                    table.AddCell(ticket.Abonnement.ToString());
+                    table.AddCell(ticket.Abonnement.Ploeg.ToString());
+                    table.AddCell(ticket.Abonnement.Ploeg.ThuisStadium.Naam.ToString());
+                    table.AddCell(ticket.BestelDatum.ToString());
                     table.AddCell(ticket.Ticket.Zitplaats.Section.Prijs.ToString("C"));
-                    //decimal totalProductPrice = ticket.Price * ticket.Number;
-                    //table.AddCell(totalProductPrice.ToString("C"));
-                    //totalPrice += totalProductPrice;
-                    //if (totalPrice > 110)
-                    //{
-                    //    table.AddCell(totalPrice.ToString("C"));
-                    //}
-                    //else
-                    //{
-                    //    table.AddCell("");
-                    //}
+                    decimal totalProductPrice = (decimal)ticket.Ticket.Zitplaats.Section.Prijs;  
+                    table.AddCell(totalProductPrice.ToString("C"));
+                    totalPrice += totalProductPrice;
+                    if (totalPrice > 50)
+                    {
+                        table.AddCell(totalPrice.ToString("C"));
+                    }
+                    else
+                    {
+                        table.AddCell("");
+                    }
 
                 }
                 document.Add(table);
@@ -77,7 +77,7 @@ namespace TicketVerkoop.Util.PDF
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
-                Bitmap qrCodeImage = qrCode.GetGraphic(10); // Grootte van 20 pixels
+                Bitmap qrCodeImage = qrCode.GetGraphic(50); // Grootte van 20 pixels
                 iText.Layout.Element.Image qrCodeImageElement = new
                 iText.Layout.Element.Image(ImageDataFactory.Create(BitmapToBytes(qrCodeImage))).SetHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.Add(qrCodeImageElement);
