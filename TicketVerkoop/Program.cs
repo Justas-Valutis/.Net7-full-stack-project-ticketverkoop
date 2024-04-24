@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TicketVerkoop.Data;
@@ -66,6 +68,15 @@ builder.Services.AddSession(options =>
 
     options.IdleTimeout = TimeSpan.FromMinutes(20);
 });
+
+//Mail
+//builder.Services.AddControllersWithViews();
+//builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+// Configuration.GetSection("EmailSettings")) zal de instellingen opvragen uit de AppSettings.json file en vervolgens wordt er een emailsettings - object aangemaakt en de waarden worden geïnjecteerd in het object
+//builder.Services.AddSingleton<IEmailSend, MailSend>();
+//Als in een Constructor een IEmailSender-parameter wordt gevonden, zal een emailSender - object worden aangemaakt. 
+
+//builder.Services.AddTransient<ICreatePDF, CreatePDF>();
 
 var app = builder.Build();
 
