@@ -35,22 +35,24 @@ namespace TicketVerkoop.Util.PDF
                 document.Add(new Paragraph(""));
 
                 // Tabel voor producten
-                Table table = new Table(UnitValue.CreatePercentArray(6)).UseAllAvailableWidth();
-                table.AddHeaderCell("Match");
-                table.AddHeaderCell("Zitplaats");
-                table.AddHeaderCell("Abonnement");
-                table.AddHeaderCell("Ploeg");
+                iText.Layout.Element.Table table = new iText.Layout.Element.Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
+                //table.AddHeaderCell("Match");
+                //table.AddHeaderCell("Zitplaats");
+                //table.AddHeaderCell("Abonnement");
+                //table.AddHeaderCell("Ploeg");
                 table.AddHeaderCell("Stadium");
-                table.AddHeaderCell("Besteldatum");
+                //table.AddHeaderCell("Besteldatum");
+                table.AddHeaderCell("Prijs");
                 //decimal totalPrice = 0;
                 foreach (var ticket in bestellings)
                 {
-                    table.AddCell(ticket.Ticket.Match);
-                    table.AddCell(ticket.Ticket.Zitplaats);
-                    table.AddCell(ticket.Abonnement);
-                    table.AddCell(ticket.Abonnement.Ploeg);
+                    //table.AddCell(ticket.Ticket.Match);
+                    //table.AddCell(ticket.Ticket.Zitplaats);
+                    //table.AddCell(ticket.Abonnement);
+                    //table.AddCell(ticket.Abonnement.Ploeg);
                     table.AddCell(ticket.Abonnement.Ploeg.ThuisStadium.Naam);
-                    table.AddCell(ticket.BestelDatum);
+                    //table.AddCell(ticket.BestelDatum);
+                    table.AddCell(ticket.Ticket.Zitplaats.Section.Prijs.ToString("C"));
                     //decimal totalProductPrice = ticket.Price * ticket.Number;
                     //table.AddCell(totalProductPrice.ToString("C"));
                     //totalPrice += totalProductPrice;
