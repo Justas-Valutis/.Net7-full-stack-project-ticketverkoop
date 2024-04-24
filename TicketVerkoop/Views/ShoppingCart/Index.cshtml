@@ -39,6 +39,7 @@
             <td colspan="5"><strong>Total</strong></td>
             <td>@total.ToString("0.00") Eur</td>
         </tr>
+        
     </table>
 }
 else
@@ -47,4 +48,11 @@ else
 }
 
 <br />
+    <a asp-controller="ShoppingCart" asp-action="Contact" class="btn-lg btn-primary">Checkout</a>
     <a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
