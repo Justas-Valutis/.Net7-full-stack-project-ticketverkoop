@@ -8,7 +8,12 @@ using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Repositories;
 using TicketVerkoop.Repositories.Interfaces;
 using TicketVerkoop.Services;
+using TicketVerkoop.Util.Mail;
+using TicketVerkoop.Util.Mail.Interfaces;
+using TicketVerkoop.Util.PDF;
+using TicketVerkoop.Util.PDF.Interfaces;
 using TicketVerkoop.Services.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,13 +75,13 @@ builder.Services.AddSession(options =>
 });
 
 //Mail
-//builder.Services.AddControllersWithViews();
-//builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddControllersWithViews();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 // Configuration.GetSection("EmailSettings")) zal de instellingen opvragen uit de AppSettings.json file en vervolgens wordt er een emailsettings - object aangemaakt en de waarden worden geïnjecteerd in het object
-//builder.Services.AddSingleton<IEmailSend, MailSend>();
+builder.Services.AddSingleton<IEmailSend, EmailSend>();
 //Als in een Constructor een IEmailSender-parameter wordt gevonden, zal een emailSender - object worden aangemaakt. 
 
-//builder.Services.AddTransient<ICreatePDF, CreatePDF>();
+builder.Services.AddTransient<ICreatePDF, CreatePDF>();
 
 var app = builder.Build();
 
