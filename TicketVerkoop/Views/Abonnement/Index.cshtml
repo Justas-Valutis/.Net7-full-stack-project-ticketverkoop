@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TicketVerkoop.ViewModels.PloegVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (Model == null)
+{
+    <h1>Er is geen data van de server</h1>
+} else {
+    <h1>Index</h1>
+
+    <p>
+    <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Naam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StadiumNaam)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StadiumNaam)
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Stadium" asp-action="Index"
+                        asp-route-stadiumID="@item.ThuisStadiumId"
+                        asp-route-ploegID="@item.PloegId">
+                        Koop abonnement
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -29,7 +29,9 @@ public class AutoMapperProfile : Profile
         CreateMap<StadiumVM, Stadium>();
 
         //--------- Ploeg ---------------
-        CreateMap<Ploeg, PloegVM>();
+        CreateMap<Ploeg, PloegVM>()
+            .ForMember(dest => dest.StadiumNaam,
+            opts => opts.MapFrom(src => src.ThuisStadium.Naam));
         CreateMap<PloegVM, Ploeg>();
 
         //--------- Voor Swagger ---------------

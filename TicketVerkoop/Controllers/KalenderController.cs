@@ -29,11 +29,12 @@ namespace TicketVerkoop.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.lstStadiums = new SelectList(await stadiumService.GetAll(), "StadiumId", "Naam");
-            ViewBag.lstPloegen = new SelectList(await ploegService.GetAll(), "PloegId", "Naam");
-            ViewBag.EndDate = DateTime.Now;
             try
             {
+                ViewBag.lstStadiums = new SelectList(await stadiumService.GetAll(), "StadiumId", "Naam");
+                ViewBag.lstPloegen = new SelectList(await ploegService.GetAll(), "PloegId", "Naam");
+                ViewBag.EndDate = DateTime.Now;
+
                 var list = await matchService.GetAll();
                 List<MatchVM> listVM = mapper.Map<List<MatchVM>>(list);
                 return View(listVM);
@@ -49,14 +50,14 @@ namespace TicketVerkoop.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(int? StadiumId, int? PloegId)
         {
+            if (StadiumId == null && PloegId == null)
+            {
+                return await Index();
+            }
+            List<MatchVM> sortedMatches = new List<MatchVM>();
+
             try
             {
-                if (StadiumId == null && PloegId == null)
-                {
-                    return await Index();
-                }
-
-                List<MatchVM> sortedMatches = new List<MatchVM>();
                 if (StadiumId != null && PloegId != null)
                 {
                     var listPloeg = await matchService.GetMatchByPloegIdAndStadiumId(Convert.ToInt16(PloegId), Convert.ToInt16(StadiumId));

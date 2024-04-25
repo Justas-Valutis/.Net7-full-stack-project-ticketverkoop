@@ -32,7 +32,9 @@ public class PloegDAO : IDAO<Ploeg>
     {
         try
         {
-            return await _dbContext.Ploegs.ToListAsync();
+            return await _dbContext.Ploegs
+                .Include(s => s.ThuisStadium)
+                .ToListAsync();
         }
         catch (Exception ex)
         {
