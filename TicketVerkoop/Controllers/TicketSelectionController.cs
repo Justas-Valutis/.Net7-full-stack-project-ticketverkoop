@@ -65,7 +65,7 @@ namespace TicketVerkoop.Controllers
             string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs)
         {
 
-            var CartVM = new CartVM
+            var TicketVM = new TicketVM
             {
                 MatchId = MatchId,
                 StadiumNaam = StadiumNaam,
@@ -73,12 +73,12 @@ namespace TicketVerkoop.Controllers
                 ThuisPloegNaam = ThuisPloegNaam,
                 UitPloegNaam = UitPloegNaam,
                 Prijs = Prijs,
-                aantaZitPlaatsen = aantalZitPlaatsen,
-                DateCreated = DateTime.Now
+                aantaZitPlaatsen = aantalZitPlaatsen
             };
 
-            try { 
-            HttpContext.Session.SetObject("mySession",
+            try 
+            { 
+                HttpContext.Session.SetObject("mySession",
                 new SessionVM { Date = DateTime.Now, Company = "Vives" });
             } catch (Exception ex)
             {
@@ -94,9 +94,9 @@ namespace TicketVerkoop.Controllers
             else
             {
                 shopping = new ShoppingCartVM();
-                shopping.Cart = new List<CartVM>();
+                shopping.Tickets = new List<TicketVM>();
             }
-            shopping?.Cart?.Add(CartVM);
+            shopping?.Tickets?.Add(TicketVM);
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
             //return View(CartVM);

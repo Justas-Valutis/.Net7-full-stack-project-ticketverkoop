@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Org.BouncyCastle.Math;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Extentions;
@@ -71,7 +72,7 @@ namespace TicketVerkoop.Controllers
         public async Task<IActionResult> AbonnementSelection(AbonnementSelectieVM abonnementSelectieVM,
             int StadiumID, int RingId, int sectionId)
         {
-            abonnementSelectieVM.Prijs = berekenPrijs(RingId, sectionId);
+            abonnementSelectieVM.Prijs = berekenPrijs(RingId, sectionId, abonnementSelectieVM);
             try
             {
                 ViewBag.lstRings = new SelectList(await ringService.GetRingsByStadiumId(Convert.ToInt16(StadiumID)), "RingId", "ZoneLocatie", RingId);
@@ -84,7 +85,8 @@ namespace TicketVerkoop.Controllers
             return View(abonnementSelectieVM);
         }
 
-        private decimal? berekenPrijs(int RingId, int sectionId)
+        private decimal? berekenPrijs(int RingId, int sectionId,
+                        AbonnementSelectieVM abonnementSelectieVM)
         {
             if (RingId == 0 || sectionId == 0)
             {
@@ -92,17 +94,50 @@ namespace TicketVerkoop.Controllers
             }
             else
             {
-                decimal prijs = RingId % 2 == 1 ? 500 + sectionId*10 : 600 + sectionId *10;
+                abonnementSelectieVM.SelectedRingId = RingId;
+                abonnementSelectieVM.SelectedSectiondId = sectionId;
+                decimal prijs;
+                if (RingId % 2 == 1)
+                {
+                    abonnementSelectieVM.SelectedRingNaam = "Bovenring";
+                    prijs = 500 + sectionId * 10;
+                }
+                else
+                {
+                    abonnementSelectieVM.SelectedRingNaam = "Onderring";
+                    prijs = 600 + sectionId * 10;
+                }
                 return prijs;
             }
         }
 
-        //[HttpPost]
-        //public IActionResult AddAbonnement(AbonnementSelectieVM abonnementSelectieVM)
-        //{
-        //    HttpContext.Session.SetObject("ShoppingCart", shopping);
-        //    return RedirectToAction("Index", "ShoppingCart");
-        //}
+        [HttpPost]
+        public IActionResult AddAbonnement(AbonnementSelectieVM abonnementSelectieVM)
+        {
+            try
+            {
+                HttpContext.Session.SetObject("mySession",
+                new SessionVM { Date = DateTime.Now, Company = "Vives" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw new Exception("SESSION" + ex.Message);
+            }
+            ShoppingCartVM? shopping;
+            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
+            {
+                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+            }
+            else
+            {
+                shopping = new ShoppingCartVM();
+                shopping.Abonnementen = new List<AbonnementSelectieVM>();
+            }
+            shopping?.Abonnementen?.Add(abonnementSelectieVM);
+            HttpContext.Session.SetObject("ShoppingCart", shopping);
+            return RedirectToAction("Index", "ShoppingCart");
+        }
 
     }
 }

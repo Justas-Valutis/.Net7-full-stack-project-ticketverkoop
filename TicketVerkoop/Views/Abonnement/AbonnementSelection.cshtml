@@ -47,7 +47,7 @@
 
         @if (Model.Prijs != null)
         {
-        <form asp-action="AddAbonnement">
+        <form method="post" asp-action="AddAbonnement">
             <div class="col-md-3 prijs">Prijs @Model.Prijs Eur</div>
             <br />
             <button class="btn btn-default" type="submit">
