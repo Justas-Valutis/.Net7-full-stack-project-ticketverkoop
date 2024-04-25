@@ -67,7 +67,7 @@
     <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script>
         $(".Id").on("change", () => {
-            $("Form").trigger("submit");
+            $("form:first").find("button[type='submit']").trigger("click");
         });
 
         $(function () {
