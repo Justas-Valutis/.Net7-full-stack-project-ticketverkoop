@@ -62,6 +62,9 @@ builder.Services.AddTransient<IDAO<Ploeg>, PloegDAO>();
 builder.Services.AddTransient<IGetAllByService<Section>, SectionService>();
 builder.Services.AddTransient<IGetAllByDAO<Section>, SectionDAO>();
 
+builder.Services.AddTransient<IRingService<Ring>, RingService>();
+builder.Services.AddTransient<IRingDAO<Ring>, RingDAO>();
+
 builder.Services.AddTransient<IService<Bestelling>, BestellingService>();
 builder.Services.AddTransient<IDAO<Bestelling>, BestellingDAO>();
 

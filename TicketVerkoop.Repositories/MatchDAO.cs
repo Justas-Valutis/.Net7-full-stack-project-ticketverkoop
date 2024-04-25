@@ -19,7 +19,8 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(d => d.Datum >= DateTime.Now)
+            return await _dbContext.Matches
+                .Where(d => d.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
@@ -36,7 +37,8 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(s => s.StadiumId == Id && s.Datum >= DateTime.Now)
+            return await _dbContext.Matches
+                .Where(s => s.StadiumId == Id && s.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
@@ -52,7 +54,8 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(p => p.PloegThuisId == Id || p.PloegUitId == Id && p.Datum >= DateTime.Now)
+            return await _dbContext.Matches
+                .Where(p => p.PloegThuisId == Id || p.PloegUitId == Id && p.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
@@ -83,7 +86,8 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(p => (p.PloegThuisId == PlegId || p.PloegUitId == PlegId)
+            return await _dbContext.Matches
+                .Where(p => (p.PloegThuisId == PlegId || p.PloegUitId == PlegId)
                     && p.StadiumId == StadiumId && p.Datum >= DateTime.Now)
                 .Include(s => s.Stadium)
                 .Include(t => t.PloegThuis)
@@ -114,7 +118,8 @@ public class MatchDAO : IMatchDAO<Match>
     {
         try
         {
-            return await _dbContext.Matches.Where(m => m.MatchId == Id)
+            return await _dbContext.Matches
+                .Where(m => m.MatchId == Id)
                 .Include(t => t.PloegThuis)
                 .Include(t => t.PloegUit)
                 .Include(s => s.Stadium)

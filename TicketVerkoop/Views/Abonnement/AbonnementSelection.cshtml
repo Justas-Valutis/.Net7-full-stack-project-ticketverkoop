@@ -1,0 +1,83 @@
+﻿@model TicketVerkoop.ViewModels.AbonnementSelectieVM
+
+@{
+    ViewData["Title"] = "AbonnementSelection";
+}
+<link rel="stylesheet" href="~/css/AbonnementSelectionStyles.css">
+
+<div>
+    <h1>Abonnement selectie</h1>
+
+    <div id="header">
+        <span>voor</span>
+        <h4> @Model.PloegNaam</h4>
+        <span>in</span>
+        <h4> @Model.PloegNaam @Model.StadiumNaam</h4>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            Ring
+        </div>
+        <div class="col-md-3">
+            Section
+        </div>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-3">
+                <select name="RingId" class="Id" id="RingId"
+                        asp-items="@ViewBag.lstRings">
+                    <option>Kies een Ring</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="sectionId" class="Id" id="sectionId"
+                        asp-items="@ViewBag.lstSections">
+                    <option>Kies een Section</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="form-group" id="submitBTN">
+            <button type="submit" value="Search" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+
+
+        @if (Model.Prijs != null)
+        {
+        <form asp-action="AddAbonnement">
+            <div class="col-md-3 prijs">Prijs @Model.Prijs Eur</div>
+            <br />
+            <button class="btn btn-default" type="submit">
+                <img src="~/images/shoppingCar.jpg" />
+                Add to Cart
+            </button>
+        </form>
+        }
+ 
+    <div>
+        <a asp-asp-route="Abonnement" asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section scripts
+                {
+    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(".Id").on("change", () => {
+            $("Form").trigger("submit");
+        });
+
+        $(function () {
+            $("#addToCartBtn").on("click", function () {
+                window.location.href = '@Url.Action("AddTicket", "TicketSelection")';
+            });
+        });
+
+        $("#RingId").on("change", function () {
+            $("#sectionId").val(null).trigger("change"); // Reset sectionId to null and trigger change event
+        });
+    </script>
+}

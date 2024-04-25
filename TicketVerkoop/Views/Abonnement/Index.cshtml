@@ -34,9 +34,11 @@
                     @Html.DisplayFor(modelItem => item.StadiumNaam)
                 </td>
                 <td>
-                    <a asp-area="" asp-controller="Stadium" asp-action="Index"
-                        asp-route-stadiumID="@item.ThuisStadiumId"
-                        asp-route-ploegID="@item.PloegId">
+                    <a asp-area="" asp-controller="Abonnement" asp-action="AbonnementSelection"
+                        asp-route-StadiumID="@item.ThuisStadiumId"
+                        asp-route-PloegID="@item.PloegId"
+                        asp-route-PloegNaam="@item.Naam"
+                        asp-route-StadiumNaam="@item.StadiumNaam">
                         Koop abonnement
                     </a>
                 </td>
