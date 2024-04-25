@@ -12,6 +12,6 @@
         public decimal? Prijs {  get; set; }
         public int? SelectedRingId { get; set; }
         public string? SelectedRingNaam { get; set; }
-        public int? SelectedSectiondId { get;}
+        public int? SelectedSectiondId { get; set; }
     }
 }

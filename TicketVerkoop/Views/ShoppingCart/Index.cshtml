@@ -3,30 +3,31 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<link rel="stylesheet" href="~/css/ShoppingCartStyles.css" />
+@{
+    decimal? total = 0;
+}
 <h3>Shopping kaart</h3>
 
-@if (Model != null && Model.Cart != null && Model.Cart.Count > 0)
+@if (Model != null && Model.Tickets != null && Model.Tickets.Count > 0)
 {
+    <h4>Tickets in je kaart</h4>
     <table>
         <tr>
-            <th>Stadium Naam</th>
+            <th>Stadium naam</th>
             <th>Stad</th>
             <th>Thuis Ploeg Naam</th>
             <th>Uit Ploeg Naam</th>
             <th>Aantal Zit Plaatsen</th>
             <th>Prijs</th>
         </tr>
-        @{
-            decimal total = 0;
-        }
-        @foreach (var item in Model.Cart)
+
+        @foreach (var item in Model.Tickets)
         {
             <tr>
                 <td>@item.StadiumNaam</td>
                 <td>@item.Stad</td>
                 <td>@item.ThuisPloegNaam</td>
-                <td>@item.UitPloegNaam</td>
                 <td>@item.aantaZitPlaatsen</td>
                 <td>@item.Prijs Eur</td>
             </tr>
@@ -37,12 +38,50 @@
         }
         <tr>
             <td colspan="5"><strong>Total</strong></td>
-            <td class="prijs">@total.ToString("0.00") Eur</td>
+            <td class="prijs">@total?.ToString("0.00") Eur</td>
         </tr>
         
     </table>
+
+} else if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
+{
+    <h4>Abonnementen in je kaart</h4>
+    <table>
+        <tr>
+            <th>PloegNaam</th>
+            <th>StadiumNaam</th>
+            <th>Gekozen Ring</th>
+            <th>Gekozen Section Id</th>
+            <th>Zitplaats</th>
+            <th>Prijs</th>
+        </tr>
+
+        @foreach (var item in Model.Abonnementen)
+        {
+            <tr>
+                <td>@item.PloegNaam</td>
+                <td>@item.StadiumNaam</td>
+                <td>@item.SelectedRingNaam</td>
+                <td>@item.SelectedSectiondId</td>
+                <td>@item.Prijs Eur</td>
+            </tr>
+
+            @if (item.Prijs != null)
+            {
+                total += @item.Prijs;
+            }
+        }
+        <tr>
+            <td colspan="5"><strong>Total</strong></td>
+            <td class="prijs">@total?.ToString("0.00") Eur</td>
+        </tr>
+
+    </table>
 }
-else
+else if (Model != null)
+{
+    <p class="prijs">Total @total?.ToString("0.00") Eur</p>
+} else
 {
     <p>Your shopping cart is empty.</p>
 }

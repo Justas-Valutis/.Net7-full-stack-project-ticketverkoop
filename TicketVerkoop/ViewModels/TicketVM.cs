@@ -1,12 +1,6 @@
 ﻿namespace TicketVerkoop.ViewModels
 {
-    public class ShoppingCartVM
-    {
-        public List<TicketVM> Tickets { get; set; }
-        public List<AbonnementSelectieVM> Abonnementen { get; set; }
-    }
-
-    public class CartVM
+    public class TicketVM
     {
         public int MatchId { get; set; }
         public string StadiumNaam { get; set; }
@@ -17,6 +11,5 @@
         public int aantaZitPlaatsen { get; set; }
         public string Prijs { get; set; }
         public System.DateTime? DateGekocht { get; set; }
-
     }
 }
