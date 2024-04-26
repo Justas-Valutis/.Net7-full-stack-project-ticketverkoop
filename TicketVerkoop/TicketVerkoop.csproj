@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="Resources\ViewModels\" />
+    <Folder Include="Resources\ViewModels\" />
   </ItemGroup>
 
 </Project>
