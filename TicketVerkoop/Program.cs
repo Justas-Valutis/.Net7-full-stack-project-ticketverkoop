@@ -91,8 +91,7 @@ builder.Services.AddTransient<ICreatePDF, CreatePDF>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder) // vertaling op View
-    .AddDataAnnotationsLocalization(); // vertaling op ViewModel
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder); // vertaling op View
 
 // we need to decide which cultures we support, and which is the default culture.
 var supportedCultures = new[] { "nl", "en", "fr" };

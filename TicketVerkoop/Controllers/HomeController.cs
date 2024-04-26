@@ -20,17 +20,17 @@ namespace TicketVerkoop.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult setAppLanguage(string lang, string returnUrl)
-        {
-            Response.Cookies.Append(
-                    CookieRequestCultureProvider.DefaultCookieName,
-                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang)),
-                    new CookieOptions { Expires = System.DateTimeOffset.UtcNow.AddYears(1) }
-                );
+        //[HttpPost]
+        //public IActionResult setAppLanguage(string lang, string returnUrl)
+        //{
+        //    Response.Cookies.Append(
+        //            CookieRequestCultureProvider.DefaultCookieName,
+        //            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang)),
+        //            new CookieOptions { Expires = System.DateTimeOffset.UtcNow.AddYears(1) }
+        //        );
 
-            return LocalRedirect(returnUrl);
-        }
+        //    return LocalRedirect(returnUrl);
+        //}
 
         //public IActionResult Privacy()
         //{
