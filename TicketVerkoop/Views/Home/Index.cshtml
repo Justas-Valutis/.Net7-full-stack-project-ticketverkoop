@@ -1,5 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
+﻿@* @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer *@
 
 @{
     ViewData["Title"] = "Home Page";
@@ -14,42 +14,36 @@
     <div>
         <img src="~/images/header_image.jpg" alt="Alternate Text" class="full-width-image" />
         <div class="text-overlay">
-            <h1 class="overlay-text">@Localizer["Welkom"].Value</h1>
-            <p class="overlay-tect">@Localizer["Naam"].Value</p>
-            <p class="overlay-tect">@Localizer["School"].Value</p>
+            <h1 class="overlay-text">@* @Localizer["Welkom"].Value *@</h1>
+            <p class="overlay-tect">@* @Localizer["Naam"].Value *@</p>
+            <p class="overlay-tect">@* @Localizer["School"].Value *@</p>
         </div>
     </div>
     <div class="boxes-container">
         <div class="box matches">
             <img src="~/images/match.png" alt="Alternate Text" class="box-image" />
-            <h2>@Localizer["Matchen"].Value</h2>
+            <h2>@* @Localizer["Matchen"].Value *@</h2>
             <p>
-                @Localizer["Match_detail"].Value
+                @* @Localizer["Match_detail"].Value *@
             </p>
-            <button class="btn btn-primary">@Localizer["Match_knop"].Value</button>
+            <button class="btn btn-primary">@* @Localizer["Match_knop"].Value *@</button>
         </div>
         <div class="box ploegen">
             <img src="~/images/ploeg.png" alt="Alternate Text" class="box-image" />
-            <h2>@Localizer["Ploegen"].Value</h2>
+            <h2>@* @Localizer["Ploegen"].Value *@</h2>
             <p>
-                @Localizer["Ploeg_detail"].Value
+                @* @Localizer["Ploeg_detail"].Value *@
             </p>
-            <button class="btn btn-primary">@Localizer["Ploeg_knop"].Value</button>
+            <button class="btn btn-primary">@* @Localizer["Ploeg_knop"].Value *@</button>
         </div>
         <div class="box stadia">
             <img src="~/images/stadia.png" alt="Alternate Text" class="box-image" />
-            <h2>@Localizer["Stadia"].Value</h2>
+            <h2>@* @Localizer["Stadia"].Value *@</h2>
             <p>
-                @Localizer["Stadia_detail"].Value
+               @*  @Localizer["Stadia_detail"].Value *@
             </p>
-            <button class="btn btn-primary">@Localizer["Stadia_knop"].Value</button>
+            <button class="btn btn-primary">@* @Localizer["Stadia_knop"].Value *@</button>
         </div>
     </div>
 </body>
 </html>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

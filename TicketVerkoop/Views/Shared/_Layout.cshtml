@@ -31,7 +31,7 @@
                             </a>
                         </li>
                     </ul>
-                    @await Html.PartialAsync("_SelectCulture")
+                    @* @await Html.PartialAsync("_SelectCulture") *@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -52,7 +52,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
+    @* <script>
         console.log("ok");
         $(document).ready(() => {
 
@@ -61,6 +61,6 @@
                 $("form").submit();
             });
         });
-    </script>
+    </script> *@
 </body>
 </html>

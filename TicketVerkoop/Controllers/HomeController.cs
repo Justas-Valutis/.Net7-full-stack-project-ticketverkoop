@@ -8,29 +8,29 @@ namespace TicketVerkoop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStringLocalizer<HomeController> _localizer;
+        //private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(IStringLocalizer<HomeController> localizer)
-        {
-            _localizer = localizer;
-        }
+        //public HomeController(IStringLocalizer<HomeController> localizer)
+        //{
+        //    _localizer = localizer;
+        //}
 
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult setAppLanguage(string lang, string returnUrl)
-        {
-            Response.Cookies.Append(
-                    CookieRequestCultureProvider.DefaultCookieName,
-                    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang)),
-                    new CookieOptions { Expires = System.DateTimeOffset.UtcNow.AddYears(1) }
-                );
+        //[HttpPost]
+        //public IActionResult setAppLanguage(string lang, string returnUrl)
+        //{
+        //    Response.Cookies.Append(
+        //            CookieRequestCultureProvider.DefaultCookieName,
+        //            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang)),
+        //            new CookieOptions { Expires = System.DateTimeOffset.UtcNow.AddYears(1) }
+        //        );
 
-            return LocalRedirect(returnUrl);
-        }
+        //    return LocalRedirect(returnUrl);
+        //}
 
         //public IActionResult Privacy()
         //{
