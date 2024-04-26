@@ -26,4 +26,8 @@
     <ProjectReference Include="..\TicketVerkoop.Util\TicketVerkoop.Util.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\ViewModels\" />
+  </ItemGroup>
+
 </Project>

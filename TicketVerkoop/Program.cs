@@ -13,6 +13,7 @@ using TicketVerkoop.Util.Mail.Interfaces;
 using TicketVerkoop.Util.PDF;
 using TicketVerkoop.Util.PDF.Interfaces;
 using TicketVerkoop.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -86,6 +87,22 @@ builder.Services.AddSingleton<IEmailSend, EmailSend>();
 
 builder.Services.AddTransient<ICreatePDF, CreatePDF>();
 
+//Talen
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder) // vertaling op View
+    .AddDataAnnotationsLocalization(); // vertaling op ViewModel
+
+// we need to decide which cultures we support, and which is the default culture.
+var supportedCultures = new[] { "nl", "en", "fr" };
+
+builder.Services.Configure<RequestLocalizationOptions>(options => {
+    options.SetDefaultCulture(supportedCultures[0]) //default culture is the first one in the list of supported cultures.
+      .AddSupportedCultures(supportedCultures)  //Culture is used when formatting or parsing culture dependent data like dates, numbers, currencies, etc
+      .AddSupportedUICultures(supportedCultures);  //UICulture is used when localizing strings, for example when using resource files.
+});
+
 var app = builder.Build();
 
 
@@ -101,6 +118,14 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Culture from the HttpRequest
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 var swaggerOptions = new TicketVerkoop.Options.OptionsSwagger();
 builder.Configuration.GetSection(nameof(TicketVerkoop.Options.OptionsSwagger)).Bind(swaggerOptions);

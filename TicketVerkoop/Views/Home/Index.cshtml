@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,37 +14,42 @@
     <div>
         <img src="~/images/header_image.jpg" alt="Alternate Text" class="full-width-image" />
         <div class="text-overlay">
-            <h1 class="overlay-text">Welkom in onze voetbalwereld!</h1>
-            <p class="overlay-tect">Met passie onderhouden door Justas Valutis en Robin Vandenbroucke</p>
-            <p class="overlay-tect">studenten van Hogeschool VIVES Kortrijk.</p>
+            <h1 class="overlay-text">@Localizer["Welkom"].Value</h1>
+            <p class="overlay-tect">@Localizer["Naam"].Value</p>
+            <p class="overlay-tect">@Localizer["School"].Value</p>
         </div>
     </div>
     <div class="boxes-container">
         <div class="box matches">
             <img src="~/images/match.png" alt="Alternate Text" class="box-image" />
-            <h2>Matchen</h2>
+            <h2>@Localizer["Matchen"].Value</h2>
             <p>
-                Bekijk hier alle matchen van de Jupiler Pro League.
+                @Localizer["Match_detail"].Value
             </p>
-            <button class="btn btn-primary">Bekijk mathen</button>
+            <button class="btn btn-primary">@Localizer["Match_knop"].Value</button>
         </div>
         <div class="box ploegen">
             <img src="~/images/ploeg.png" alt="Alternate Text" class="box-image" />
-            <h2>Ploegen</h2>
+            <h2>@Localizer["Ploegen"].Value</h2>
             <p>
-                Bekijk hier alle ploegen van de Jupiler Pro League
+                @Localizer["Ploeg_detail"].Value
             </p>
-            <button class="btn btn-primary">Bekijk ploegen</button>
+            <button class="btn btn-primary">@Localizer["Ploeg_knop"].Value</button>
         </div>
         <div class="box stadia">
             <img src="~/images/stadia.png" alt="Alternate Text" class="box-image" />
-            <h2>Stadia</h2>
+            <h2>@Localizer["Stadia"].Value</h2>
             <p>
-                Bekijk hier alle stadiums van de Jupiler Pro League
+                @Localizer["Stadia_detail"].Value
             </p>
-            <button class="btn btn-primary">Bekijk stadia</button>
+            <button class="btn btn-primary">@Localizer["Stadia_knop"].Value</button>
         </div>
     </div>
 </body>
 </html>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
