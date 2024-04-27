@@ -55,10 +55,6 @@
         border-radius: 20px;
     }
 
-        .box h2 {
-            margin-top: 0;
-        }
-
     .matches {
         align-content: end;
         background-color: darkgray;
