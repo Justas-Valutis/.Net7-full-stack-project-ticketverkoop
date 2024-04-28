@@ -32,7 +32,7 @@
                             </a>
                         </li>
                     </ul>
-                    @* @await Html.PartialAsync("_SelectCulture") *@
+                    @await Html.PartialAsync("_SelectCulture")
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -51,29 +51,15 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
-        // $(document).ready(() => {
-        //     // Bind change event only to dropdown lists within the form with ID 'selectLanguageForm'
-        //     $("#selectLanguageForm .setLang").on("change", () => {
-        //         $("#selectLanguageForm").submit(); // Submit the form with ID 'selectLanguageForm'
-        //     });
-        // });
+        console.log("ok");
+        $(document).ready(() => {
 
-        // Additional script logic for TicketSelection page
-        $(function () {
-            // Bind change event to the dropdown list with ID 'RingId'
-            $("#RingId").on("change", () => {
-                // Submit the form with ID 'AbonnementForm' when 'RingId' changes
-                $("#AbonnementForm").submit();
-            });
+            $(".setLang").on("change", () => {
 
-            // Reset sectionId to null and trigger change event when RingId changes
-            $("#RingId").on("change", function () {
-                $("#sectionId").val(null).trigger("change");
+                $("form").submit();
             });
         });
     </script>
