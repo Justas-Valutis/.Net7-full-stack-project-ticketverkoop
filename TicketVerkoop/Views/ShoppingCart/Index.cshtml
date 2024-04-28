@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/ShoppingCartStyles.css" />
 @{
-    decimal total = 0; // Initialize total outside of the if statements
+    decimal total = 0;
 }
 <h3>Shopping kaart</h3>
 
@@ -24,7 +24,8 @@ else
                 <th>Stad</th>
                 <th>Thuis Ploeg Naam</th>
                 <th>Uit Ploeg Naam</th>
-                <th>Aantal Zit Plaatsen</th>
+                <th>Aantal Tickets</th>
+                <th>Zitplaatsen</th>
                 <th>Prijs</th>
             </tr>
 
@@ -34,9 +35,10 @@ else
                     <td>@item.StadiumNaam</td>
                     <td>@item.Stad</td>
                     <td>@item.ThuisPloegNaam</td>
-                    <td>@item.UitPloegNaam</td> <!-- Corrected property name -->
-                    <td>@item.aantaZitPlaatsen</td> <!-- Corrected property name -->
-                    <td>@item.Prijs</td> <!-- Assuming Prijs is already in Euro -->
+                    <td>@item.UitPloegNaam</td>
+                    <td>@item.aantaZitPlaatsen</td>
+                    <td><strong>Zit stoelen</strong></td>
+                    <td>@item.Prijs</td>
                 </tr>
 
                 @if (item.Prijs != null)
@@ -66,11 +68,11 @@ else
                     <td>@item.PloegNaam</td>
                     <td>@item.StadiumNaam</td>
                     <td>@item.SelectedRingNaam</td>
-                    <td>Here has to be zitplaats</td> <!-- Corrected property name -->
-                    <td>@item.Prijs</td> <!-- Assuming Prijs is already in Euro -->
+                    <td><strong>Zitstoel</strong></td>
+                    <td>@item.Prijs</td> 
                 </tr>
 
-                @if (item.Prijs.HasValue) // Check if Prijs has a value before adding to total
+                @if (item.Prijs.HasValue)
                 {
                     total += item.Prijs.Value;
                 }

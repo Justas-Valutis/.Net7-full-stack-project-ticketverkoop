@@ -123,19 +123,14 @@ namespace TicketVerkoop.Controllers
         public ShoppingCartVM GetOrCreateShoppingCart()
         {
             ShoppingCartVM shopping;
-
-            // Check if the shopping cart exists in session
             if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
             {
-                // If the shopping cart exists in session, retrieve it
                 shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
             }
             else
             {
-                // If the shopping cart doesn't exist in session, create a new one with empty lists
                 shopping = InitializeShoppingCart();
             }
-
             return shopping;
         }
 
