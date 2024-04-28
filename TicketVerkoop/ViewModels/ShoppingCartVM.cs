@@ -2,8 +2,8 @@
 {
     public class ShoppingCartVM
     {
-        public List<TicketVM> Tickets { get; set; }
-        public List<AbonnementSelectieVM> Abonnementen { get; set; }
+        public List<TicketVM>? Tickets { get; set; }
+        public List<AbonnementSelectieVM>? Abonnementen { get; set; }
     }
 
     public class CartVM

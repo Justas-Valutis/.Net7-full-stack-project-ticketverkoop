@@ -95,12 +95,11 @@ namespace TicketVerkoop.Controllers
             {
                 shopping = new ShoppingCartVM();
                 shopping.Tickets = new List<TicketVM>();
+                shopping.Abonnementen = new List<AbonnementSelectieVM>();
             }
             shopping?.Tickets?.Add(TicketVM);
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
-            //return View(CartVM);
-
         }
 
     }

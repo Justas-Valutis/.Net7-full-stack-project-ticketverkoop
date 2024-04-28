@@ -132,6 +132,8 @@ namespace TicketVerkoop.Controllers
             else
             {
                 shopping = new ShoppingCartVM();
+                                shopping.Tickets = new List<TicketVM>();
+
                 shopping.Abonnementen = new List<AbonnementSelectieVM>();
             }
             shopping?.Abonnementen?.Add(abonnementSelectieVM);

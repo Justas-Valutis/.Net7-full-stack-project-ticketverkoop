@@ -9,7 +9,10 @@
 }
 <h3>Shopping kaart</h3>
 
-@if (Model != null && Model.Tickets != null && Model.Tickets.Count > 0)
+@if (Model == null )
+{
+        <p>Your shopping cart is empty.</p>
+} else if(Model.Tickets != null && Model.Tickets.Count > 0)
 {
     <h4>Tickets in je kaart</h4>
     <table>
@@ -77,14 +80,11 @@
         </tr>
 
     </table>
-}
-else if (Model != null)
-{
-    <p class="prijs">Total @total?.ToString("0.00") Eur</p>
 } else
 {
-    <p>Your shopping cart is empty.</p>
+    <p class="prijs">Total @total?.ToString("0.00") Eur</p>
 }
+
 
 <br />
     <a asp-controller="ShoppingCart" asp-action="Contact" class="btn-lg btn-primary">Checkout</a>
