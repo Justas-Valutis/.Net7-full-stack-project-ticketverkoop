@@ -22,7 +22,6 @@ namespace TicketVerkoop.Controllers
         }
 
         // GET: ShoppingCartController
-        [HttpGet]
         public IActionResult Index()
         {
             ShoppingCartVM? cartList = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");

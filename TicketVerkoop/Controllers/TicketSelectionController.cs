@@ -75,32 +75,37 @@ namespace TicketVerkoop.Controllers
                 Prijs = Prijs,
                 aantaZitPlaatsen = aantalZitPlaatsen
             };
+            ShoppingCartVM shopping = GetOrCreateShoppingCart();
+            shopping.Tickets.Add(TicketVM);
+            HttpContext.Session.SetObject("ShoppingCart", shopping);
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+        public ShoppingCartVM GetOrCreateShoppingCart()
+        {
+            ShoppingCartVM shopping;
 
-            try 
-            { 
-                HttpContext.Session.SetObject("mySession",
-                new SessionVM { Date = DateTime.Now, Company = "Vives" });
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw new Exception("SESSION" + ex.Message);
-            }
-            ShoppingCartVM? shopping;
-
+            // Check if the shopping cart exists in session
             if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
             {
+                // If the shopping cart exists in session, retrieve it
                 shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
             }
             else
             {
-                shopping = new ShoppingCartVM();
-                shopping.Tickets = new List<TicketVM>();
-                shopping.Abonnementen = new List<AbonnementSelectieVM>();
+                // If the shopping cart doesn't exist in session, create a new one with empty lists
+                shopping = InitializeShoppingCart();
             }
-            shopping?.Tickets?.Add(TicketVM);
-            HttpContext.Session.SetObject("ShoppingCart", shopping);
-            return RedirectToAction("Index", "ShoppingCart");
+
+            return shopping;
         }
 
+        public ShoppingCartVM InitializeShoppingCart()
+        {
+            return new ShoppingCartVM
+            {
+                Abonnementen = new List<AbonnementSelectieVM>(),
+                Tickets = new List<TicketVM>()
+            };
+        }
     }
 }

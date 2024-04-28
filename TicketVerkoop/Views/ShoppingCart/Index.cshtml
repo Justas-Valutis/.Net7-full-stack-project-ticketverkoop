@@ -5,90 +5,85 @@
 }
 <link rel="stylesheet" href="~/css/ShoppingCartStyles.css" />
 @{
-    decimal? total = 0;
+    decimal total = 0; // Initialize total outside of the if statements
 }
 <h3>Shopping kaart</h3>
 
-@if (Model == null )
+@if (Model == null || (Model.Tickets == null && Model.Abonnementen == null))
 {
-        <p>Your shopping cart is empty.</p>
-} else if(Model.Tickets != null && Model.Tickets.Count > 0)
+    <p>Your shopping cart is empty.</p>
+}
+else
 {
-    <h4>Tickets in je kaart</h4>
-    <table>
-        <tr>
-            <th>Stadium naam</th>
-            <th>Stad</th>
-            <th>Thuis Ploeg Naam</th>
-            <th>Uit Ploeg Naam</th>
-            <th>Aantal Zit Plaatsen</th>
-            <th>Prijs</th>
-        </tr>
-
-        @foreach (var item in Model.Tickets)
-        {
+    @if (Model.Tickets != null && Model.Tickets.Count > 0)
+    {
+        <h4>Tickets in je kaart</h4>
+        <table>
             <tr>
-                <td>@item.StadiumNaam</td>
-                <td>@item.Stad</td>
-                <td>@item.ThuisPloegNaam</td>
-                <td>@item.aantaZitPlaatsen</td>
-                <td>@item.Prijs Eur</td>
-            </tr>
-            
-            @if (item.Prijs != null) {
-                total += decimal.Parse(item.Prijs);
-            }
-        }
-        <tr>
-            <td colspan="5"><strong>Total</strong></td>
-            <td class="prijs">@total?.ToString("0.00") Eur</td>
-        </tr>
-        
-    </table>
-
-} else if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
-{
-    <h4>Abonnementen in je kaart</h4>
-    <table>
-        <tr>
-            <th>PloegNaam</th>
-            <th>StadiumNaam</th>
-            <th>Gekozen Ring</th>
-            <th>Gekozen Section Id</th>
-            <th>Zitplaats</th>
-            <th>Prijs</th>
-        </tr>
-
-        @foreach (var item in Model.Abonnementen)
-        {
-            <tr>
-                <td>@item.PloegNaam</td>
-                <td>@item.StadiumNaam</td>
-                <td>@item.SelectedRingNaam</td>
-                <td>@item.SelectedSectiondId</td>
-                <td>@item.Prijs Eur</td>
+                <th>Stadium naam</th>
+                <th>Stad</th>
+                <th>Thuis Ploeg Naam</th>
+                <th>Uit Ploeg Naam</th>
+                <th>Aantal Zit Plaatsen</th>
+                <th>Prijs</th>
             </tr>
 
-            @if (item.Prijs != null)
+            @foreach (var item in Model.Tickets)
             {
-                total += @item.Prijs;
-            }
-        }
-        <tr>
-            <td colspan="5"><strong>Total</strong></td>
-            <td class="prijs">@total?.ToString("0.00") Eur</td>
-        </tr>
+                <tr>
+                    <td>@item.StadiumNaam</td>
+                    <td>@item.Stad</td>
+                    <td>@item.ThuisPloegNaam</td>
+                    <td>@item.UitPloegNaam</td> <!-- Corrected property name -->
+                    <td>@item.aantaZitPlaatsen</td> <!-- Corrected property name -->
+                    <td>@item.Prijs</td> <!-- Assuming Prijs is already in Euro -->
+                </tr>
 
-    </table>
-} else
-{
-    <p class="prijs">Total @total?.ToString("0.00") Eur</p>
+                @if (item.Prijs != null)
+                {
+                    total += decimal.Parse(item.Prijs);
+                }
+            }
+        </table>
+    }
+
+    @if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
+    {
+        <h4>Abonnementen in je kaart</h4>
+        <table>
+            <tr>
+                <th>PloegNaam</th>
+                <th>StadiumNaam</th>
+                <th>Gekozen Ring</th>
+                <th>Gekozen Section Id</th>
+                <th>Zitplaats</th>
+                <th>Prijs</th>
+            </tr>
+
+            @foreach (var item in Model.Abonnementen)
+            {
+                <tr>
+                    <td>@item.PloegNaam</td>
+                    <td>@item.StadiumNaam</td>
+                    <td>@item.SelectedRingNaam</td>
+                    <td>Here has to be zitplaats</td> <!-- Corrected property name -->
+                    <td>@item.Prijs</td> <!-- Assuming Prijs is already in Euro -->
+                </tr>
+
+                @if (item.Prijs.HasValue) // Check if Prijs has a value before adding to total
+                {
+                    total += item.Prijs.Value;
+                }
+            }
+        </table>
+    }
+
+    <p class="prijs">Total: @total.ToString("0.00") Eur</p>
 }
 
-
 <br />
-    <a asp-controller="ShoppingCart" asp-action="Contact" class="btn-lg btn-primary">Checkout</a>
-    <a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
+<a asp-controller="ShoppingCart" asp-action="Contact" class="btn-lg btn-primary">Checkout</a>
+<a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
 
 @section Scripts {
     @{

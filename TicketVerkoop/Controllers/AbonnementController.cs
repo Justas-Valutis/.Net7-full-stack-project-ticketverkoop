@@ -114,32 +114,38 @@ namespace TicketVerkoop.Controllers
         [HttpPost]
         public IActionResult AddAbonnement(AbonnementSelectieVM abonnementSelectieVM)
         {
-            try
-            {
-                HttpContext.Session.SetObject("mySession",
-                new SessionVM { Date = DateTime.Now, Company = "Vives" });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw new Exception("SESSION" + ex.Message);
-            }
-            ShoppingCartVM? shopping;
-            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
-            {
-                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
-            }
-            else
-            {
-                shopping = new ShoppingCartVM();
-                                shopping.Tickets = new List<TicketVM>();
-
-                shopping.Abonnementen = new List<AbonnementSelectieVM>();
-            }
-            shopping?.Abonnementen?.Add(abonnementSelectieVM);
+            ShoppingCartVM shopping = GetOrCreateShoppingCart();
+            shopping.Abonnementen.Add(abonnementSelectieVM);
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
         }
 
+        public ShoppingCartVM GetOrCreateShoppingCart()
+        {
+            ShoppingCartVM shopping;
+
+            // Check if the shopping cart exists in session
+            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
+            {
+                // If the shopping cart exists in session, retrieve it
+                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+            }
+            else
+            {
+                // If the shopping cart doesn't exist in session, create a new one with empty lists
+                shopping = InitializeShoppingCart();
+            }
+
+            return shopping;
+        }
+
+        public ShoppingCartVM InitializeShoppingCart()
+        {
+            return new ShoppingCartVM
+            {
+                Abonnementen = new List<AbonnementSelectieVM>(),
+                Tickets = new List<TicketVM>()
+            };
+        }
     }
 }
