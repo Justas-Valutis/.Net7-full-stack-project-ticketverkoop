@@ -63,19 +63,6 @@
         //     });
         // });
 
-        // Additional script logic for TicketSelection page
-        $(function () {
-            // Bind change event to the dropdown list with ID 'RingId'
-            $("#RingId").on("change", () => {
-                // Submit the form with ID 'AbonnementForm' when 'RingId' changes
-                $("#AbonnementForm").submit();
-            });
-
-            // Reset sectionId to null and trigger change event when RingId changes
-            $("#RingId").on("change", function () {
-                $("#sectionId").val(null).trigger("change");
-            });
-        });
     </script>
 </body>
 </html>

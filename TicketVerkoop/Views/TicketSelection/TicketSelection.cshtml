@@ -97,3 +97,22 @@
 <br />
 <a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
 
+@section scripts
+{
+    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(".Id").on("change", () => {
+            $("Form").trigger("submit");
+        });
+
+        $(function () {
+            $("#addToCartBtn").on("click", function () {
+                window.location.href = '@Url.Action("AddTicket", "TicketSelection")';
+            });
+        });
+
+        $("#RingId").on("change", function () {
+            $("#sectionId").val(null).trigger("change"); // Reset sectionId to null and trigger change event
+        });
+    </script>
+}
