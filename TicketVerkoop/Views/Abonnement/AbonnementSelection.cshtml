@@ -23,7 +23,8 @@
             Section
         </div>
     </div>
-    <form method="post">
+    <form method="post" id="abonnementForm">
+        <!-- Add ID to the form -->
         <div class="row">
             <div class="col-md-3">
                 <select name="RingId" class="Id" id="RingId"
@@ -44,9 +45,8 @@
         </div>
     </form>
 
-
-        @if (Model.Prijs != null)
-        {
+    @if (Model.Prijs != null)
+    {
         <form method="post" asp-action="AddAbonnement">
             <div class="col-md-3 prijs">Prijs @Model.Prijs Eur</div>
             <br />
@@ -55,29 +55,28 @@
                 Add to Cart
             </button>
         </form>
-        }
- 
+    }
+
     <div>
         <a asp-asp-route="Abonnement" asp-action="Index">Back to List</a>
     </div>
 </div>
 
 @section scripts
-                {
-    <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+{
     <script>
-        $(".Id").on("change", () => {
-            $("form:first").find("button[type='submit']").trigger("click");
-        });
-
-        $(function () {
-            $("#addToCartBtn").on("click", function () {
-                window.location.href = '@Url.Action("AddTicket", "TicketSelection")';
+        // Update script to target only the AbonnementSelection form
+        $(document).ready(() => {
+            // Bind change event only to dropdown lists within the form with ID 'abonnementForm'
+            $("#abonnementForm .Id").on("change", () => {
+                $("#abonnementForm").submit(); // Submit the form with ID 'abonnementForm'
             });
         });
 
+
+        // Reset sectionId to null and trigger change event when RingId changes
         $("#RingId").on("change", function () {
-            $("#sectionId").val(null).trigger("change"); // Reset sectionId to null and trigger change event
+            $("#sectionId").val(null).trigger("change");
         });
     </script>
 }
