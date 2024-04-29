@@ -37,8 +37,10 @@ namespace TicketVerkoop.Controllers
                 int? chosenSeats = null;
                 if (!string.IsNullOrEmpty(chosenSeatNr) && int.TryParse(chosenSeatNr, out int parsedSeatNr))
                 {
+                    stadiumTicketVM.SelectedRingNaam = RingId % 2 == 1 ? "Bovenring" : "Onderring";
                     stadiumTicketVM.chosenSeatNr = parsedSeatNr;
                     if (sectionId != null && RingId != null)  {
+                        stadiumTicketVM.SelectedSectionId = sectionId;
                         stadiumTicketVM.TotalePrijs = Math.Round(parsedSeatNr * stadiumTicketVM.Sections.FirstOrDefault(s => s.SectionId == sectionId).Prijs, 2).ToString("N2");
                     }
                     else
@@ -61,8 +63,9 @@ namespace TicketVerkoop.Controllers
             return View();
         }
 
-        public IActionResult AddTicket(int MatchId, string StadiumNaam, string Stad, 
-            string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs)
+        public IActionResult AddTicket(int MatchId, string StadiumNaam, string Stad,
+            string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs,
+            string RingNaam, int SectionId)
         {
 
             var TicketVM = new TicketVM
@@ -72,36 +75,15 @@ namespace TicketVerkoop.Controllers
                 Stad = Stad,
                 ThuisPloegNaam = ThuisPloegNaam,
                 UitPloegNaam = UitPloegNaam,
+                RingNaam = RingNaam,
+                SectionId = SectionId,
                 Prijs = Prijs,
                 aantaZitPlaatsen = aantalZitPlaatsen
             };
-            ShoppingCartVM shopping = GetOrCreateShoppingCart();
+            ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
             shopping.Tickets.Add(TicketVM);
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
-        }
-        public ShoppingCartVM GetOrCreateShoppingCart()
-        {
-            ShoppingCartVM shopping;
-
-            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
-            {
-                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
-            }
-            else
-            {
-                shopping = InitializeShoppingCart();
-            }
-            return shopping;
-        }
-
-        public ShoppingCartVM InitializeShoppingCart()
-        {
-            return new ShoppingCartVM
-            {  
-                Abonnementen = new List<AbonnementSelectieVM>(),
-                Tickets = new List<TicketVM>()
-            };
         }
     }
 }

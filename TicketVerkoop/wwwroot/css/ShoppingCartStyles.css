@@ -1,3 +1,8 @@
 ﻿h3 {
     text-align: center;
 }
+
+#totalePrijs {
+    text-align: center;
+    font-weight: bold !important;
+}

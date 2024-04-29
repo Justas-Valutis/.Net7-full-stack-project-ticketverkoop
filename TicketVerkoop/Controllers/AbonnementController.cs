@@ -114,33 +114,33 @@ namespace TicketVerkoop.Controllers
         [HttpPost]
         public IActionResult AddAbonnement(AbonnementSelectieVM abonnementSelectieVM)
         {
-            ShoppingCartVM shopping = GetOrCreateShoppingCart();
+            ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
             shopping.Abonnementen.Add(abonnementSelectieVM);
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
         }
 
-        public ShoppingCartVM GetOrCreateShoppingCart()
-        {
-            ShoppingCartVM shopping;
-            if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
-            {
-                shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
-            }
-            else
-            {
-                shopping = InitializeShoppingCart();
-            }
-            return shopping;
-        }
+        //public ShoppingCartVM GetOrCreateShoppingCart()
+        //{
+        //    ShoppingCartVM shopping;
+        //    if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
+        //    {
+        //        shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+        //    }
+        //    else
+        //    {
+        //        shopping = InitializeShoppingCart();
+        //    }
+        //    return shopping;
+        //}
 
-        public ShoppingCartVM InitializeShoppingCart()
-        {
-            return new ShoppingCartVM
-            {
-                Abonnementen = new List<AbonnementSelectieVM>(),
-                Tickets = new List<TicketVM>()
-            };
-        }
+        //public ShoppingCartVM InitializeShoppingCart()
+        //{
+        //    return new ShoppingCartVM
+        //    {
+        //        Abonnementen = new List<AbonnementSelectieVM>(),
+        //        Tickets = new List<TicketVM>()
+        //    };
+        //}
     }
 }
