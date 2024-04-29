@@ -75,9 +75,7 @@ public partial class SoccerDbContext : DbContext
             entity.ToTable("Bestelling");
 
             entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
-            entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
             entity.Property(e => e.BestelDatum).HasColumnType("datetime");
-            entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 

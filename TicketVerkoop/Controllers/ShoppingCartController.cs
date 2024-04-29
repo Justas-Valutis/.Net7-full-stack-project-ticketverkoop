@@ -44,7 +44,7 @@ namespace TicketVerkoop.Controllers
                     var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
                     var bestellings = new List<Domains.Entities.Bestelling>
             {
-                new Domains.Entities.Bestelling { BestellingId = 1, TicketId = 1, UserId = 1, AbonnementId = 1, BestelDatum = DateTime.Now },
+                new Domains.Entities.Bestelling { BestellingId = 1, BestelDatum = DateTime.Now },
             };
                     //het pad naar de map waarin het logo zich bevindt
                     string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
