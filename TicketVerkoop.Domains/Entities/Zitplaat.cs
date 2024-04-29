@@ -9,7 +9,9 @@ public partial class Zitplaat
 
     public int SectionId { get; set; }
 
+    public int? TicketId { get; set; }
+
     public virtual Section Section { get; set; } = null!;
 
-    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public virtual Ticket? Ticket { get; set; }
 }

@@ -47,19 +47,15 @@ public partial class SoccerDbContext : DbContext
             entity.ToTable("Abonnement");
 
             entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
+            entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.PloegId).HasColumnName("PloegID");
-            entity.Property(e => e.PloegNaam)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.RingNaam)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.SectionId).HasColumnName("SectionID");
-            entity.Property(e => e.StadiaNaam)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
+
+            entity.HasOne(d => d.Bestelling).WithMany(p => p.Abonnements)
+                .HasForeignKey(d => d.BestellingId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Abonnement_Bestelling");
         });
 
         modelBuilder.Entity<Bestelling>(entity =>
@@ -73,14 +69,6 @@ public partial class SoccerDbContext : DbContext
             entity.Property(e => e.BestelDatum).HasColumnType("datetime");
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.Abonnement).WithMany(p => p.Bestellings)
-                .HasForeignKey(d => d.AbonnementId)
-                .HasConstraintName("FK_Bestelling_Abonnement");
-
-            entity.HasOne(d => d.Ticket).WithMany(p => p.Bestellings)
-                .HasForeignKey(d => d.TicketId)
-                .HasConstraintName("FK_Bestelling_Ticket1");
         });
 
         modelBuilder.Entity<Match>(entity =>
@@ -172,23 +160,18 @@ public partial class SoccerDbContext : DbContext
             entity.ToTable("Ticket");
 
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
+            entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.MatchId).HasColumnName("MatchID");
-            entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.RingNaam)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.SectionId).HasColumnName("SectionID");
-            entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
+
+            entity.HasOne(d => d.Bestelling).WithMany(p => p.Tickets)
+                .HasForeignKey(d => d.BestellingId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Ticket_Bestelling");
 
             entity.HasOne(d => d.Match).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.MatchId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Ticket_Match");
-
-            entity.HasOne(d => d.Zitplaats).WithMany(p => p.Tickets)
-                .HasForeignKey(d => d.ZitplaatsId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Ticket_Zitplaats");
         });
 
         modelBuilder.Entity<Zitplaat>(entity =>
@@ -199,11 +182,16 @@ public partial class SoccerDbContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("ZitplaatsID");
             entity.Property(e => e.SectionId).HasColumnName("SectionID");
+            entity.Property(e => e.TicketId).HasColumnName("TicketID");
 
             entity.HasOne(d => d.Section).WithMany(p => p.Zitplaats)
                 .HasForeignKey(d => d.SectionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Zitplaats_Section");
+
+            entity.HasOne(d => d.Ticket).WithMany(p => p.Zitplaats)
+                .HasForeignKey(d => d.TicketId)
+                .HasConstraintName("FK_Zitplaats_Ticket");
         });
 
         OnModelCreatingPartial(modelBuilder);

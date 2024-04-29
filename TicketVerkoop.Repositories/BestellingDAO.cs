@@ -43,8 +43,8 @@ public class BestellingDAO : IDAO<Bestelling>
         try
         {
             return await _dbContext.Bestellings.Where(d => d.BestelDatum >= DateTime.Now)
-               .Include(b => b.Ticket)
-               .Include(b => b.Abonnement)
+               .Include(b => b.Tickets)
+               .Include(b => b.Abonnements)
                .ToListAsync();
         }
         catch (Exception ex)

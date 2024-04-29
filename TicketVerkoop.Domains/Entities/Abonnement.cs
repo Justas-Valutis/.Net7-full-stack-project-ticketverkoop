@@ -13,13 +13,7 @@ public partial class Abonnement
 
     public decimal Prijs { get; set; }
 
-    public string PloegNaam { get; set; } = null!;
+    public int BestellingId { get; set; }
 
-    public string StadiaNaam { get; set; } = null!;
-
-    public string RingNaam { get; set; } = null!;
-
-    public int SectionId { get; set; }
-
-    public virtual ICollection<Bestelling> Bestellings { get; set; } = new List<Bestelling>();
+    public virtual Bestelling Bestelling { get; set; } = null!;
 }

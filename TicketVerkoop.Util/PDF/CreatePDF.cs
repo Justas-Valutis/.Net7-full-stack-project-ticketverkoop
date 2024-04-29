@@ -46,16 +46,16 @@ namespace TicketVerkoop.Util.PDF
                 decimal totalPrice = 0;
                 foreach (var ticket in bestellings)
                 {
-                    table.AddCell(ticket.Ticket.Match.ToString());
-                    table.AddCell(ticket.Ticket.Zitplaats.ToString());
-                    table.AddCell(ticket.Abonnement.ToString());
-                    table.AddCell(ticket.Abonnement.PloegNaam.ToString());
-                    table.AddCell(ticket.Abonnement.StadiaNaam.ToString());
+                    //table.AddCell(ticket.Tickets.Match.ToString());
+                    //table.AddCell(ticket.Tickets.Zitplaats.ToString());
+                    table.AddCell(ticket.Abonnements.ToString());
+                    //table.AddCell(ticket.Abonnements.PloegNaam.ToString());
+                    //table.AddCell(ticket.Abonnements.StadiaNaam.ToString());
                     table.AddCell(ticket.BestelDatum.ToString());
-                    table.AddCell(ticket.Ticket.Zitplaats.Section.Prijs.ToString("C"));
-                    decimal totalProductPrice = (decimal)ticket.Ticket.Zitplaats.Section.Prijs;  
-                    table.AddCell(totalProductPrice.ToString("C"));
-                    totalPrice += totalProductPrice;
+                    //table.AddCell(ticket.Tickets.Zitplaats.Section.Prijs.ToString("C"));
+                    //decimal totalProductPrice = (decimal)ticket.Tickets.Zitplaats.Section.Prijs;  
+                    //table.AddCell(totalProductPrice.ToString("C"));
+                    //totalPrice += totalProductPrice;
                     if (totalPrice > 50)
                     {
                         table.AddCell(totalPrice.ToString("C"));
