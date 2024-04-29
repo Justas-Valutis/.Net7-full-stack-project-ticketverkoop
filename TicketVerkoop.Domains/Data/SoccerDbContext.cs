@@ -56,6 +56,16 @@ public partial class SoccerDbContext : DbContext
                 .HasForeignKey(d => d.BestellingId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Abonnement_Bestelling");
+
+            entity.HasOne(d => d.Ploeg).WithMany(p => p.Abonnements)
+                .HasForeignKey(d => d.PloegId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Abonnement_Ploeg");
+
+            entity.HasOne(d => d.Zitplaats).WithMany(p => p.Abonnements)
+                .HasForeignKey(d => d.ZitplaatsId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Abonnement_Zitplaats");
         });
 
         modelBuilder.Entity<Bestelling>(entity =>

@@ -16,4 +16,8 @@ public partial class Abonnement
     public int BestellingId { get; set; }
 
     public virtual Bestelling Bestelling { get; set; } = null!;
+
+    public virtual Ploeg Ploeg { get; set; } = null!;
+
+    public virtual Zitplaat Zitplaats { get; set; } = null!;
 }
