@@ -48,17 +48,18 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
             entity.Property(e => e.PloegId).HasColumnName("PloegID");
+            entity.Property(e => e.PloegNaam)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.RingNaam)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SectionId).HasColumnName("SectionID");
+            entity.Property(e => e.StadiaNaam)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
-
-            entity.HasOne(d => d.Ploeg).WithMany(p => p.Abonnements)
-                .HasForeignKey(d => d.PloegId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Abonnement_Ploeg");
-
-            entity.HasOne(d => d.Zitplaats).WithMany(p => p.Abonnements)
-                .HasForeignKey(d => d.ZitplaatsId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Abonnement_Zitplaats");
         });
 
         modelBuilder.Entity<Bestelling>(entity =>
@@ -79,7 +80,7 @@ public partial class SoccerDbContext : DbContext
 
             entity.HasOne(d => d.Ticket).WithMany(p => p.Bestellings)
                 .HasForeignKey(d => d.TicketId)
-                .HasConstraintName("FK_Bestelling_Ticket");
+                .HasConstraintName("FK_Bestelling_Ticket1");
         });
 
         modelBuilder.Entity<Match>(entity =>
@@ -172,6 +173,11 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.MatchId).HasColumnName("MatchID");
+            entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.RingNaam)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SectionId).HasColumnName("SectionID");
             entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
 
             entity.HasOne(d => d.Match).WithMany(p => p.Tickets)
@@ -189,11 +195,10 @@ public partial class SoccerDbContext : DbContext
         {
             entity.HasKey(e => e.ZitplaatsId);
 
-            entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
+            entity.Property(e => e.ZitplaatsId)
+                .ValueGeneratedNever()
+                .HasColumnName("ZitplaatsID");
             entity.Property(e => e.SectionId).HasColumnName("SectionID");
-            entity.Property(e => e.Stoel)
-                .HasMaxLength(255)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.Section).WithMany(p => p.Zitplaats)
                 .HasForeignKey(d => d.SectionId)

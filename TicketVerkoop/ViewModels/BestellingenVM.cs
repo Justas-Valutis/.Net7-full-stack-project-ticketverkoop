@@ -2,12 +2,12 @@
 
 namespace TicketVerkoop.ViewModels
 {
-    public class BestellingVM
+    public class BestellingenVM
     {
-        public List<Bestelling> Bestellingen { get; set; }
+        public List<BestellingenVM> Bestellingen { get; set; }
     }
 
-    public class Bestelling
+    public class BestelllingVM
     {
         public int BestellingId { get; set; }
 

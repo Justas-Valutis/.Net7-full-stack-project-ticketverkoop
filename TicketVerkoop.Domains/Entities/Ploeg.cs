@@ -11,8 +11,6 @@ public partial class Ploeg
 
     public int ThuisStadiumId { get; set; }
 
-    public virtual ICollection<Abonnement> Abonnements { get; set; } = new List<Abonnement>();
-
     public virtual ICollection<Match> MatchPloegThuis { get; set; } = new List<Match>();
 
     public virtual ICollection<Match> MatchPloegUits { get; set; } = new List<Match>();

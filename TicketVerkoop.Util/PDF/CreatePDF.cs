@@ -49,8 +49,8 @@ namespace TicketVerkoop.Util.PDF
                     table.AddCell(ticket.Ticket.Match.ToString());
                     table.AddCell(ticket.Ticket.Zitplaats.ToString());
                     table.AddCell(ticket.Abonnement.ToString());
-                    table.AddCell(ticket.Abonnement.Ploeg.ToString());
-                    table.AddCell(ticket.Abonnement.Ploeg.ThuisStadium.Naam.ToString());
+                    table.AddCell(ticket.Abonnement.PloegNaam.ToString());
+                    table.AddCell(ticket.Abonnement.StadiaNaam.ToString());
                     table.AddCell(ticket.BestelDatum.ToString());
                     table.AddCell(ticket.Ticket.Zitplaats.Section.Prijs.ToString("C"));
                     decimal totalProductPrice = (decimal)ticket.Ticket.Zitplaats.Section.Prijs;  

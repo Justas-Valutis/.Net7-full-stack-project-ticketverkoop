@@ -11,11 +11,15 @@ public partial class Abonnement
 
     public int PloegId { get; set; }
 
-    public double Prijs { get; set; }
+    public decimal Prijs { get; set; }
+
+    public string PloegNaam { get; set; } = null!;
+
+    public string StadiaNaam { get; set; } = null!;
+
+    public string RingNaam { get; set; } = null!;
+
+    public int SectionId { get; set; }
 
     public virtual ICollection<Bestelling> Bestellings { get; set; } = new List<Bestelling>();
-
-    public virtual Ploeg Ploeg { get; set; } = null!;
-
-    public virtual Zitplaat Zitplaats { get; set; } = null!;
 }
