@@ -18,6 +18,11 @@ public class PloegDAO : IDAO<Ploeg>
         throw new NotImplementedException();
     }
 
+    public Task<int> AddandGetID(Ploeg entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task Delete(Ploeg entity)
     {
         throw new NotImplementedException();

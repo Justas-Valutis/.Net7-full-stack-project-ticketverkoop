@@ -11,6 +11,8 @@ public partial class Ticket
 
     public int BestellingId { get; set; }
 
+    public decimal Prijs { get; set; }
+
     public virtual Bestelling Bestelling { get; set; } = null!;
 
     public virtual Match Match { get; set; } = null!;

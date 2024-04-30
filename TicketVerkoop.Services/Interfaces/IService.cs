@@ -1,4 +1,6 @@
 ﻿
+using TicketVerkoop.Domains.Entities;
+
 namespace TicketVerkoop.Services.Interfaces
 {
     public interface IService<T> where T : class
@@ -8,5 +10,6 @@ namespace TicketVerkoop.Services.Interfaces
         Task Add(T entity);
         Task Delete(T entity);
         Task<T?> Get (int v);
+        Task<int> AddandGetID(T entity);
     }
 }

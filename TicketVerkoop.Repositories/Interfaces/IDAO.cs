@@ -8,5 +8,6 @@ namespace TicketVerkoop.Repositories.Interfaces
         Task<T?> FindById(int Id);
         Task Add(T entity);
         Task Delete(T entity);
+        Task<int> AddandGetID(T entity);
     }
 }

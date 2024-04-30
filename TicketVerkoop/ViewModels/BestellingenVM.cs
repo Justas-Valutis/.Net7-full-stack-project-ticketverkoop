@@ -9,9 +9,7 @@ namespace TicketVerkoop.ViewModels
 
     public class BestelllingVM
     {
-        public int BestellingId { get; set; }
-
-        public int? TicketId { get; set; }
+        public int? BestellingId { get; set; }
 
         public int? AbonnementId { get; set; }
 

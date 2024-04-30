@@ -52,4 +52,9 @@ public class StadiumDAO : IDAO<Stadium>
     {
         throw new NotImplementedException();
     }
+
+    public Task<int> AddandGetID(Stadium entity)
+    {
+        throw new NotImplementedException();
+    }
 }

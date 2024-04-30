@@ -54,6 +54,9 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.UitPloegNaam,
             opts => opts.MapFrom(src => src.PloegUit.Naam));
 
+        CreateMap<Bestelling, BestelllingVM>();
+        CreateMap<BestelllingVM, Bestelling>();
+
         CreateMap<Ring, RingVM>();
         CreateMap<RingVM, Ring>();
 

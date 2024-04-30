@@ -38,4 +38,9 @@ public class StadiumService : IService<Stadium>
     {
         throw new NotImplementedException();
     }
+
+    public Task<int> AddandGetID(Stadium entity)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -13,6 +13,10 @@ public class BestellingService : IService<Bestelling>
     {
         bestellingDAO = _bestellingDAO;
     }
+    public async Task<int> AddandGetID(Bestelling entity)
+    {
+        return await bestellingDAO.AddandGetID(entity);
+    }
 
     public Task Add(Bestelling entity)
     {
@@ -38,5 +42,4 @@ public class BestellingService : IService<Bestelling>
     {
         return await bestellingDAO.GetAll();
     }
-
 }

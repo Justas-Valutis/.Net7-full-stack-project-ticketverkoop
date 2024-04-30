@@ -50,7 +50,6 @@ public partial class SoccerDbContext : DbContext
             entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.PloegId).HasColumnName("PloegID");
             entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
 
             entity.HasOne(d => d.Bestelling).WithMany(p => p.Abonnements)
                 .HasForeignKey(d => d.BestellingId)
@@ -61,11 +60,6 @@ public partial class SoccerDbContext : DbContext
                 .HasForeignKey(d => d.PloegId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Abonnement_Ploeg");
-
-            entity.HasOne(d => d.Zitplaats).WithMany(p => p.Abonnements)
-                .HasForeignKey(d => d.ZitplaatsId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Abonnement_Zitplaats");
         });
 
         modelBuilder.Entity<Bestelling>(entity =>
@@ -170,6 +164,7 @@ public partial class SoccerDbContext : DbContext
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
             entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.MatchId).HasColumnName("MatchID");
+            entity.Property(e => e.Prijs).HasColumnType("decimal(18, 2)");
 
             entity.HasOne(d => d.Bestelling).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.BestellingId)
@@ -186,11 +181,14 @@ public partial class SoccerDbContext : DbContext
         {
             entity.HasKey(e => e.ZitplaatsId);
 
-            entity.Property(e => e.ZitplaatsId)
-                .ValueGeneratedNever()
-                .HasColumnName("ZitplaatsID");
+            entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
+            entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
             entity.Property(e => e.SectionId).HasColumnName("SectionID");
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
+
+            entity.HasOne(d => d.Abonnement).WithMany(p => p.Zitplaats)
+                .HasForeignKey(d => d.AbonnementId)
+                .HasConstraintName("FK_Zitplaats_AbonnementID");
 
             entity.HasOne(d => d.Section).WithMany(p => p.Zitplaats)
                 .HasForeignKey(d => d.SectionId)

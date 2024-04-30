@@ -11,7 +11,9 @@ public partial class Zitplaat
 
     public int? TicketId { get; set; }
 
-    public virtual ICollection<Abonnement> Abonnements { get; set; } = new List<Abonnement>();
+    public int? AbonnementId { get; set; }
+
+    public virtual Abonnement? Abonnement { get; set; }
 
     public virtual Section Section { get; set; } = null!;
 

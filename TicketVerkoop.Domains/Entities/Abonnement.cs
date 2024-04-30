@@ -7,8 +7,6 @@ public partial class Abonnement
 {
     public int AbonnementId { get; set; }
 
-    public int ZitplaatsId { get; set; }
-
     public int PloegId { get; set; }
 
     public decimal Prijs { get; set; }
@@ -19,5 +17,5 @@ public partial class Abonnement
 
     public virtual Ploeg Ploeg { get; set; } = null!;
 
-    public virtual Zitplaat Zitplaats { get; set; } = null!;
+    public virtual ICollection<Zitplaat> Zitplaats { get; set; } = new List<Zitplaat>();
 }

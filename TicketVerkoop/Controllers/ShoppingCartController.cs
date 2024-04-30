@@ -5,6 +5,9 @@ using TicketVerkoop.ViewModels;
 using TicketVerkoop.Domains;
 using TicketVerkoop.Extentions;
 using TicketVerkoop.Domains.Entities;
+using AutoMapper;
+using TicketVerkoop.Services.Interfaces;
+using System.Diagnostics;
 
 namespace TicketVerkoop.Controllers
 {
@@ -13,12 +16,20 @@ namespace TicketVerkoop.Controllers
         private readonly ICreatePDF _createPDF;
         private readonly IEmailSend _emailSender;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IMapper mapper;
+        private readonly IService<Bestelling> bestellingService;
 
-        public ShoppingCartController(IEmailSend emailSend, ICreatePDF createPDF, IWebHostEnvironment webHostEnvironment)
+        public ShoppingCartController(IEmailSend emailSend,
+            ICreatePDF createPDF, 
+            IWebHostEnvironment webHostEnvironment,
+            IMapper mapper,
+            IService<Bestelling> bestellingService)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
             _hostingEnvironment = webHostEnvironment;
+            this.mapper = mapper;
+            this.bestellingService = bestellingService;
         }
 
         // GET: ShoppingCartController
@@ -29,6 +40,30 @@ namespace TicketVerkoop.Controllers
             //call SessionID
             //var SessiondId = HttpContext.Session.Id;
             return View(cartList);
+        }
+
+        [HttpPost]
+        public IActionResult Checkout()
+        {
+            ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+            var bestellingVM = new BestelllingVM
+            {
+                AbonnementId = 1,
+                UserId = 1,
+                BestelDatum = DateTime.Now
+            };
+            try
+            {
+                var bestelling = mapper.Map<Bestelling>(bestellingVM);
+                var bestellingID = bestellingService.AddandGetID(bestelling);
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Errorlog " + ex.Message);
+            }
+
+            List<TicketVM> ticketList = shoppingCartVM.Tickets;
+            return View("Thanks");
         }
 
         //ALLES VAN MAIL

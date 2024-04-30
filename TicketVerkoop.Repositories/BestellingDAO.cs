@@ -13,10 +13,25 @@ public class BestellingDAO : IDAO<Bestelling>
     {
         _dbContext = new SoccerDbContext();
     }
+    public async Task<int> AddandGetID(Bestelling entity)
+    {
+        _dbContext.Add(entity).State = EntityState.Added;
+        try
+        {
+            await _dbContext.SaveChangesAsync();
+            return Convert.ToInt16(entity.BestellingId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
+    }
 
     public Task Add(Bestelling entity)
     {
         throw new NotImplementedException();
+
     }
 
     public async Task Delete(Bestelling entity)

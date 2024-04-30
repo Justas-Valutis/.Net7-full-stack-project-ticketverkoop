@@ -90,8 +90,9 @@ else
 }
 
 <br />
-<a asp-controller="ShoppingCart" asp-action="Contact" class="btn-lg btn-primary">Checkout</a>
-<a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
+<form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
+    <button type="submit" class="btn-lg btn-primary">Checkout</button>
+</form><a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
 
 @section Scripts {
     @{
