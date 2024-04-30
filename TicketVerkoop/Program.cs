@@ -69,6 +69,12 @@ builder.Services.AddTransient<IRingDAO<Ring>, RingDAO>();
 builder.Services.AddTransient<IService<Bestelling>, BestellingService>();
 builder.Services.AddTransient<IDAO<Bestelling>, BestellingDAO>();
 
+builder.Services.AddTransient<IBasketService<Abonnement>, AbonnementService>();
+builder.Services.AddTransient<IBasketDAO<Abonnement>, AbonnementDAO>();
+
+builder.Services.AddTransient<IStoelService<Zitplaat>, ZitplaatService>();
+builder.Services.AddTransient<IStoelDAO<Zitplaat>, ZitplaatDAO>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddSession(options =>

@@ -18,18 +18,24 @@ namespace TicketVerkoop.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper mapper;
         private readonly IService<Bestelling> bestellingService;
+        private readonly IBasketService<Abonnement> abonnementService;
+        private readonly IStoelService<Zitplaat> stoelService;
 
         public ShoppingCartController(IEmailSend emailSend,
             ICreatePDF createPDF, 
             IWebHostEnvironment webHostEnvironment,
             IMapper mapper,
-            IService<Bestelling> bestellingService)
+            IService<Bestelling> bestellingService,
+            IBasketService<Abonnement> abonnementService,
+            IStoelService<Zitplaat> stoelService)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
             _hostingEnvironment = webHostEnvironment;
             this.mapper = mapper;
             this.bestellingService = bestellingService;
+            this.abonnementService = abonnementService;
+            this.stoelService = stoelService;
         }
 
         // GET: ShoppingCartController
@@ -43,7 +49,7 @@ namespace TicketVerkoop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout()
         {
             ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
             var bestellingVM = new BestelllingVM
@@ -56,7 +62,7 @@ namespace TicketVerkoop.Controllers
             {
                 //---------------    Bestelling in database toevoegen ---------------------------------------
                 var bestelling = mapper.Map<Bestelling>(bestellingVM);
-                var bestellingID =Convert.ToInt16(bestellingService.AddandGetID(bestelling));
+                var bestellingID =Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
                 //---------------    Abonnementen toevoegen in database toevoegen ---------------------------------------
                 if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
                 {
@@ -65,6 +71,8 @@ namespace TicketVerkoop.Controllers
                         x.BestellingId = bestellingID;
                     });
                     var abonnementen = mapper.Map<List<Abonnement>>(shoppingCartVM.Abonnementen);
+                    var listAabonnementenIds = await abonnementService.AddListAndGetIDs(abonnementen);
+                    
                 }
             }
             catch (Exception ex) 

@@ -9,6 +9,6 @@ namespace TicketVerkoop.Services.Interfaces
     public interface IBasketService<T> where T : class
     {
         Task<IEnumerable<T>?> GetAllByBestellingId(int id);
-        Task AddList(IEnumerable<T> entityList);
+        Task<IEnumerable<int>> AddListAndGetIDs(IEnumerable<T> entityList);
     }
 }

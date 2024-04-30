@@ -19,7 +19,7 @@ public class BestellingDAO : IDAO<Bestelling>
         try
         {
             await _dbContext.SaveChangesAsync();
-            return Convert.ToInt16(entity.BestellingId);
+            return entity.BestellingId;
         }
         catch (Exception ex)
         {
