@@ -28,7 +28,9 @@
             <p>
                 @Localizer["Match_detail"].Value
             </p>
-            <button class="btn btn-primary">@Localizer["Match_knop"].Value</button>
+            <form asp-controller="Kalender" asp-action="Index" asp-method="post">
+                <button type="submit" class="btn-lg btn-primary">@Localizer["Match_knop"].Value</button>
+            </form>
         </div>
         <div class="box ploegen">
             <img src="~/images/ploeg.png" alt="Alternate Text" class="box-image" />
@@ -36,7 +38,9 @@
             <p>
                 @Localizer["Ploeg_detail"].Value
             </p>
-            <button class="btn btn-primary">@Localizer["Ploeg_knop"].Value</button>
+            <form asp-controller="Ploeg" asp-action="Index" asp-method="post">
+                <button type="submit" class="btn-lg btn-primary">@Localizer["Ploeg_knop"].Value</button>
+            </form>
         </div>
         <div class="box stadia">
             <img src="~/images/stadia.png" alt="Alternate Text" class="box-image" />
@@ -44,7 +48,9 @@
             <p>
                 @Localizer["Stadia_detail"].Value
             </p>
-            <button class="btn btn-primary">@Localizer["Stadia_knop"].Value</button>
+            <form asp-controller="Stadium" asp-action="Index" asp-method="post">
+                <button type="submit" class="btn-lg btn-primary">@Localizer["Stadia_knop"].Value</button>
+            </form>
         </div>
     </div>
 </body>
