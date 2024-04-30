@@ -127,7 +127,7 @@
     <value>Regarder les matchs</value>
   </data>
   <data name="Naam" xml:space="preserve">
-    <value>Maintenance assurée avec passion par Justas Valutis et Robin Vandenbroucke</value>
+    <value>Ressens l'excitation en direct dans le stade!</value>
   </data>
   <data name="Ploegen" xml:space="preserve">
     <value>Les équipes</value>
@@ -139,7 +139,7 @@
     <value>Regarder les équipes</value>
   </data>
   <data name="School" xml:space="preserve">
-    <value>Étudiants du Collège universitaire VIVES de Courtrai</value>
+    <value>Découvrez les meilleures expériences de football en Belgique - Achetez vos billets ici!</value>
   </data>
   <data name="Stadia" xml:space="preserve">
     <value>Stades</value>
@@ -151,6 +151,6 @@
     <value>Regarder les stades</value>
   </data>
   <data name="Welkom" xml:space="preserve">
-    <value>Bienvenue dans notre monde du football!</value>
+    <value>Jupiler Pro League</value>
   </data>
 </root>

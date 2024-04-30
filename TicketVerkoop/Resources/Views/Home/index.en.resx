@@ -127,7 +127,7 @@
     <value>Watch all matches</value>
   </data>
   <data name="Naam" xml:space="preserve">
-    <value>Maintained with passion by Justas Valutis and Robin Vandenbroucke</value>
+    <value>Experience the tension live in the stadium!</value>
   </data>
   <data name="Ploegen" xml:space="preserve">
     <value>Teams</value>
@@ -139,7 +139,7 @@
     <value>Watch all teams</value>
   </data>
   <data name="School" xml:space="preserve">
-    <value>Students of VIVES University College Kortrijk</value>
+    <value>Discover the best football experiences in Belgium - Buy your tickets here!</value>
   </data>
   <data name="Stadia" xml:space="preserve">
     <value>Stadia</value>
@@ -151,6 +151,6 @@
     <value>Watch all stadia</value>
   </data>
   <data name="Welkom" xml:space="preserve">
-    <value>Welcome to our soccerworld!</value>
+    <value>Jupiler Pro League</value>
   </data>
 </root>

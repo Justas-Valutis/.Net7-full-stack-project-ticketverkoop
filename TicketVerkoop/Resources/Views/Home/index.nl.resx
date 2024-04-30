@@ -127,7 +127,7 @@
     <value>Bekijk matchen</value>
   </data>
   <data name="Naam" xml:space="preserve">
-    <value>Met passie onderhouden door Justas Valutis en Robin Vandenbroucke</value>
+    <value>beleef de spanning live in het stadion!</value>
   </data>
   <data name="Ploegen" xml:space="preserve">
     <value>Ploegen</value>
@@ -139,7 +139,7 @@
     <value>Bekijk ploegen</value>
   </data>
   <data name="School" xml:space="preserve">
-    <value>Studenten van Hogeschool VIVES Kortrijk</value>
+    <value>Ontdek de beste voetbalervaringen in België - koop je tickets hier!</value>
   </data>
   <data name="Stadia" xml:space="preserve">
     <value>Stadia</value>
@@ -151,6 +151,6 @@
     <value>Bekijk stadia</value>
   </data>
   <data name="Welkom" xml:space="preserve">
-    <value>Welkom in onze voetbalwereld!</value>
+    <value>Jupiler Pro League</value>
   </data>
 </root>
