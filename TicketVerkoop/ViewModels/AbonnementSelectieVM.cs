@@ -13,5 +13,6 @@
         public int? SelectedRingId { get; set; }
         public string? SelectedRingNaam { get; set; }
         public int? SelectedSectiondId { get; set; }
+        public int? BestellingId { get; set; }
     }
 }

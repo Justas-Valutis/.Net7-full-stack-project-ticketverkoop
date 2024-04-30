@@ -54,13 +54,25 @@ namespace TicketVerkoop.Controllers
             };
             try
             {
+                //---------------    Bestelling in database toevoegen ---------------------------------------
                 var bestelling = mapper.Map<Bestelling>(bestellingVM);
-                var bestellingID = bestellingService.AddandGetID(bestelling);
+                var bestellingID =Convert.ToInt16(bestellingService.AddandGetID(bestelling));
+                //---------------    Abonnementen toevoegen in database toevoegen ---------------------------------------
+                if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
+                {
+                    shoppingCartVM.Abonnementen.ForEach(x =>
+                    {
+                        x.BestellingId = bestellingID;
+                    });
+                    var abonnementen = mapper.Map<List<Abonnement>>(shoppingCartVM.Abonnementen);
+                }
             }
             catch (Exception ex) 
             {
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
+
+
 
             List<TicketVM> ticketList = shoppingCartVM.Tickets;
             return View("Thanks");

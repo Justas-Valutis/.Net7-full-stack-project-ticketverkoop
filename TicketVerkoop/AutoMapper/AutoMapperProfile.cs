@@ -24,11 +24,9 @@ public class AutoMapperProfile : Profile
             opts => opts.MapFrom(src => src.Datum.ToString("HH:mm")));
         CreateMap<MatchVM, Match>();
 
-        //--------- Stadium ---------------
         CreateMap<Stadium, StadiumVM>();
         CreateMap<StadiumVM, Stadium>();
 
-        //--------- Ploeg ---------------
         CreateMap<Ploeg, PloegVM>()
             .ForMember(dest => dest.StadiumNaam,
             opts => opts.MapFrom(src => src.ThuisStadium.Naam));
@@ -65,5 +63,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<Zitplaat, ZitPlaatsVM>();
         CreateMap<ZitPlaatsVM, Zitplaat>();
+
+        CreateMap<AbonnementSelectieVM, Abonnement>();
     }
 }
