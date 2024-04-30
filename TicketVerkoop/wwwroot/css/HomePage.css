@@ -72,6 +72,10 @@
         background-color: darkgray;
         height: 25%;
     }
+    
+    .btn-lg{
+        font-size: 0.4em;
+    }
 }
 @media only screen and (min-width: 1538px) {
     .full-width-image {
