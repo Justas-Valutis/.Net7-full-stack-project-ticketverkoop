@@ -119,28 +119,5 @@ namespace TicketVerkoop.Controllers
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
         }
-
-        //public ShoppingCartVM GetOrCreateShoppingCart()
-        //{
-        //    ShoppingCartVM shopping;
-        //    if (HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart") != null)
-        //    {
-        //        shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
-        //    }
-        //    else
-        //    {
-        //        shopping = InitializeShoppingCart();
-        //    }
-        //    return shopping;
-        //}
-
-        //public ShoppingCartVM InitializeShoppingCart()
-        //{
-        //    return new ShoppingCartVM
-        //    {
-        //        Abonnementen = new List<AbonnementSelectieVM>(),
-        //        Tickets = new List<TicketVM>()
-        //    };
-        //}
     }
 }

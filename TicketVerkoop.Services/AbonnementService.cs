@@ -12,7 +12,7 @@ public class AbonnementService : IBasketService<Abonnement>
     {
         this.basketDAO = basketDAO;
     }
-    public async Task<IEnumerable<int>> AddListAndGetIDs(IEnumerable<Abonnement> entityList)
+    public async Task<List<int>> AddListAndGetIDs(IEnumerable<Abonnement> entityList)
     {
         return await basketDAO.AddListAndGetIDs(entityList);
     }

@@ -9,7 +9,7 @@ namespace TicketVerkoop.Repositories.Interfaces
     public interface IBasketDAO<T> where T : class
     {
         Task<IEnumerable<T>?> GetAllByBestellingId(int id);
-        Task<IEnumerable<int>> AddListAndGetIDs(IEnumerable<T> entityList);
+        Task<List<int>> AddListAndGetIDs(IEnumerable<T> entityList);
     
     }
 }

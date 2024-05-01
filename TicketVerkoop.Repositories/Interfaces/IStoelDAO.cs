@@ -8,6 +8,6 @@ namespace TicketVerkoop.Repositories.Interfaces
 {
     public interface IStoelDAO<T> where T : class
     {
-        Task ReserveerStoelen(IEnumerable<T> stoelen);
+        Task<List<int>> ReserveerStoelen(IEnumerable<T> stoelen);
     }
 }

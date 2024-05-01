@@ -14,7 +14,7 @@ public class AbonnementDAO : IBasketDAO<Abonnement>
         _dbContext = new SoccerDbContext();
     }
 
-    public async Task<IEnumerable<int>> AddListAndGetIDs(IEnumerable<Abonnement> entityList)
+    public async Task<List<int>> AddListAndGetIDs(IEnumerable<Abonnement> entityList)
     {
         var listAbonnementenId = new List<int>();
         foreach (var item in entityList)

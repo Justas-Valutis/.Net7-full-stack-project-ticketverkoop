@@ -13,14 +13,16 @@ public class ZitplaatDAO : IStoelDAO<Zitplaat>
     {
         _dbContext = new SoccerDbContext();
     }
-    public async Task ReserveerStoelen(IEnumerable<Zitplaat> stoelen)
+    public async Task<List<int>> ReserveerStoelen(IEnumerable<Zitplaat> stoelen)
     {
+        var listStoelennID = new List<int>();
         foreach (var item in stoelen)
         {
             _dbContext.Add(item).State = EntityState.Added;
             try
             {
                 await _dbContext.SaveChangesAsync();
+                listStoelennID.Add(item.ZitplaatsId);
             }
             catch (Exception ex)
             {
@@ -28,5 +30,6 @@ public class ZitplaatDAO : IStoelDAO<Zitplaat>
                 throw new Exception("ERROR IN DAO" + ex.Message);
             }
         }
+        return listStoelennID;
     }
 }

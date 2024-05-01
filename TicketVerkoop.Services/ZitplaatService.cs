@@ -12,8 +12,8 @@ public class ZitplaatService : IStoelService<Zitplaat>
     {
         this.stoelDAO = stoelDAO;
     }
-    public async Task ReserveerStoelen(IEnumerable<Zitplaat> stoelen)
+    public async Task< List<int>> ReserveerStoelen(IEnumerable<Zitplaat> stoelen)
     {
-        await stoelDAO.ReserveerStoelen(stoelen);
+       return await stoelDAO.ReserveerStoelen(stoelen);
     }
 }

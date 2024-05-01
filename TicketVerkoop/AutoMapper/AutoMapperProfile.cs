@@ -65,5 +65,8 @@ public class AutoMapperProfile : Profile
         CreateMap<ZitPlaatsVM, Zitplaat>();
 
         CreateMap<AbonnementSelectieVM, Abonnement>();
+        CreateMap<AbonnementSelectieVM, Zitplaat>()
+            .ForMember(dest => dest.SectionId,
+            opts => opts.MapFrom(src => src.SelectedSectiondId));
     }
 }

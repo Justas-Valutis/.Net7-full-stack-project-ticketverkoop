@@ -60,10 +60,10 @@ namespace TicketVerkoop.Controllers
             };
             try
             {
-                //---------------    Bestelling in database toevoegen ---------------------------------------
+                //---------------    Bestelling toevoegen in database  ---------------------------------------
                 var bestelling = mapper.Map<Bestelling>(bestellingVM);
                 var bestellingID =Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
-                //---------------    Abonnementen toevoegen in database toevoegen ---------------------------------------
+                //---------------    Abonnementen toevoegen in database ---------------------------------------
                 if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
                 {
                     shoppingCartVM.Abonnementen.ForEach(x =>
@@ -72,7 +72,20 @@ namespace TicketVerkoop.Controllers
                     });
                     var abonnementen = mapper.Map<List<Abonnement>>(shoppingCartVM.Abonnementen);
                     var listAabonnementenIds = await abonnementService.AddListAndGetIDs(abonnementen);
-                    
+
+                    //Toevoegen zitplaats
+                    for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+                    {
+                        shoppingCartVM.Abonnementen[i].AbonnementId =listAabonnementenIds[i];
+                    }
+
+                    var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Abonnementen);
+                    var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
+
+                    for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+                    {
+                        shoppingCartVM.Abonnementen[i].StoelId = listStoelenIds[i];
+                    }
                 }
             }
             catch (Exception ex) 
