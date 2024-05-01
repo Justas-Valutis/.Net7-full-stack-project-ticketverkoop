@@ -123,9 +123,7 @@ namespace TicketVerkoop.Controllers
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
 
-
-
-            List<TicketVM> ticketList = shoppingCartVM.Tickets;
+            HttpContext.Session.SetObject("ShoppingCart", null);
             return View("Thanks");
         }
 
