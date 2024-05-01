@@ -20,15 +20,17 @@ namespace TicketVerkoop.Controllers
         private readonly IService<Bestelling> bestellingService;
         private readonly IBasketService<Abonnement> abonnementService;
         private readonly IStoelService<Zitplaat> stoelService;
+        private readonly IBasketService<Ticket> ticketService;
 
-        public ShoppingCartController(
-            IEmailSend emailSend,
-            ICreatePDF createPDF,
+
+        public ShoppingCartController(IEmailSend emailSend,
+            ICreatePDF createPDF, 
             IWebHostEnvironment webHostEnvironment,
             IMapper mapper,
             IService<Bestelling> bestellingService,
             IBasketService<Abonnement> abonnementService,
-            IStoelService<Zitplaat> stoelService)
+            IStoelService<Zitplaat> stoelService,
+            IBasketService<Ticket> ticketService)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
@@ -37,6 +39,7 @@ namespace TicketVerkoop.Controllers
             this.bestellingService = bestellingService;
             this.abonnementService = abonnementService;
             this.stoelService = stoelService;
+            this.ticketService = ticketService;
         }
 
         // GET: ShoppingCartController
@@ -88,15 +91,38 @@ namespace TicketVerkoop.Controllers
                         shoppingCartVM.Abonnementen[i].StoelId = listStoelenIds[i];
                     }
                 }
+
+                //---------------    Tickets toevoegen in database ---------------------------------------
+                if (shoppingCartVM.Tickets != null && shoppingCartVM.Tickets.Count > 0)
+                {
+                    shoppingCartVM.Tickets.ForEach(x =>
+                    {
+                        x.BestellingId = bestellingID;
+                    });
+                    var tickets = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
+                    var listTicketsIds = await ticketService.AddListAndGetIDs(tickets);
+
+                    //Toevoegen zitplaats
+                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                    {
+                        shoppingCartVM.Tickets[i].TicketId = listTicketsIds[i];
+                    }
+
+                    var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Tickets);
+                    var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
+
+                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                    {
+                        shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
+                    }
+                }
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
 
-
-
-            List<TicketVM> ticketList = shoppingCartVM.Tickets;
+            HttpContext.Session.SetObject("ShoppingCart", null);
             return View("Thanks");
         }
 
