@@ -72,8 +72,12 @@ builder.Services.AddTransient<IDAO<Bestelling>, BestellingDAO>();
 builder.Services.AddTransient<IBasketService<Abonnement>, AbonnementService>();
 builder.Services.AddTransient<IBasketDAO<Abonnement>, AbonnementDAO>();
 
+builder.Services.AddTransient<IBasketService<Ticket>, TicketService>();
+builder.Services.AddTransient<IBasketDAO<Ticket>, TicketDAO>();
+
 builder.Services.AddTransient<IStoelService<Zitplaat>, ZitplaatService>();
 builder.Services.AddTransient<IStoelDAO<Zitplaat>, ZitplaatDAO>();
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 

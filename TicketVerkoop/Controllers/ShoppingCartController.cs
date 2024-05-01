@@ -20,6 +20,8 @@ namespace TicketVerkoop.Controllers
         private readonly IService<Bestelling> bestellingService;
         private readonly IBasketService<Abonnement> abonnementService;
         private readonly IStoelService<Zitplaat> stoelService;
+        private readonly IBasketService<Ticket> ticketService;
+
 
         public ShoppingCartController(IEmailSend emailSend,
             ICreatePDF createPDF, 
@@ -27,7 +29,8 @@ namespace TicketVerkoop.Controllers
             IMapper mapper,
             IService<Bestelling> bestellingService,
             IBasketService<Abonnement> abonnementService,
-            IStoelService<Zitplaat> stoelService)
+            IStoelService<Zitplaat> stoelService,
+            IBasketService<Ticket> ticketService)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
@@ -36,6 +39,7 @@ namespace TicketVerkoop.Controllers
             this.bestellingService = bestellingService;
             this.abonnementService = abonnementService;
             this.stoelService = stoelService;
+            this.ticketService = ticketService;
         }
 
         // GET: ShoppingCartController
@@ -62,7 +66,7 @@ namespace TicketVerkoop.Controllers
             {
                 //---------------    Bestelling toevoegen in database  ---------------------------------------
                 var bestelling = mapper.Map<Bestelling>(bestellingVM);
-                var bestellingID =Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
+                var bestellingID = Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
                 //---------------    Abonnementen toevoegen in database ---------------------------------------
                 if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
                 {
@@ -76,7 +80,7 @@ namespace TicketVerkoop.Controllers
                     //Toevoegen zitplaats
                     for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
                     {
-                        shoppingCartVM.Abonnementen[i].AbonnementId =listAabonnementenIds[i];
+                        shoppingCartVM.Abonnementen[i].AbonnementId = listAabonnementenIds[i];
                     }
 
                     var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Abonnementen);
@@ -87,8 +91,34 @@ namespace TicketVerkoop.Controllers
                         shoppingCartVM.Abonnementen[i].StoelId = listStoelenIds[i];
                     }
                 }
+
+                //---------------    Tickets toevoegen in database ---------------------------------------
+                if (shoppingCartVM.Tickets != null && shoppingCartVM.Tickets.Count > 0)
+                {
+                    shoppingCartVM.Tickets.ForEach(x =>
+                    {
+                        x.BestellingId = bestellingID;
+                    });
+                    var tickets = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
+                    var listTicketsIds = await ticketService.AddListAndGetIDs(tickets);
+
+                    //Toevoegen zitplaats
+                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                    {
+                        shoppingCartVM.Tickets[i].TicketId = listTicketsIds[i];
+                    }
+
+                    var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Tickets);
+                    var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
+
+                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                    {
+                        shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
+                    }
+                }
             }
-            catch (Exception ex) 
+
+            catch (Exception ex)
             {
                 Debug.WriteLine("Errorlog " + ex.Message);
             }

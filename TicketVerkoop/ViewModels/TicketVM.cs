@@ -11,5 +11,8 @@
         public int SectionId { get; set; }
         public int aantaZitPlaatsen { get; set; }
         public string Prijs { get; set; }
+        public int? BestellingId { get; set; }
+        public int? StoelId { get; set; }
+        public int? TicketId { get; set; }
     }
 }
