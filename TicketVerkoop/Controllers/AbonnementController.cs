@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Org.BouncyCastle.Math;
 using System.Diagnostics;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Extentions;

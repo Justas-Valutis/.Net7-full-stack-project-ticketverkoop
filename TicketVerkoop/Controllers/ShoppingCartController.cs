@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace TicketVerkoop.Controllers
 {
     public class ShoppingCartController : Controller
-    {
+    {        
         private readonly ICreatePDF _createPDF;
         private readonly IEmailSend _emailSender;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -21,8 +21,9 @@ namespace TicketVerkoop.Controllers
         private readonly IBasketService<Abonnement> abonnementService;
         private readonly IStoelService<Zitplaat> stoelService;
 
-        public ShoppingCartController(IEmailSend emailSend,
-            ICreatePDF createPDF, 
+        public ShoppingCartController(
+            IEmailSend emailSend,
+            ICreatePDF createPDF,
             IWebHostEnvironment webHostEnvironment,
             IMapper mapper,
             IService<Bestelling> bestellingService,
@@ -62,7 +63,7 @@ namespace TicketVerkoop.Controllers
             {
                 //---------------    Bestelling toevoegen in database  ---------------------------------------
                 var bestelling = mapper.Map<Bestelling>(bestellingVM);
-                var bestellingID =Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
+                var bestellingID = Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
                 //---------------    Abonnementen toevoegen in database ---------------------------------------
                 if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
                 {
@@ -76,7 +77,7 @@ namespace TicketVerkoop.Controllers
                     //Toevoegen zitplaats
                     for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
                     {
-                        shoppingCartVM.Abonnementen[i].AbonnementId =listAabonnementenIds[i];
+                        shoppingCartVM.Abonnementen[i].AbonnementId = listAabonnementenIds[i];
                     }
 
                     var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Abonnementen);
@@ -88,7 +89,7 @@ namespace TicketVerkoop.Controllers
                     }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
@@ -111,9 +112,9 @@ namespace TicketVerkoop.Controllers
                     string pdfFile = "Ticket" + DateTime.Now.Year;
                     var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
                     var bestellings = new List<Domains.Entities.Bestelling>
-            {
-                new Domains.Entities.Bestelling { BestellingId = 1, BestelDatum = DateTime.Now },
-            };
+                {
+                    new Domains.Entities.Bestelling { BestellingId = 1, BestelDatum = DateTime.Now },
+                };
                     //het pad naar de map waarin het logo zich bevindt
                     string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
 
@@ -153,3 +154,4 @@ namespace TicketVerkoop.Controllers
         }
     }
 }
+
