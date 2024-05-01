@@ -32,5 +32,20 @@ namespace TicketVerkoop.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> IndexStadium()
+        {
+            try
+            {
+                var list = await stadiumService.GetAll();
+                List<StadiumVM> listVM = mapper.Map<List<StadiumVM>>(list);
+                return View(listVM);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Errorlog " + ex.Message);
+            }
+            return View();
+        }
     }
 }
