@@ -8,6 +8,7 @@ using TicketVerkoop.Domains.Entities;
 using AutoMapper;
 using TicketVerkoop.Services.Interfaces;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 
 namespace TicketVerkoop.Controllers
 {
@@ -21,6 +22,8 @@ namespace TicketVerkoop.Controllers
         private readonly IBasketService<Abonnement> abonnementService;
         private readonly IStoelService<Zitplaat> stoelService;
         private readonly IBasketService<Ticket> ticketService;
+        private readonly UserManager<IdentityUser> userManager;
+
 
 
         public ShoppingCartController(IEmailSend emailSend,
@@ -30,7 +33,8 @@ namespace TicketVerkoop.Controllers
             IService<Bestelling> bestellingService,
             IBasketService<Abonnement> abonnementService,
             IStoelService<Zitplaat> stoelService,
-            IBasketService<Ticket> ticketService)
+            IBasketService<Ticket> ticketService,
+            UserManager<IdentityUser> userManager)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
@@ -40,6 +44,7 @@ namespace TicketVerkoop.Controllers
             this.abonnementService = abonnementService;
             this.stoelService = stoelService;
             this.ticketService = ticketService;
+            this.userManager = userManager;
         }
 
         // GET: ShoppingCartController
@@ -55,75 +60,86 @@ namespace TicketVerkoop.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout()
         {
-            ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
-            var bestellingVM = new BestelllingVM
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
             {
-                AbonnementId = 1,
-                UserId = 1,
-                BestelDatum = DateTime.Now
-            };
-            try
-            {
-                //---------------    Bestelling toevoegen in database  ---------------------------------------
-                var bestelling = mapper.Map<Bestelling>(bestellingVM);
-                var bestellingID = Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
-                //---------------    Abonnementen toevoegen in database ---------------------------------------
-                if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
-                {
-                    shoppingCartVM.Abonnementen.ForEach(x =>
-                    {
-                        x.BestellingId = bestellingID;
-                    });
-                    var abonnementen = mapper.Map<List<Abonnement>>(shoppingCartVM.Abonnementen);
-                    var listAabonnementenIds = await abonnementService.AddListAndGetIDs(abonnementen);
+                return RedirectToPage("/Account/Register", new { area = "Identity" });
 
-                    //Toevoegen zitplaats
-                    for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+            }
+            else {
+                ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+
+ 
+
+                var bestellingVM = new BestelllingVM
+                {
+                    AbonnementId = 1,
+                    UserId = user.Id,
+                    BestelDatum = DateTime.Now
+                };
+                try
+                {
+                    //---------------    Bestelling toevoegen in database  ---------------------------------------
+                    var bestelling = mapper.Map<Bestelling>(bestellingVM);
+                    var bestellingID = Convert.ToInt16(await bestellingService.AddandGetID(bestelling));
+                    //---------------    Abonnementen toevoegen in database ---------------------------------------
+                    if (shoppingCartVM.Abonnementen != null && shoppingCartVM.Abonnementen.Count > 0)
                     {
-                        shoppingCartVM.Abonnementen[i].AbonnementId = listAabonnementenIds[i];
+                        shoppingCartVM.Abonnementen.ForEach(x =>
+                        {
+                            x.BestellingId = bestellingID;
+                        });
+                        var abonnementen = mapper.Map<List<Abonnement>>(shoppingCartVM.Abonnementen);
+                        var listAabonnementenIds = await abonnementService.AddListAndGetIDs(abonnementen);
+
+                        //Toevoegen zitplaats
+                        for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+                        {
+                            shoppingCartVM.Abonnementen[i].AbonnementId = listAabonnementenIds[i];
+                        }
+
+                        var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Abonnementen);
+                        var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
+
+                        for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+                        {
+                            shoppingCartVM.Abonnementen[i].StoelId = listStoelenIds[i];
+                        }
                     }
 
-                    var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Abonnementen);
-                    var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
-
-                    for (int i = 0; i < shoppingCartVM.Abonnementen.Count(); i++)
+                    //---------------    Tickets toevoegen in database ---------------------------------------
+                    if (shoppingCartVM.Tickets != null && shoppingCartVM.Tickets.Count > 0)
                     {
-                        shoppingCartVM.Abonnementen[i].StoelId = listStoelenIds[i];
+                        shoppingCartVM.Tickets.ForEach(x =>
+                        {
+                            x.BestellingId = bestellingID;
+                        });
+                        var tickets = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
+                        var listTicketsIds = await ticketService.AddListAndGetIDs(tickets);
+
+                        //Toevoegen zitplaats
+                        for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                        {
+                            shoppingCartVM.Tickets[i].TicketId = listTicketsIds[i];
+                        }
+
+                        var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Tickets);
+                        var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
+
+                        for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
+                        {
+                            shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
+                        }
                     }
                 }
-
-                //---------------    Tickets toevoegen in database ---------------------------------------
-                if (shoppingCartVM.Tickets != null && shoppingCartVM.Tickets.Count > 0)
+                catch (Exception ex) 
                 {
-                    shoppingCartVM.Tickets.ForEach(x =>
-                    {
-                        x.BestellingId = bestellingID;
-                    });
-                    var tickets = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
-                    var listTicketsIds = await ticketService.AddListAndGetIDs(tickets);
-
-                    //Toevoegen zitplaats
-                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
-                    {
-                        shoppingCartVM.Tickets[i].TicketId = listTicketsIds[i];
-                    }
-
-                    var zitPlaatsen = mapper.Map<List<Zitplaat>>(shoppingCartVM.Tickets);
-                    var listStoelenIds = await stoelService.ReserveerStoelen(zitPlaatsen);
-
-                    for (int i = 0; i < shoppingCartVM.Tickets.Count(); i++)
-                    {
-                        shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
-                    }
+                    Debug.WriteLine("Errorlog " + ex.Message);
                 }
-            }
-            catch (Exception ex) 
-            {
-                Debug.WriteLine("Errorlog " + ex.Message);
-            }
 
-            HttpContext.Session.SetObject("ShoppingCart", null);
-            return View("Thanks");
+                HttpContext.Session.SetObject("ShoppingCart", null);
+                return View("Thanks");
+            }
         }
 
         //ALLES VAN MAIL

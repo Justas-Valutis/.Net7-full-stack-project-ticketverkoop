@@ -28,6 +28,8 @@ public partial class SoccerDbContext : DbContext
 
     public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
 
+    public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
     public virtual DbSet<Bestelling> Bestellings { get; set; }
@@ -103,25 +105,11 @@ public partial class SoccerDbContext : DbContext
             entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
             entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
             entity.Property(e => e.UserName).HasMaxLength(256);
-
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AspNetUserRole",
-                    r => r.HasOne<AspNetRole>().WithMany().HasForeignKey("RoleId"),
-                    l => l.HasOne<AspNetUser>().WithMany().HasForeignKey("UserId"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId");
-                        j.ToTable("AspNetUserRoles");
-                        j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
-                    });
         });
 
         modelBuilder.Entity<AspNetUserClaim>(entity =>
         {
             entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserClaims).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<AspNetUserLogin>(entity =>
@@ -132,8 +120,15 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.LoginProvider).HasMaxLength(128);
             entity.Property(e => e.ProviderKey).HasMaxLength(128);
+        });
 
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserLogins).HasForeignKey(d => d.UserId);
+        modelBuilder.Entity<AspNetUserRole>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.RoleId });
+
+            entity.HasIndex(e => e.RoleId, "IX_AspNetUserRoles_RoleId");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.AspNetUserRoles).HasForeignKey(d => d.RoleId);
         });
 
         modelBuilder.Entity<AspNetUserToken>(entity =>
@@ -142,8 +137,6 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.LoginProvider).HasMaxLength(128);
             entity.Property(e => e.Name).HasMaxLength(128);
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<Bestelling>(entity =>
@@ -154,7 +147,14 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.BestelDatum).HasColumnType("datetime");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(450)
+                .HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Bestellings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Bestelling_AspNetUsers");
         });
 
         modelBuilder.Entity<Match>(entity =>
