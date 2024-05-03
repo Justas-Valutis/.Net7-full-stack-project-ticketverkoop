@@ -54,12 +54,24 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.UitPloegNaam,
             opts => opts.MapFrom(src => src.PloegUit.Naam));
 
-        CreateMap<Bestelling, BestelllingVM>();
+        CreateMap<Bestelling, BestellingenVM>();
         CreateMap<BestelllingVM, Bestelling>();
 
         // -----------------------------------
         //CreateMap<Bestelling, BestellingenVM>();
-        CreateMap<Abonnement, AbonnementSelectieVM>();
+        CreateMap<Abonnement, AbonnementSelectieVM>()
+            .ForMember(dest => dest.PloegNaam,
+            opts => opts.MapFrom(src => src.Ploeg.Naam))
+            .ForMember(dest => dest.StadiumNaam,
+            opts => opts.MapFrom(src => src.Ploeg.ThuisStadium.Naam))
+            .ForMember(dest => dest.StoelId,
+            opts => opts.MapFrom(src => src.Zitplaats.First().ZitplaatsId))
+            .ForMember(dest => dest.SelectedSectiondId,
+            opts => opts.MapFrom(src => src.Zitplaats.First().SectionId))
+            .ForMember(dest => dest.SelectedRingNaam,
+            opts => opts.MapFrom(src => src.Zitplaats.First().Section.Ring.ZoneLocatie));
+
+
         CreateMap<Ticket, TicketVM>();
         CreateMap<Zitplaat, AbonnementSelectieVM>()
              .ForMember(dest => dest.SelectedSectiondId,

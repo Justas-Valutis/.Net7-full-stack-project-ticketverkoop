@@ -34,8 +34,22 @@ public class AbonnementDAO : IBasketDAO<Abonnement>
         return listAbonnementenId;
     }
 
-    public Task<IEnumerable<Abonnement>?> GetAllByBestellingId(int id)
+    public async Task<IEnumerable<Abonnement>?> GetAllByBestellingId(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbContext.Abonnements.Where(t => t.BestellingId == id)
+                 .Include(p => p.Ploeg)
+                 .ThenInclude(ploeg => ploeg.ThuisStadium)
+                 .Include(s => s.Zitplaats)
+                 .ThenInclude(zitplaats => zitplaats.Section)
+                 .ThenInclude(section => section.Ring)
+                 .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
     }
 }

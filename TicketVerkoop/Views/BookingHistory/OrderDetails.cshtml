@@ -42,7 +42,7 @@ else
                         <td>@item.aantaZitPlaatsen</td>
                         <th>@item.RingNaam</th>
                         <th>@item.SectionId</th>
-                        <td><strong>Zit stoelen</strong></td>
+                        <td><strong>@item.StoelId</strong></td>
                         <td>@item.Prijs, Eur</td>
                     </tr>
 
@@ -57,33 +57,30 @@ else
         @if (Model.Abonnements != null && Model.Abonnements.Count > 0)
         {
             <h4>Abonnementen in je kaart</h4>
-            <table>
-                <tr>
-                    <th>Ploegnaam</th>
-                    <th>Stadianaam</th>
-                    <th>Ring</th>
-                    <th>Section</th>
-                    <th>Zitplaats nr</th>
-                    <th>Prijs, Eur</th>
-                </tr>
-
+            <br />
+            <div class="row">
+                <p class="col-md-2">Ploegnaam</p>
+                <p class="col-md-2">Stadianaam</p>
+                <p class="col-md-2">Ring</p>
+                <p class="col-md-2">Section</p>
+                <p class="col-md-2">Zitplaats</p>
+                <p class="col-md-2">Prijs</p>
+            </div>
                 @foreach (var item in Model.Abonnements)
                 {
-                    <tr>
-                        <td>@item.PloegNaam</td>
-                        <td>@item.StadiumNaam</td>
-                        <td>@item.SelectedRingNaam</td>
-                        <td>@item.SelectedSectiondId</td>
-                        <td><strong>Zitstoel</strong></td>
-                        <td>@item.Prijs</td>
-                    </tr>
-
+                <div class="row">
+                    <p class="col-md-2">@item.PloegNaam</p>
+                    <p class="col-md-2">@item.StadiumNaam</p>
+                    <p class="col-md-2">@item.SelectedRingNaam</p>
+                    <p class="col-md-2">@item.SelectedSectiondId</p>
+                    <p class="col-md-2">@item.StoelId</p>
+                    <p class="col-md-2">@item.Prijs</p>
+                </div>
                     @if (item.Prijs.HasValue)
                     {
                         total += item.Prijs.Value;
                     }
                 }
-            </table>
         }
 
         <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @total.ToString("0.00") Eur</p>
