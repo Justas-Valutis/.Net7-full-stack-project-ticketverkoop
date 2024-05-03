@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TicketVerkoop.ViewModels.BestelllingVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Je order geschiedenis</h1>
+
+@if(@Model == null )
+{
+    <p> Je hebt nog geen orders geplaats</p>
+} else 
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BestellingId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BestelDatum)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BestellingId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BestelDatum)
+                </td>
+                <td>
+                        @Html.ActionLink("Order Details", "OrderDetails", new { id = item.BestellingId })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

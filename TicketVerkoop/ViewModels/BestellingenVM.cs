@@ -4,7 +4,13 @@ namespace TicketVerkoop.ViewModels
 {
     public class BestellingenVM
     {
-        public List<BestellingenVM> Bestellingen { get; set; }
+        public int BestellingId { get; set; }
+        public List<AbonnementSelectieVM> Abonnements { get; set; } = new List<AbonnementSelectieVM>();
+
+        public List<TicketVM> Tickets { get; set; } = new List<TicketVM>();
+
+        public DateTime BestelDatum { get; set; }
+
     }
 
     public class BestelllingVM

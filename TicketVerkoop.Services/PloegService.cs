@@ -42,4 +42,8 @@ public class PloegService : IService<Ploeg>
         return await ploegDAO.GetAll();
     }
 
+    public Task<IEnumerable<Ploeg>?> GetAllByUserId(string UserId)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -11,5 +11,6 @@ namespace TicketVerkoop.Services.Interfaces
         Task Delete(T entity);
         Task<T?> Get (int v);
         Task<int> AddandGetID(T entity);
+        Task<IEnumerable<T>?> GetAllByUserId(string UserId);
     }
 }

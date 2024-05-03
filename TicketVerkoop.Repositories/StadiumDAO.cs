@@ -57,4 +57,9 @@ public class StadiumDAO : IDAO<Stadium>
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<Stadium>?> GetAllByUserId(string UserId)
+    {
+        throw new NotImplementedException();
+    }
 }

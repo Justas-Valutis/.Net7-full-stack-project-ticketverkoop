@@ -42,4 +42,9 @@ public class BestellingService : IService<Bestelling>
     {
         return await bestellingDAO.GetAll();
     }
+
+    public async Task<IEnumerable<Bestelling>?> GetAllByUserId(string UserId)
+    {
+        return await bestellingDAO.GetAllByUserId(UserId);
+    }
 }

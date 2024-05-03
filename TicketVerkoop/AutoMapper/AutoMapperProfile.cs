@@ -57,6 +57,15 @@ public class AutoMapperProfile : Profile
         CreateMap<Bestelling, BestelllingVM>();
         CreateMap<BestelllingVM, Bestelling>();
 
+        // -----------------------------------
+        //CreateMap<Bestelling, BestellingenVM>();
+        CreateMap<Abonnement, AbonnementSelectieVM>();
+        CreateMap<Ticket, TicketVM>();
+        CreateMap<Zitplaat, AbonnementSelectieVM>()
+             .ForMember(dest => dest.SelectedSectiondId,
+               opts => opts.MapFrom(src => src.SectionId));
+
+
         CreateMap<Ring, RingVM>();
         CreateMap<RingVM, Ring>();
 

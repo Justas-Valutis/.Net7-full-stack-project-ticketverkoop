@@ -47,4 +47,9 @@ public class PloegDAO : IDAO<Ploeg>
             throw new Exception("ERROR IN DAO" + ex.Message);
         }
     }
+
+    public Task<IEnumerable<Ploeg>?> GetAllByUserId(string UserId)
+    {
+        throw new NotImplementedException();
+    }
 }

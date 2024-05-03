@@ -68,4 +68,19 @@ public class BestellingDAO : IDAO<Bestelling>
             throw new Exception("ERROR IN BestellingDAO" + ex.Message);
         }
     }
+
+    public async Task<IEnumerable<Bestelling>?> GetAllByUserId(string UserId)
+    {
+        try
+        {
+            return await _dbContext.Bestellings
+                .Where(d => d.UserId == UserId)
+               .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN BestellingDAO" + ex.Message);
+        }
+    }
 }

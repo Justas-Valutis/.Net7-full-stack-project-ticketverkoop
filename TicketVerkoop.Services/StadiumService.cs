@@ -43,4 +43,9 @@ public class StadiumService : IService<Stadium>
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<Stadium>?> GetAllByUserId(string UserId)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -9,5 +9,6 @@ namespace TicketVerkoop.Repositories.Interfaces
         Task Add(T entity);
         Task Delete(T entity);
         Task<int> AddandGetID(T entity);
+        Task<IEnumerable<T>?> GetAllByUserId(string UserId);
     }
 }
