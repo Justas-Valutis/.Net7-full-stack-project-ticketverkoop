@@ -10,6 +10,7 @@ namespace TicketVerkoop.ViewModels
         public List<TicketVM> Tickets { get; set; } = new List<TicketVM>();
 
         public DateTime BestelDatum { get; set; }
+        public decimal? TotalPrijs { get; set; }
 
     }
 
@@ -22,5 +23,6 @@ namespace TicketVerkoop.ViewModels
         public string UserId { get; set; }
 
         public DateTime BestelDatum { get; set; }
+        public decimal? TotalPrijs { get; set;}
     }
 }

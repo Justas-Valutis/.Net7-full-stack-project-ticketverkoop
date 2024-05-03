@@ -147,6 +147,7 @@ public partial class SoccerDbContext : DbContext
 
             entity.Property(e => e.BestellingId).HasColumnName("BestellingID");
             entity.Property(e => e.BestelDatum).HasColumnType("datetime");
+            entity.Property(e => e.TotalPrijs).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UserId)
                 .HasMaxLength(450)
                 .HasColumnName("UserID");

@@ -58,7 +58,7 @@ namespace TicketVerkoop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout(decimal totalPrijs)
         {
             var user = await userManager.GetUserAsync(User);
             if (user == null)
@@ -75,7 +75,8 @@ namespace TicketVerkoop.Controllers
                 {
                     AbonnementId = 1,
                     UserId = user.Id,
-                    BestelDatum = DateTime.Now
+                    BestelDatum = DateTime.Now,
+                    TotalPrijs = totalPrijs
                 };
                 try
                 {

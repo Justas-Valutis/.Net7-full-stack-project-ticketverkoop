@@ -1,20 +1,21 @@
-﻿@model TicketVerkoop.ViewModels.ShoppingCartVM
+﻿@model TicketVerkoop.ViewModels.BestellingenVM
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "OrderDetails";
 }
-<link rel="stylesheet" href="~/css/ShoppingCartStyles.css" />
 @{
     decimal total = 0;
 }
-<h3>Shopping kaart</h3>
+<h1>OrderDetails</h1>
 
-@if (Model == null || (Model.Tickets == null && Model.Abonnementen == null))
+@if (Model == null || (Model.Tickets == null && Model.Abonnements == null))
 {
     <p>Your shopping cart is empty.</p>
 }
 else
-{   <div>
+{
+
+       <div>
         @if (Model.Tickets != null && Model.Tickets.Count > 0)
         {
             <h4>Tickets in je kaart</h4>
@@ -53,7 +54,7 @@ else
             </table>
         }
 
-        @if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
+        @if (Model.Abonnements != null && Model.Abonnements.Count > 0)
         {
             <h4>Abonnementen in je kaart</h4>
             <table>
@@ -66,7 +67,7 @@ else
                     <th>Prijs, Eur</th>
                 </tr>
 
-                @foreach (var item in Model.Abonnementen)
+                @foreach (var item in Model.Abonnements)
                 {
                     <tr>
                         <td>@item.PloegNaam</td>
@@ -74,7 +75,7 @@ else
                         <td>@item.SelectedRingNaam</td>
                         <td>@item.SelectedSectiondId</td>
                         <td><strong>Zitstoel</strong></td>
-                        <td>@item.Prijs</td> 
+                        <td>@item.Prijs</td>
                     </tr>
 
                     @if (item.Prijs.HasValue)
@@ -84,17 +85,7 @@ else
                 }
             </table>
         }
+
         <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @total.ToString("0.00") Eur</p>
     </div>
-}
-<br />
-<form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
-    <input type="hidden" id="totalPrijs" name="totalPrijs" value="@total" />
-    <button type="submit" class="btn-lg btn-primary">Checkout</button>
-</form><a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 }
