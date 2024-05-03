@@ -7,7 +7,7 @@
 @{
     decimal total = 0;
 }
-<h3>Shopping kaart</h3>
+<h3 class="centered">Shopping kaart</h3>
 
 @if (Model == null || (Model.Tickets == null && Model.Abonnementen == null))
 {
@@ -18,9 +18,8 @@ else
         @if (Model.Tickets != null && Model.Tickets.Count > 0)
         {
             <br />
-            <br />
             <div class="row">
-                <h4>Tickets in je kaart</h4>
+                <h4 class="centered">Tickets in je kaart</h4>
                 <br />
                 @foreach (var item in Model.Tickets)
                 {
