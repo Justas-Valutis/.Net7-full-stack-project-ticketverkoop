@@ -63,10 +63,27 @@
         <img id="tshirt-logo" src="/images/t-shirt-logo.jpg" />
     </div>
 
+
     <div class="col-md-2 stadium-match-ticket-content centered-horizontaly">
-        <a class="nav-link text-dark" asp-area="" asp-controller="TicketSelection" asp-action="TicketSelection"
-           asp-route-matchID="@Model.MatchId" asp-route-ThuisPloegNaam="@Model.ThuisPloegNaam">Buy Tickets
-       </a>
+
+        @if (Model.DateTime < DateTime.Now)
+        {
+            <p class="centered-text">Match is al verlopen</p>
+        }
+
+        @if (Model.DateTime > DateTime.Now.AddDays(30))
+        {
+            <p class="centered-text">1 mand voor wedstrijd</p>
+        }
+
+        @if (Model.DateTime < DateTime.Now.AddDays(30) && Model.DateTime > DateTime.Now)
+        {
+            <a class="buytTickets" asp-area="" asp-controller="TicketSelection" asp-action="TicketSelection"
+                   asp-route-matchID="@Model.MatchId" asp-route-ThuisPloegNaam="@Model.ThuisPloegNaam">
+                    Buy Tickets
+            </a>
+        }
+
     </div>
 
 </div>

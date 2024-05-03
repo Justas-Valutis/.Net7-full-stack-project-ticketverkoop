@@ -21,7 +21,9 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.DayOfWeek,
             opts => opts.MapFrom(src => src.Datum.DayOfWeek))
             .ForMember(dest => dest.Time,
-            opts => opts.MapFrom(src => src.Datum.ToString("HH:mm")));
+            opts => opts.MapFrom(src => src.Datum.ToString("HH:mm")))
+            .ForMember(dest => dest.DateTime,
+            opts => opts.MapFrom(src => src.Datum));
         CreateMap<MatchVM, Match>();
 
         CreateMap<Stadium, StadiumVM>();

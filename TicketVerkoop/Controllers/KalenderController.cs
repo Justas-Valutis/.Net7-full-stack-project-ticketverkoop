@@ -37,6 +37,7 @@ namespace TicketVerkoop.Controllers
 
                 var list = await matchService.GetAll();
                 List<MatchVM> listVM = mapper.Map<List<MatchVM>>(list);
+                listVM.Sort((x, y) => DateTime.Compare(x.DateTime, y.DateTime));
                 return View(listVM);
             }
             catch (Exception ex)
@@ -82,7 +83,7 @@ namespace TicketVerkoop.Controllers
                 ViewBag.lstStadiums = new SelectList(await stadiumService.GetAll(), "StadiumId", "Naam", StadiumId);
                 }
 
-
+                sortedMatches.Sort((x, y) => DateTime.Compare(x.DateTime, y.DateTime));
                 return View(sortedMatches);
             }
             catch (Exception ex)

@@ -31,6 +31,7 @@
     text-align:center;
 }
 
+
 .centered-horizontaly {
     justify-content: center;
 }
@@ -45,4 +46,17 @@ div .stadium-match-ticket-content #stadiumCOL {
 #stadiumCOL > * {
     margin: 0;
     padding: 0;
+}
+
+#black-text {
+    color: black;
+}
+
+a.buytTickets {
+    color: #fff;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd;
+    padding: .5rem 1rem;
+    font-size: 1.10rem;
+    border-radius: .3rem;
 }

@@ -5,3 +5,12 @@
 #matchHeader {
     text-align: center
 }
+
+a.buytTickets {
+    color: #fff;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd;
+    padding: .5rem 1rem;
+    font-size: 1.10rem;
+    border-radius: .3rem;
+}
