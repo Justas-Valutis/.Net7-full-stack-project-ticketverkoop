@@ -1,7 +1,5 @@
 ﻿@model TicketVerkoop.ViewModels.AbonnementSelectieVM
-@{
-    decimal total = 0;
-}
+
 <div class="row grey">
     <p class="col-md-2">Ploegnaam</p>
     <p class="col-md-2">Stadianaam</p>
@@ -19,8 +17,3 @@
     <p class="col-md-2">@Html.DisplayFor(model => model.StoelId)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.Prijs)</p>
 </div>
-
-@if (Model.Prijs.HasValue)
-{
-    total += Model.Prijs.Value;
-}

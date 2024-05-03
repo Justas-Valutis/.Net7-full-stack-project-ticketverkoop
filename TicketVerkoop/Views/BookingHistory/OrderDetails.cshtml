@@ -18,40 +18,22 @@ else
        <div>
         @if (Model.Tickets != null && Model.Tickets.Count > 0)
         {
-            <h4>Tickets in je kaart</h4>
-            <table>
-                <tr>
-                    <th>Stadium</th>
-                    <th>Stad</th>
-                    <th>Thuisploeg</th>
-                    <th>Uitploeg</th>
-                    <th>Aantal Tickets</th>
-                    <th>Ring</th>
-                    <th>Section</th>
-                    <th>Zitplaats(en) nr</th>
-                    <th>Prijs</th>
-                </tr>
-
+            <br />
+            <br />
+            <div class="row">
+                <h4>Tickets in je kaart</h4>
+                <br />
                 @foreach (var item in Model.Tickets)
                 {
-                    <tr>
-                        <td>@item.StadiumNaam</td>
-                        <td>@item.Stad</td>
-                        <td>@item.ThuisPloegNaam</td>
-                        <td>@item.UitPloegNaam</td>
-                        <td>@item.aantaZitPlaatsen</td>
-                        <th>@item.RingNaam</th>
-                        <th>@item.SectionId</th>
-                        <td><strong>@item.StoelId</strong></td>
-                        <td>@item.Prijs, Eur</td>
-                    </tr>
-
-                    @if (item.Prijs != null)
-                    {
-                        total += decimal.Parse(item.Prijs);
-                    }
+                    @await Html.PartialAsync("_TicketsPartialView", item)
                 }
-            </table>
+            </div>
+
+@*             @if (item.Prijs != null)
+            {
+                total += decimal.Parse(item.Prijs);
+            } *@
+
         }
 
         @if (Model.Abonnements != null && Model.Abonnements.Count > 0)
@@ -73,6 +55,6 @@ else
                     } *@
         }
 
-        <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @total.ToString("0.00") Eur</p>
+        <p style="text-align: center; font-weight: bold;" id="totalePrijs"> Total: @Model.TotalPrijs Eur</p>
     </div>
 }
