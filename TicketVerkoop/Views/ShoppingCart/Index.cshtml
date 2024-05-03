@@ -55,7 +55,17 @@ else
 
         @if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
         {
-            <h4>Abonnementen in je kaart</h4>
+            <br />
+            <br />
+            <div class="row">
+                <h4 class="centered">Abonnementen in je kaart</h4>
+                <br />
+                @foreach (var item in Model.Abonnementen)
+                {
+                    @await Html.PartialAsync("_AbonnementenPartialView", item)
+                }
+            </div>
+@*             <h4>Abonnementen in je kaart</h4>
             <table>
                 <tr>
                     <th>Ploegnaam</th>
@@ -82,7 +92,7 @@ else
                         total += item.Prijs.Value;
                     }
                 }
-            </table>
+            </table> *@
         }
         <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @total.ToString("0.00") Eur</p>
     </div>
