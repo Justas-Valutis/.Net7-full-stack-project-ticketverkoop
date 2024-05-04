@@ -42,7 +42,7 @@ namespace TicketVerkoop.Controllers
                 var bestellingen = await bestellingService.GetAllByUserId(user.Id);
                 if(bestellingen != null)
                 {
-                    List<BestellingenVM> bestellingenVM = mapper.Map<List<BestellingenVM>>(bestellingen);
+                    List<BestellingenVM> bestellingenVM = mapper.Map<List<BestellingenVM>>(bestellingen).OrderByDescending(b => b.BestelDatum).ToList();
                     return View(bestellingenVM);
                 }
     ;

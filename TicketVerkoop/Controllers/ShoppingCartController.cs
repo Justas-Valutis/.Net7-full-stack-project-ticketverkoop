@@ -58,7 +58,7 @@ namespace TicketVerkoop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(decimal totalPrijs)
+        public async Task<IActionResult> Checkout()
         {
             var user = await userManager.GetUserAsync(User);
             if (user == null)
@@ -69,14 +69,12 @@ namespace TicketVerkoop.Controllers
             else {
                 ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
 
- 
-
                 var bestellingVM = new BestelllingVM
                 {
                     AbonnementId = 1,
                     UserId = user.Id,
                     BestelDatum = DateTime.Now,
-                    TotalPrijs = totalPrijs
+                    TotalPrijs = shoppingCartVM.TotalPrijs
                 };
                 try
                 {

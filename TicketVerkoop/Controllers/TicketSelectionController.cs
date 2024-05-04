@@ -82,6 +82,8 @@ namespace TicketVerkoop.Controllers
             };
             ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
             shopping.Tickets.Add(TicketVM);
+            shopping.TotalPrijs += decimal.Parse(Prijs);
+        
             HttpContext.Session.SetObject("ShoppingCart", shopping);
             return RedirectToAction("Index", "ShoppingCart");
         }
