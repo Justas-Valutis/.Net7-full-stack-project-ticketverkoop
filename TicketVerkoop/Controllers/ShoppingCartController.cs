@@ -130,14 +130,23 @@ namespace TicketVerkoop.Controllers
                             shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
                         }
                     }
+
+                    BestellingenVM bestelllingVM = new BestellingenVM
+                    {
+                        BestellingId = bestellingID,
+                        BestelDatum = bestellingVM.BestelDatum,
+                        TotalPrijs = bestellingVM.TotalPrijs
+                    };
+
+                    HttpContext.Session.SetObject("ShoppingCart", null);
+                    return RedirectToAction("OrderDetails", "BookingHistory", bestelllingVM);
                 }
                 catch (Exception ex) 
                 {
                     Debug.WriteLine("Errorlog " + ex.Message);
                 }
 
-                HttpContext.Session.SetObject("ShoppingCart", null);
-                return View("Thanks");
+                return View("Oops");
             }
         }
 
