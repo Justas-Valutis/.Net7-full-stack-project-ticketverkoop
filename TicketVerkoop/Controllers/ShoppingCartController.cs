@@ -137,6 +137,7 @@ namespace TicketVerkoop.Controllers
                         BestelDatum = bestellingVM.BestelDatum,
                         TotalPrijs = bestellingVM.TotalPrijs
                     };
+                    _emailSender.SendEmailAttachmentAsync("justas.valutis@gmail.com", "Sender", "thank you for buying");
 
                     HttpContext.Session.SetObject("ShoppingCart", null);
                     return RedirectToAction("OrderDetails", "BookingHistory", bestelllingVM);
@@ -184,9 +185,9 @@ namespace TicketVerkoop.Controllers
                     _emailSender.SendEmailAttachmentAsync(
                         mailVM.FromEmail,
                         "contact pagina",
-                        mailVM.FromName,
-                        pdfDocument,
-                        pdfFileName
+                        mailVM.FromName
+                        //,pdfDocument,
+                        //pdfFileName
                         ).Wait(); // wait for the task to complete
 
                     return View("Thanks");

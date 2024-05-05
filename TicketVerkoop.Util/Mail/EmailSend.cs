@@ -20,15 +20,15 @@ namespace TicketVerkoop.Util.Mail
             _emailSettings = emailSettings.Value;
         }
 
-        public async Task SendEmailAttachmentAsync(string email, string subject, string message, Stream attachmentStream, string attachmentName, bool isBodyHtml = false)
+        public async Task SendEmailAttachmentAsync(string email, string subject, string message/*, Stream attachmentStream, string attachmentName, bool isBodyHtml = false*/)
         {
             var mail = new MailMessage(); 
             mail.To.Add(new MailAddress(email));
             mail.From = new
-            MailAddress("robinvandenbroucke78@gmail.com"); 
+            MailAddress("justas.valutis@gmail.com"); 
             mail.Subject = subject;
             mail.Body = message;
-            mail.Attachments.Add(new Attachment(attachmentStream, attachmentName));
+            //mail.Attachments.Add(new Attachment(attachmentStream, attachmentName));
             mail.IsBodyHtml = true;
             try
             {
