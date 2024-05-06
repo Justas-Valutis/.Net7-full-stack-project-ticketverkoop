@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using TicketVerkoop.Domains.Entities;
+﻿using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Util.PDF.Interfaces;
 using QRCoder;
 using iText.IO.Image;
@@ -15,7 +14,8 @@ namespace TicketVerkoop.Util.PDF
 {
     public class CreatePDF : ICreatePDF
     {
-        public MemoryStream CreatePDFDocumentAsync(List<Bestelling> bestellings, string logoPath)
+        
+        public MemoryStream CreatePDFDocumentAsync(List<Ticket> tickets, string logoPath)
         {
             //Genereren van de PDF - factuur
             using (MemoryStream stream = new MemoryStream())
@@ -24,60 +24,31 @@ namespace TicketVerkoop.Util.PDF
                 PdfDocument pdf = new PdfDocument(writer);
                 iText.Layout.Document document = new iText.Layout.Document(pdf);
 
-                // Paragraaf toevoegen
-                //Paragraph paragraph = new Paragraph("Dit is een voorbeeld van een paragraaf.");
-                //document.Add(paragraph);
-
                 // Factuurinformatie toevoegen
-                document.Add(new Paragraph("Ticket").SetFontSize(20));
-                document.Add(new Paragraph("TicketId: ").SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA)).SetFontSize(16).SetFontColor(ColorConstants.BLUE));
-                document.Add(new Paragraph("Datum: " + DateTime.Now.ToShortDateString()));
-                document.Add(new Paragraph(""));
-
-                // Tabel voor producten
-                iText.Layout.Element.Table table = new iText.Layout.Element.Table(UnitValue.CreatePercentArray(2)).UseAllAvailableWidth();
-                table.AddHeaderCell("Match");
-                table.AddHeaderCell("Zitplaats");
-                table.AddHeaderCell("Abonnement");
-                table.AddHeaderCell("Ploeg");
-                table.AddHeaderCell("Stadium");
-                table.AddHeaderCell("Besteldatum");
-                table.AddHeaderCell("Prijs");
-                decimal totalPrice = 0;
-                foreach (var ticket in bestellings)
+                document.Add(new Paragraph("Jupiler Pro League Ticket").SetFontSize(20));
+                foreach (var ticket in tickets)
                 {
-                    //table.AddCell(ticket.Tickets.Match.ToString());
-                    //table.AddCell(ticket.Tickets.Zitplaats.ToString());
-                    table.AddCell(ticket.Abonnements.ToString());
-                    //table.AddCell(ticket.Abonnements.PloegNaam.ToString());
-                    //table.AddCell(ticket.Abonnements.StadiaNaam.ToString());
-                    table.AddCell(ticket.BestelDatum.ToString());
-                    //table.AddCell(ticket.Tickets.Zitplaats.Section.Prijs.ToString("C"));
-                    //decimal totalProductPrice = (decimal)ticket.Tickets.Zitplaats.Section.Prijs;  
-                    //table.AddCell(totalProductPrice.ToString("C"));
-                    //totalPrice += totalProductPrice;
-                    if (totalPrice > 50)
+                    //TICKETID KRIJG IK WEL, REST NIET
+                    document.Add(new Paragraph("Ticketnummer: " + ticket.TicketId.ToString()));
+                    //wanneer ik hieronder de match wil toevoegen, krijg ik een nullpointerexception (omdat er geen match word meegegeven blijkbaar)
+                    document.Add(new Paragraph("Ploeg: " + ticket.Match.PloegThuis.Naam.ToString() + " - " + ticket.Match.PloegUit.Naam.ToString()));
+                    document.Add(new Paragraph("Stadium: " + ticket.Match.Stadium.Naam.ToString()));
+                    document.Add(new Paragraph("Besteldatum: " + ticket.Match.Datum.ToShortDateString()));
+                    document.Add(new Paragraph("Prijs: " + ticket.Bestelling.TotalPrijs.ToString() + " €"));
+                    foreach (var zitplaats in ticket.Zitplaats)
                     {
-                        table.AddCell(totalPrice.ToString("C"));
+                        string ringZoneLocatie = zitplaats.Section.Ring.ToString() + " " + zitplaats.Section.Ring.ZoneLocatie.ToString();
+                        document.Add(new Paragraph("Zitplaats: " + ringZoneLocatie));
                     }
-                    else
-                    {
-                        table.AddCell("");
-                    }
-
                 }
-                document.Add(table);
-
-                //Totaalbedrag andere manier (onder de tabel)
-                //document.Add(new Paragraph($"Totaalbedrag: " + $"{totalPrice.ToString("C")}"));
 
                 //QR-Code
                 // Binnen de GeneratePdf methode
-                string qrContent = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                string qrContent = "";
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
-                Bitmap qrCodeImage = qrCode.GetGraphic(50); // Grootte van 20 pixels
+                Bitmap qrCodeImage = qrCode.GetGraphic(5);
                 iText.Layout.Element.Image qrCodeImageElement = new
                 iText.Layout.Element.Image(ImageDataFactory.Create(BitmapToBytes(qrCodeImage))).SetHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.Add(qrCodeImageElement);

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TicketVerkoop.Util.Mail.Interfaces;
+using TicketVerkoop.Domains.Entities;
 
 namespace TicketVerkoop.Util.Mail
 {

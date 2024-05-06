@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicketVerkoop.Domains\TicketVerkoop.Domains.csproj" />
+    <ProjectReference Include="..\TicketVerkoop.Services\TicketVerkoop.Services.csproj" />
   </ItemGroup>
 
 </Project>
