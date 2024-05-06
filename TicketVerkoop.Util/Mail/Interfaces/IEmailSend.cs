@@ -8,7 +8,7 @@ namespace TicketVerkoop.Util.Mail.Interfaces
 {
     public interface IEmailSend
     {
-        Task SendEmailAttachmentAsync(string email, string subject, string message, Stream attachmentStream, string attachmentName, bool isBodyHtml = false);
+        Task SendEmailAttachmentAsync(Stream attachmentStream, string attachmentName, bool isBodyHtml = false);
 
     }
 }
