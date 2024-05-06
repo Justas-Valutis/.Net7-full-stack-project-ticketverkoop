@@ -59,6 +59,7 @@ namespace TicketVerkoop.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout()
         {
             var user = await userManager.GetUserAsync(User);
@@ -138,7 +139,31 @@ namespace TicketVerkoop.Controllers
                         BestelDatum = bestellingVM.BestelDatum,
                         TotalPrijs = bestellingVM.TotalPrijs
                     };
-                    _emailSender.SendEmailAttachmentAsync("justas.valutis@gmail.com", "Sender", "thank you for buying");
+
+                    //---------------    Email versturen ---------------------------------------
+                    string pdfFile = "Ticket" + DateTime.Now.Year;
+                    var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
+                    var bestellings = new List<Bestelling>
+                    {
+                    new Bestelling { BestellingId = 1, BestelDatum = DateTime.Now },
+                    };
+                    //het pad naar de map waarin het logo zich bevindt
+                    string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
+
+                    var pdfDocument = _createPDF.CreatePDFDocumentAsync(bestellings, logoPath); // wait for the task to complete
+
+                    // Als de map pdf nog niet bestaat in de wwwroot map,
+                    // maak deze dan aan voordat je het PDF-document opslaat.
+                    string pdfFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
+                    Directory.CreateDirectory(pdfFolderPath);
+                    //Combineer het pad naar de wwwroot map met het gewenste subpad en bestandsnaam voor het PDF-document.
+                    string filePath = Path.Combine(pdfFolderPath, "example.pdf");
+                    // Opslaan van de MemoryStream naar een bestand
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        pdfDocument.WriteTo(fileStream);
+                    }
+                    _emailSender.SendEmailAttachmentAsync("robsievandenbroucke@gmail.com", "Bestelling Ticket", "thank you for buying", pdfDocument, pdfFileName);
 
                     HttpContext.Session.SetObject("ShoppingCart", null);
                     return RedirectToAction("OrderDetails", "BookingHistory", bestelllingVM);
@@ -187,8 +212,8 @@ namespace TicketVerkoop.Controllers
                         mailVM.FromEmail,
                         "contact pagina",
                         mailVM.FromName
-                        //,pdfDocument,
-                        //pdfFileName
+                        ,pdfDocument,
+                        pdfFileName
                         ).Wait(); // wait for the task to complete
 
                     return View("Thanks");
