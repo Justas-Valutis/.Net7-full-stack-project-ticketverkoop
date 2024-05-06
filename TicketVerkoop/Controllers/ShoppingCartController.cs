@@ -9,6 +9,7 @@ using AutoMapper;
 using TicketVerkoop.Services.Interfaces;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
+using TicketVerkoop.Services;
 
 namespace TicketVerkoop.Controllers
 {
@@ -145,7 +146,6 @@ namespace TicketVerkoop.Controllers
                     var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
                     //het pad naar de map waarin het logo zich bevindt
                     string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
-                    //var ticket = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
                     var ticket = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
                     var pdfDocument = _createPDF.CreatePDFDocumentAsync(ticket, logoPath); // wait for the task to complete
 
