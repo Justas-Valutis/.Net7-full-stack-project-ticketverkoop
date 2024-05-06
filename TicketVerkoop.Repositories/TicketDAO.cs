@@ -34,8 +34,27 @@ public class TicketDAO : IBasketDAO<Ticket>
         return listTicketsID;
     }
 
-    public Task<IEnumerable<Ticket>?> GetAllByBestellingId(int id)
+    public async Task<IEnumerable<Ticket>?> GetAllByBestellingId(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+           return await _dbContext.Tickets.Where(t => t.BestellingId == id)
+                .Include(z => z.Zitplaats)
+                .Include(m => m.Match)
+                .ThenInclude(match => match.PloegThuis)
+                .Include(m => m.Match)
+                .ThenInclude(match => match.PloegUit)
+                .Include(m => m.Match)
+                .ThenInclude(match => match.Stadium)
+                .Include(s => s.Zitplaats)
+                .ThenInclude(zitplaats => zitplaats.Section)
+                .ThenInclude(section => section.Ring)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
     }
 }

@@ -7,7 +7,7 @@
 @{
     decimal total = 0;
 }
-<h3>Shopping kaart</h3>
+<h3 class="centered">Shopping kaart</h3>
 
 @if (Model == null || (Model.Tickets == null && Model.Abonnementen == null))
 {
@@ -17,81 +17,37 @@ else
 {   <div>
         @if (Model.Tickets != null && Model.Tickets.Count > 0)
         {
-            <h4>Tickets in je kaart</h4>
-            <table>
-                <tr>
-                    <th>Stadium</th>
-                    <th>Stad</th>
-                    <th>Thuisploeg</th>
-                    <th>Uitploeg</th>
-                    <th>Aantal Tickets</th>
-                    <th>Ring</th>
-                    <th>Section</th>
-                    <th>Zitplaats(en) nr</th>
-                    <th>Prijs</th>
-                </tr>
-
+            <br />
+            <div class="row">
+                <h4 class="centered">Tickets in je kaart</h4>
+                <br />
                 @foreach (var item in Model.Tickets)
                 {
-                    <tr>
-                        <td>@item.StadiumNaam</td>
-                        <td>@item.Stad</td>
-                        <td>@item.ThuisPloegNaam</td>
-                        <td>@item.UitPloegNaam</td>
-                        <td>@item.aantaZitPlaatsen</td>
-                        <th>@item.RingNaam</th>
-                        <th>@item.SectionId</th>
-                        <td><strong>Zit stoelen</strong></td>
-                        <td>@item.Prijs, Eur</td>
-                    </tr>
-
-                    @if (item.Prijs != null)
-                    {
-                        total += decimal.Parse(item.Prijs);
-                    }
+                    @await Html.PartialAsync("_TicketsPartialView", item)
                 }
-            </table>
+            </div>
         }
 
         @if (Model.Abonnementen != null && Model.Abonnementen.Count > 0)
         {
-            <h4>Abonnementen in je kaart</h4>
-            <table>
-                <tr>
-                    <th>Ploegnaam</th>
-                    <th>Stadianaam</th>
-                    <th>Ring</th>
-                    <th>Section</th>
-                    <th>Zitplaats nr</th>
-                    <th>Prijs, Eur</th>
-                </tr>
-
+            <br />
+            <br />
+            <div class="row">
+                <h4 class="centered">Abonnementen in je kaart</h4>
+                <br />
                 @foreach (var item in Model.Abonnementen)
                 {
-                    <tr>
-                        <td>@item.PloegNaam</td>
-                        <td>@item.StadiumNaam</td>
-                        <td>@item.SelectedRingNaam</td>
-                        <td>@item.SelectedSectiondId</td>
-                        <td><strong>Zitstoel</strong></td>
-                        <td>@item.Prijs</td> 
-                    </tr>
-
-                    @if (item.Prijs.HasValue)
-                    {
-                        total += item.Prijs.Value;
-                    }
+                    @await Html.PartialAsync("_AbonnementenPartialView", item)
                 }
-            </table>
+            </div>
         }
-
-        <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @total.ToString("0.00") Eur</p>
+        <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @Model.TotalPrijs Eur</p>
     </div>
 }
-
 <br />
 <form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
-    <button type="submit" class="btn-lg btn-primary">Checkout</button> 
+    <input type="hidden" id="totalPrijs" name="totalPrijs" value="@total" />
+    <button type="submit" class="btn-lg btn-primary">Checkout</button>
 </form><a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
 
 @section Scripts {

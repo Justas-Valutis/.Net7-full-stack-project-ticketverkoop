@@ -5,7 +5,6 @@
         public List<TicketVM>? Tickets { get; set; }
         public List<AbonnementSelectieVM>? Abonnementen { get; set; }
         public System.DateTime? DateGekocht { get; set; }
-
-        public bool MailSent { get; set; }
+        public decimal TotalPrijs { get; set; }
     }
 }

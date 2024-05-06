@@ -70,13 +70,12 @@ namespace TicketVerkoop.Controllers
             else {
                 ShoppingCartVM? shoppingCartVM = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
 
- 
-
                 var bestellingVM = new BestelllingVM
                 {
                     AbonnementId = 1,
                     UserId = user.Id,
-                    BestelDatum = DateTime.Now
+                    BestelDatum = DateTime.Now,
+                    TotalPrijs = shoppingCartVM.TotalPrijs
                 };
                 try
                 {
@@ -132,14 +131,24 @@ namespace TicketVerkoop.Controllers
                             shoppingCartVM.Tickets[i].StoelId = listStoelenIds[i];
                         }
                     }
+
+                    BestellingenVM bestelllingVM = new BestellingenVM
+                    {
+                        BestellingId = bestellingID,
+                        BestelDatum = bestellingVM.BestelDatum,
+                        TotalPrijs = bestellingVM.TotalPrijs
+                    };
+                    _emailSender.SendEmailAttachmentAsync("justas.valutis@gmail.com", "Sender", "thank you for buying");
+
+                    HttpContext.Session.SetObject("ShoppingCart", null);
+                    return RedirectToAction("OrderDetails", "BookingHistory", bestelllingVM);
                 }
                 catch (Exception ex) 
                 {
                     Debug.WriteLine("Errorlog " + ex.Message);
                 }
 
-                HttpContext.Session.SetObject("ShoppingCart", null);
-                return View("Thanks");
+                return View("Oops");
             }
         }
 
@@ -163,22 +172,25 @@ namespace TicketVerkoop.Controllers
 
                         var pdfDocument = _createPDF.CreatePDFDocumentAsync(bestellings, logoPath); // wait for the task to complete
 
-                        // Als de map pdf nog niet bestaat in de wwwroot map,
-                        // maak deze dan aan voordat je het PDF-document opslaat.
-                        string pdfFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
-                        Directory.CreateDirectory(pdfFolderPath);
-                        //Combineer het pad naar de wwwroot map met het gewenste subpad en bestandsnaam voor het PDF-document.
-                        string filePath = Path.Combine(pdfFolderPath, "example.pdf");
-                        // Opslaan van de MemoryStream naar een bestand
-                        using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            pdfDocument.WriteTo(fileStream);
-                        }
-                        _emailSender.SendEmailAttachmentAsync(
-                            pdfDocument,
-                            pdfFileName
-                            ).Wait(); // wait for the task to complete
-                    
+                    // Als de map pdf nog niet bestaat in de wwwroot map,
+                    // maak deze dan aan voordat je het PDF-document opslaat.
+                    string pdfFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
+                    Directory.CreateDirectory(pdfFolderPath);
+                    //Combineer het pad naar de wwwroot map met het gewenste subpad en bestandsnaam voor het PDF-document.
+                    string filePath = Path.Combine(pdfFolderPath, "example.pdf");
+                    // Opslaan van de MemoryStream naar een bestand
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        pdfDocument.WriteTo(fileStream);
+                    }
+                    _emailSender.SendEmailAttachmentAsync(
+                        mailVM.FromEmail,
+                        "contact pagina",
+                        mailVM.FromName
+                        //,pdfDocument,
+                        //pdfFileName
+                        ).Wait(); // wait for the task to complete
+
                     return View("Thanks");
 
                 }

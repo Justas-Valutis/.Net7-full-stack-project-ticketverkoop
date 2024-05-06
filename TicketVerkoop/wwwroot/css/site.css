@@ -24,3 +24,11 @@ body {
 .prijs {
     font-weight: 600;
 }
+
+.centered {
+    text-align:center;
+}
+
+.grey {
+    background-color: lightgray;
+}

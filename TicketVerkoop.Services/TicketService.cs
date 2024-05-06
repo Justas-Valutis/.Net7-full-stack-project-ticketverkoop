@@ -17,8 +17,8 @@ public class TicketService : IBasketService<Ticket>
         return await basketDAO.AddListAndGetIDs(entityList);
     }
 
-    public Task<IEnumerable<Ticket>?> GetAllByBestellingId(int id)
+    public async Task<IEnumerable<Ticket>?> GetAllByBestellingId(int id)
     {
-        throw new NotImplementedException();
+        return await basketDAO.GetAllByBestellingId(id);
     }
 }

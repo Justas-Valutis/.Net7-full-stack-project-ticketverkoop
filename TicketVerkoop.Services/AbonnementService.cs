@@ -17,8 +17,8 @@ public class AbonnementService : IBasketService<Abonnement>
         return await basketDAO.AddListAndGetIDs(entityList);
     }
 
-    public Task<IEnumerable<Abonnement>?> GetAllByBestellingId(int id)
+    public async Task<IEnumerable<Abonnement>?> GetAllByBestellingId(int id)
     {
-        throw new NotImplementedException();
+        return await basketDAO.GetAllByBestellingId(id);
     }
 }

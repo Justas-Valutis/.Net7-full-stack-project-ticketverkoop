@@ -14,5 +14,6 @@
         public int? BestellingId { get; set; }
         public int? StoelId { get; set; }
         public int? TicketId { get; set; }
+        public List<ZitPlaatsVM>? Zitplaats { get; set; }
     }
 }

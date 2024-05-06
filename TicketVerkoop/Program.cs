@@ -28,6 +28,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+//Mail
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+// Configuration.GetSection("EmailSettings")) zal de instellingen opvragen uit de AppSettings.json file en vervolgens wordt er een emailsettings - object aangemaakt en de waarden worden geïnjecteerd in het object
+builder.Services.AddSingleton<IEmailSend, EmailSend>();
+//Als in een Constructor een IEmailSender-parameter wordt gevonden, zal een emailSender - object worden aangemaakt. 
+
+builder.Services.AddSingleton<ICreatePDF, CreatePDF>();
+
 //----> Register the Swagger generator, defining 1 or more Swagger documents
 builder.Services.AddSwaggerGen(c =>
 {
@@ -87,15 +95,6 @@ builder.Services.AddSession(options =>
 
     options.IdleTimeout = TimeSpan.FromMinutes(20);
 });
-
-//Mail
-builder.Services.AddControllersWithViews();
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-// Configuration.GetSection("EmailSettings")) zal de instellingen opvragen uit de AppSettings.json file en vervolgens wordt er een emailsettings - object aangemaakt en de waarden worden geïnjecteerd in het object
-builder.Services.AddSingleton<IEmailSend, EmailSend>();
-//Als in een Constructor een IEmailSender-parameter wordt gevonden, zal een emailSender - object worden aangemaakt. 
-
-builder.Services.AddTransient<ICreatePDF, CreatePDF>();
 
 //Talen
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");

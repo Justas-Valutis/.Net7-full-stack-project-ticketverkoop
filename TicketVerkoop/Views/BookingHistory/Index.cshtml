@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TicketVerkoop.ViewModels.BestelllingVM>
+﻿@model IEnumerable<TicketVerkoop.ViewModels.BestellingenVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -20,7 +20,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BestelDatum)
                 </th>
-                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrijs), Eur
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -32,8 +34,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.BestelDatum)
                 </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrijs)
+                    </td>
                 <td>
-                        @Html.ActionLink("Order Details", "OrderDetails", new { id = item.BestellingId })
+                        @Html.ActionLink("Order Details", "OrderDetails", item)
                 </td>
             </tr>
     }

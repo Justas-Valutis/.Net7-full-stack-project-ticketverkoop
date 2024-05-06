@@ -1,0 +1,60 @@
+﻿@model TicketVerkoop.ViewModels.BestellingenVM
+
+@{
+    ViewData["Title"] = "OrderDetails";
+}
+@{
+    decimal total = 0;
+}
+<h1>OrderDetails</h1>
+
+@if (Model == null || (Model.Tickets == null && Model.Abonnements == null))
+{
+    <p>Your shopping cart is empty.</p>
+}
+else
+{
+
+       <div>
+        @if (Model.Tickets != null && Model.Tickets.Count > 0)
+        {
+            <br />
+            <br />
+            <div class="row">
+                <h4>Tickets in je kaart</h4>
+                <br />
+                @foreach (var item in Model.Tickets)
+                {
+                    @await Html.PartialAsync("_TicketsPartialView", item)
+                }
+            </div>
+
+@*             @if (item.Prijs != null)
+            {
+                total += decimal.Parse(item.Prijs);
+            } *@
+
+        }
+
+        @if (Model.Abonnements != null && Model.Abonnements.Count > 0)
+        {
+            <br />
+            <br />
+            <div class="row">
+                <h4 class="centered">Abonnementen in je kaart</h4>
+                <br />
+                @foreach (var item in Model.Abonnements)
+                {
+                    @await Html.PartialAsync("_AbonnementenPartialView", item)
+                }
+            </div>
+
+@*                     @if (item.Prijs.HasValue)
+                    {
+                        total += item.Prijs.Value;
+                    } *@
+        }
+
+        <p style="text-align: center; font-weight: bold;" id="totalePrijs"> Total: @Model.TotalPrijs Eur</p>
+    </div>
+}

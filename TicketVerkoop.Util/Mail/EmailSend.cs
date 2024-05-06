@@ -20,12 +20,12 @@ namespace TicketVerkoop.Util.Mail
             _emailSettings = emailSettings.Value;
         }
 
-        public async Task SendEmailAttachmentAsync(Stream attachmentStream, string attachmentName, bool isBodyHtml = false)
+        public async Task SendEmailAttachmentAsync(string email, string subject, string message/*, Stream attachmentStream, string attachmentName, bool isBodyHtml = false*/)
         {
             var mail = new MailMessage(); 
             mail.From = new
-            MailAddress("robinvandenbroucke78@gmail.com"); 
-            mail.Attachments.Add(new Attachment(attachmentStream, attachmentName));
+            MailAddress("justas.valutis@gmail.com"); 
+            //mail.Attachments.Add(new Attachment(attachmentStream, attachmentName));
             mail.IsBodyHtml = true;
             try
             {

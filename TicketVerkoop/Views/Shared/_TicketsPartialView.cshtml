@@ -1,0 +1,23 @@
+﻿@model TicketVerkoop.ViewModels.TicketVM
+
+<div class="row grey">
+    <p class="col-md-2">Stadium</p>
+    <p class="col-md-2">ThuisPloeg</p>
+    <p class="col-md-2">UitPloeg</p>
+    <p class="col-md-1">Tickets</p>
+    <p class="col-md-2">Ring</p>
+    <p class="col-md-1">Section</p>
+    <p class="col-md-1">Zitplaats</p>
+    <p class="col-md-1">Prijs, Eur</p>
+</div>
+<br />
+<div class="row">
+    <p class="col-md-2">@Html.DisplayFor(model => model.StadiumNaam)</p>
+    <p class="col-md-2">@Html.DisplayFor(model => model.ThuisPloegNaam)</p>
+    <p class="col-md-2">@Html.DisplayFor(model => model.UitPloegNaam)</p>
+    <p class="col-md-1">@Html.DisplayFor(model => model.aantaZitPlaatsen)</p>
+    <p class="col-md-2">@Html.DisplayFor(model => model.RingNaam)</p>
+    <p class="col-md-1">@Html.DisplayFor(model => model.SectionId)</p>
+    <p class="col-md-1">@Html.DisplayFor(model => model.Zitplaats)</p>
+    <p class="col-md-1">@Html.DisplayFor(model => model.Prijs)</p>
+</div>
