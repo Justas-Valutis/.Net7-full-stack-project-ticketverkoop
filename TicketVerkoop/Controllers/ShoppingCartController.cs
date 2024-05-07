@@ -146,9 +146,8 @@ namespace TicketVerkoop.Controllers
                     var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
                     //het pad naar de map waarin het logo zich bevindt
                     string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
-                    var ticket = mapper.Map<List<Ticket>>(shoppingCartVM.Tickets);
-                    var pdfDocument = _createPDF.CreatePDFDocumentAsync(ticket, logoPath); // wait for the task to complete
-
+                    var pdfDocument = _createPDF.CreatePDFDocumentAsync(bestelllingVM.BestellingId, logoPath); // wait for the task to complete
+                     
                     // Als de map pdf nog niet bestaat in de wwwroot map,
                     // maak deze dan aan voordat je het PDF-document opslaat.
                     string pdfFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
