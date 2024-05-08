@@ -109,5 +109,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<TicketVM, Ticket>();
         CreateMap<TicketVM, Zitplaat>();
+
+        CreateMap<AspNetUser, UserVM>();
     }
 }

@@ -47,4 +47,9 @@ public class MatchService : IMatchService<Match>
         return await matchDAO.GetAllWithHistory();
 
     }
+
+    public async Task<IEnumerable<Match>?> GetMatchByPloegenID(int PloegThuisID, int PloegUitID)
+    {
+        return await matchDAO.GetMatchByPloegenID(PloegThuisID, PloegUitID);
+    }
 }

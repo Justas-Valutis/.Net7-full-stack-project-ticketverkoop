@@ -16,5 +16,7 @@ namespace TicketVerkoop.Repositories.Interfaces
         Task Add(T entity);
         Task<IEnumerable<T>?> GetAllWithHistory();
         Task<T?> FindById(int Id);
+        Task<IEnumerable<T>?> GetMatchByPloegenID(int PloegThuisID, int PloegUitID);
+
     }
 }

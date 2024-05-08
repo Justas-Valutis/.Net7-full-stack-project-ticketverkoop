@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TicketVerkoop.Domains.Entities;
+using TicketVerkoop.Services;
 using TicketVerkoop.Services.Interfaces;
 using TicketVerkoop.ViewModels;
 
@@ -9,24 +9,23 @@ namespace TicketVerkoop.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MatchController : ControllerBase
+    public class UserController : Controller
     {
-        private IMatchService<Match> matchService;
         private readonly IMapper mapper;
+        private readonly IService<AspNetUser> userService;
 
-        public MatchController(IMapper mapper, IMatchService<Match> matchService)
+        public UserController(IMapper mapper, IService<AspNetUser> userService)
         {
             this.mapper = mapper;
-            this.matchService = matchService;
+            this.userService = userService;
         }
-
         [HttpGet]
-        public async Task<ActionResult<MatchSwaggerVM>> Get(int ploegThuisID, int ploegUitID)
+        public async Task<ActionResult<StadiumVM>> Get()
         {
             try
             {
-                var listMatches = await matchService.GetMatchByPloegenID(ploegThuisID, ploegUitID);
-                var data = mapper.Map<List<MatchSwaggerVM>>(listMatches);
+                var listStadiums = await userService.GetAll();
+                var data = mapper.Map<List<UserVM>>(listStadiums);
 
                 if (data == null)
                 {
@@ -39,5 +38,6 @@ namespace TicketVerkoop.Controllers.API
                 return StatusCode(500, new { error = ex.Message });
             }
         }
+
     }
 }

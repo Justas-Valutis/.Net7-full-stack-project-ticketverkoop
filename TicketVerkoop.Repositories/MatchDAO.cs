@@ -133,4 +133,19 @@ public class MatchDAO : IMatchDAO<Match>
             throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
         }
     }
+
+    public async Task<IEnumerable<Match>?> GetMatchByPloegenID(int PloegThuisID, int PloegUitID)
+    {
+        try
+        {
+            return await _dbContext.Matches
+                .Where(m => m.PloegThuisId == PloegThuisID && m.PloegUitId == PloegUitID)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO GET MATCH BY ID" + ex.Message);
+        }
+    }
 }

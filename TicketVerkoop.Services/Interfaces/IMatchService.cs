@@ -16,5 +16,6 @@ namespace TicketVerkoop.Services.Interfaces
         Task<IEnumerable<T>?> GetMatchByPloegIdAndStadiumId(int PlegId, int StadiumId);
         Task Add(T entity);
         Task<IEnumerable<T>?> GetAllWithHistory();
+        Task<IEnumerable<T>?> GetMatchByPloegenID(int PloegThuisID, int PloegUitID);
     }
 }

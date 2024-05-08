@@ -86,6 +86,8 @@ builder.Services.AddTransient<IBasketDAO<Ticket>, TicketDAO>();
 builder.Services.AddTransient<IStoelService<Zitplaat>, ZitplaatService>();
 builder.Services.AddTransient<IStoelDAO<Zitplaat>, ZitplaatDAO>();
 
+builder.Services.AddTransient<IDAO<AspNetUser>, UserDAO>();
+builder.Services.AddTransient<IService<AspNetUser>, UserService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
