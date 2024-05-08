@@ -9,6 +9,6 @@ namespace TicketVerkoop.Util.PDF.Interfaces
 {
     public interface ICreatePDF
     {
-        MemoryStream CreatePDFDocumentAsync(int? bestelling, string logoPath);
+        MemoryStream CreatePDFDocumentAsync(Bestelling bestelling, string logoPath);
     }
 }

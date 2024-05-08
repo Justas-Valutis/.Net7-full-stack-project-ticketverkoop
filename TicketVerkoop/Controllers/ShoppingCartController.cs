@@ -26,7 +26,6 @@ namespace TicketVerkoop.Controllers
         private readonly UserManager<IdentityUser> userManager;
 
 
-
         public ShoppingCartController(IEmailSend emailSend,
             ICreatePDF createPDF, 
             IWebHostEnvironment webHostEnvironment,
@@ -146,7 +145,10 @@ namespace TicketVerkoop.Controllers
                     var pdfFileName = $"{pdfFile}_{Guid.NewGuid()}.pdf";
                     //het pad naar de map waarin het logo zich bevindt
                     string logoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "bull.jpg");
-                    var pdfDocument = _createPDF.CreatePDFDocumentAsync(bestelllingVM.BestellingId, logoPath); // wait for the task to complete
+
+                    Bestelling bestellingRep = await bestellingService.FindById(Convert.ToInt16(bestellingID));
+
+                    var pdfDocument = _createPDF.CreatePDFDocumentAsync(bestellingRep, logoPath); // wait for the task to complete
                      
                     // Als de map pdf nog niet bestaat in de wwwroot map,
                     // maak deze dan aan voordat je het PDF-document opslaat.

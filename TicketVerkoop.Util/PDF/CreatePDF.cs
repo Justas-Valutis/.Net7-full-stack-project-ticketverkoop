@@ -15,17 +15,13 @@ namespace TicketVerkoop.Util.PDF
 {
     public class CreatePDF : ICreatePDF
     {
-        private readonly IBasketService<Ticket> basketService;
-        private readonly IBasketService<Abonnement> abonnementService;
 
-        public CreatePDF(IBasketService<Ticket> basketService, IBasketService<Abonnement> abonnementService)
+        public CreatePDF()
         {
-            this.basketService = basketService;
-            this.abonnementService = abonnementService;
-
+  
         }
 
-        public MemoryStream CreatePDFDocumentAsync(int? bestellingen, string logoPath)
+        public MemoryStream CreatePDFDocumentAsync(Bestelling bestelling, string logoPath)
         {
             //Genereren van de PDF - factuur
             using (MemoryStream stream = new MemoryStream())
@@ -34,10 +30,7 @@ namespace TicketVerkoop.Util.PDF
                 PdfDocument pdf = new(writer);
                 iText.Layout.Document document = new iText.Layout.Document(pdf);
 
-                IEnumerable<Ticket> tickets = (IEnumerable<Ticket>)basketService.GetAllByBestellingId((int)bestellingen);
-                IEnumerable<Abonnement> abonnementen = (IEnumerable<Abonnement>)abonnementService.GetAllByBestellingId((int)bestellingen);
-
-                foreach (var abonnement in abonnementen)
+                foreach (var abonnement in bestelling.Abonnements)
                 {
                     document.Add(new Paragraph("Jupiler Pro League Abonnement").SetFontSize(20));
                     document.Add(new Paragraph("Abonnementnummer: " + abonnement.AbonnementId));
@@ -57,7 +50,7 @@ namespace TicketVerkoop.Util.PDF
                         }
                     }
                 }
-                foreach (var ticket in tickets)
+                foreach (var ticket in bestelling.Tickets)
                 {
                     document.Add(new Paragraph("Jupiler Pro League Ticket").SetFontSize(20));
                     //Ticketnummer, niet van belang maar krijg ik wel

@@ -48,9 +48,24 @@ public class BestellingDAO : IDAO<Bestelling>
         }
     }
 
-    public Task<Bestelling?> FindById(int Id)
+    public async Task<Bestelling?> FindById(int Id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbContext.Bestellings.Where(d => d.BestellingId == Id)
+               .Include(b => b.Tickets)
+               .ThenInclude(tickets => tickets.Match)
+               .ThenInclude(match => match.Stadium)
+               .Include(b => b.Abonnements)
+               .ThenInclude(abon => abon.Ploeg)
+               .ThenInclude(ploeg => ploeg.ThuisStadium)
+               .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN BestellingDAO" + ex.Message);
+        }
     }
 
     public async Task<IEnumerable<Bestelling>?> GetAll()
