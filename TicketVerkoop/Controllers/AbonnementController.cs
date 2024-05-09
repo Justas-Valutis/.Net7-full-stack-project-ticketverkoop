@@ -76,6 +76,7 @@ namespace TicketVerkoop.Controllers
             {
                 ViewBag.lstRings = new SelectList(await ringService.GetRingsByStadiumId(Convert.ToInt16(StadiumID)), "RingId", "ZoneLocatie", RingId);
                 ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "SectionId", sectionId);
+
             }
             catch (Exception ex)
             {

@@ -16,11 +16,6 @@ namespace TicketVerkoop.Util.PDF
     public class CreatePDF : ICreatePDF
     {
 
-        public CreatePDF()
-        {
-  
-        }
-
         public MemoryStream CreatePDFDocumentAsync(Bestelling bestelling, string logoPath)
         {
             //Genereren van de PDF - factuur
@@ -38,9 +33,6 @@ namespace TicketVerkoop.Util.PDF
                     {
                         document.Add(new Paragraph("Ploeg: " + abonnement.Ploeg.Naam));
                     }
-                    //prijs krijg ik 
-                    document.Add(new Paragraph("Prijs: " + abonnement.Prijs + " €"));
-                    // Loop through each zitplaats associated with the abonnement
                     foreach (var zitplaats in abonnement.Zitplaats)
                     {
                         if (zitplaats.Section != null && zitplaats.Section.Ring != null)
@@ -49,7 +41,20 @@ namespace TicketVerkoop.Util.PDF
                             document.Add(new Paragraph("Zitplaats: " + ringZoneLocatie));
                         }
                     }
+                    //prijs krijg ik 
+                    document.Add(new Paragraph("Prijs: " + abonnement.Prijs + " €"));
+                    //QR-Code
+                    // Binnen de GeneratePdf methode
+                    string qrContent = ""; // You need to set this to something meaningful
+                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
+                    QRCode qrCode = new QRCode(qrCodeData);
+                    Bitmap qrCodeImage = qrCode.GetGraphic(5);
+                    iText.Layout.Element.Image qrCodeImageElement = new iText.Layout.Element.Image(ImageDataFactory.Create(BitmapToBytes(qrCodeImage))).SetHorizontalAlignment(HorizontalAlignment.CENTER);
+                    document.Add(qrCodeImageElement);
                 }
+
+                
                 foreach (var ticket in bestelling.Tickets)
                 {
                     document.Add(new Paragraph("Jupiler Pro League Ticket").SetFontSize(20));
@@ -74,6 +79,10 @@ namespace TicketVerkoop.Util.PDF
                     //prijs krijg ik 
                     document.Add(new Paragraph("Prijs: " + ticket.Prijs + " €"));
                     // Loop through each zitplaats associated with the ticket
+                    if(ticket.Zitplaats.Count == 0)
+                    {
+                        document.Add(new Paragraph("Zitplaats: Geen zitplaats"));
+                    }
                     foreach (var zitplaats in ticket.Zitplaats)
                     {
                         if (zitplaats.Section != null && zitplaats.Section.Ring != null)
@@ -82,18 +91,16 @@ namespace TicketVerkoop.Util.PDF
                             document.Add(new Paragraph("Zitplaats: " + ringZoneLocatie));
                         }
                     }
+                    //QR-Code
+                    // Binnen de GeneratePdf methode
+                    string qrContent = ""; // You need to set this to something meaningful
+                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
+                    QRCode qrCode = new QRCode(qrCodeData);
+                    Bitmap qrCodeImage = qrCode.GetGraphic(5);
+                    iText.Layout.Element.Image qrCodeImageElement = new iText.Layout.Element.Image(ImageDataFactory.Create(BitmapToBytes(qrCodeImage))).SetHorizontalAlignment(HorizontalAlignment.CENTER);
+                    document.Add(qrCodeImageElement);
                 }
-
-                //QR-Code
-                // Binnen de GeneratePdf methode
-                string qrContent = ""; // You need to set this to something meaningful
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrContent, QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                Bitmap qrCodeImage = qrCode.GetGraphic(5);
-                iText.Layout.Element.Image qrCodeImageElement = new iText.Layout.Element.Image(ImageDataFactory.Create(BitmapToBytes(qrCodeImage))).SetHorizontalAlignment(HorizontalAlignment.CENTER);
-                document.Add(qrCodeImageElement);
-
                 document.Close();
                 return new MemoryStream(stream.ToArray());
             }
