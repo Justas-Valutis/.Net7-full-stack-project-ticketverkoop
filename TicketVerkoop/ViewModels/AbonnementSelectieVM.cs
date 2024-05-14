@@ -2,6 +2,7 @@
 {
     public class AbonnementSelectieVM
     {
+        public int Id { get; set; }
         public int PloegId { get; set; }
 
         public string? PloegNaam { get; set; }

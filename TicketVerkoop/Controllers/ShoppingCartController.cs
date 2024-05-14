@@ -10,6 +10,7 @@ using TicketVerkoop.Services.Interfaces;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using TicketVerkoop.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace TicketVerkoop.Controllers
 {
@@ -173,6 +174,33 @@ namespace TicketVerkoop.Controllers
 
                 return View("Oops");
             }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAbonnementItem(int id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            ShoppingCartVM shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+
+            var itemToDelete = shopping.Abonnementen.FirstOrDefault(item => item.Id == id);
+            if (itemToDelete == null)
+            {
+                return NotFound();
+            }
+            UpdatePrijs(itemToDelete.Prijs, shopping);
+            shopping.Abonnementen.Remove(itemToDelete);
+
+            HttpContext.Session.SetObject("ShoppingCart", shopping);
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
+        private void UpdatePrijs(decimal? prijs, ShoppingCartVM shopping)
+        {
+            shopping.TotalPrijs -= prijs.Value;
         }
     }
 }

@@ -115,6 +115,7 @@ namespace TicketVerkoop.Controllers
         public IActionResult AddAbonnement(AbonnementSelectieVM abonnementSelectieVM)
         {
             ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
+            abonnementSelectieVM.Id = shopping.Abonnementen.Count();
             shopping.Abonnementen.Add(abonnementSelectieVM);
             shopping.TotalPrijs += abonnementSelectieVM.Prijs.Value;
             HttpContext.Session.SetObject("ShoppingCart", shopping);
