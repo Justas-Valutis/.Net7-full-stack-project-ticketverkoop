@@ -32,3 +32,13 @@ body {
 .grey {
     background-color: lightgray;
 }
+
+.date {
+    margin-bottom: 0;
+}
+
+.stadium-match-ticket-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

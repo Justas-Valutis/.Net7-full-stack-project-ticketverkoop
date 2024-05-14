@@ -84,7 +84,15 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.RingNaam,
             opts => opts.MapFrom(src => src.Zitplaats.First().Section.Ring.ZoneLocatie))
             .ForMember(dest => dest.aantaZitPlaatsen,
-            opts => opts.MapFrom(src => src.Zitplaats.Count));
+            opts => opts.MapFrom(src => src.Zitplaats.Count))
+            .ForMember(dest => dest.Datum,
+            opts => opts.MapFrom(src => src.Match.Datum.ToString("dd/MM/yyyy")))
+            .ForMember(dest => dest.DayOfWeek,
+            opts => opts.MapFrom(src => src.Match.Datum.DayOfWeek))
+            .ForMember(dest => dest.Time,
+            opts => opts.MapFrom(src => src.Match.Datum.ToString("HH:mm")))
+            .ForMember(dest => dest.DateTime,
+            opts => opts.MapFrom(src => src.Match.Datum)); ;
 
 
 

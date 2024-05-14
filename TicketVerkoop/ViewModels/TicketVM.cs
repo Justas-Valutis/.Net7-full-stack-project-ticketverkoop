@@ -2,8 +2,13 @@
 {
     public class TicketVM
     {
+
         public int Id { get; set; }
         public int MatchId { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Datum { get; set; }
+        public string DayOfWeek { get; set; }
+        public string Time { get; set; }
         public string StadiumNaam { get; set; }
         public string Stad { get; set; }
         public string ThuisPloegNaam { get; set; }

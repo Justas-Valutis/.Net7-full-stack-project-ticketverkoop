@@ -4,10 +4,13 @@
     <p class="col-md-2">Stadium</p>
     <p class="col-md-2">ThuisPloeg</p>
     <p class="col-md-2">UitPloeg</p>
-    <p class="col-md-1">Tickets</p>
+    <p class="col-md-1">Datum</p>
     <p class="col-md-1">Ring</p>
     <p class="col-md-1">Section</p>
-    <p class="col-md-1">Zitplaats</p>
+        @if (Model.Zitplaats != null)
+    {
+        <p class="col-md-1">Zitplaats</p>
+    }
     <p class="col-md-1">Prijs, Eur</p>
     @if (Model.Zitplaats == null)
     {
@@ -19,10 +22,17 @@
     <p class="col-md-2">@Html.DisplayFor(model => model.StadiumNaam)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.ThuisPloegNaam)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.UitPloegNaam)</p>
-    <p class="col-md-1">@Html.DisplayFor(model => model.aantaZitPlaatsen)</p>
+    <div class="col-md-1 stadium-match-ticket-content">
+        <p class="date">@Html.DisplayFor(model => model.Datum)</p>
+        <p class="date">@Html.DisplayFor(model => model.DayOfWeek)</p>
+        <p class="date">@Html.DisplayFor(model => model.Time)</p>
+    </div>
     <p class="col-md-1">@Html.DisplayFor(model => model.RingNaam)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.SectionId)</p>
+        @if (Model.Zitplaats != null)
+    {
     <p class="col-md-1">@Html.DisplayFor(model => model.Zitplaats)</p>
+    }
     <p class="col-md-1">@Html.DisplayFor(model => model.Prijs)</p>
     @if (Model.Zitplaats == null)
     {
