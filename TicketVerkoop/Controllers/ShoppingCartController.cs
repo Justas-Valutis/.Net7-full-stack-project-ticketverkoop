@@ -161,7 +161,7 @@ namespace TicketVerkoop.Controllers
                     {
                         pdfDocument.WriteTo(fileStream);
                     }
-                    _emailSender.SendEmailAttachmentAsync("robsievandenbroucke@gmail.com", "Bestelling Ticket", "thank you for buying", pdfDocument, pdfFileName);
+                    _emailSender.SendEmailAttachmentAsync(user.Email, "Bestelling Ticket", "thank you for buying", pdfDocument, pdfFileName);
 
                     HttpContext.Session.SetObject("ShoppingCart", null);
                     return RedirectToAction("OrderDetails", "BookingHistory", bestelllingVM);
