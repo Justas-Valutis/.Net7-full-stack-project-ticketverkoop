@@ -18,16 +18,31 @@ public class ZitplaatDAO : IStoelDAO<Zitplaat>
         var listStoelennID = new List<int>();
         foreach (var item in stoelen)
         {
-            _dbContext.Add(item).State = EntityState.Added;
-            try
+            int aantalZitplaatsen = await _dbContext.Sections
+                .Where(s => s.SectionId == item.SectionId)
+                .Select(s => s.AantalZitplaatsen)
+                .FirstOrDefaultAsync();
+            int a = 1;
+            bool itemAdded = false;
+            while (a <= aantalZitplaatsen && !itemAdded)
             {
-                await _dbContext.SaveChangesAsync();
-                listStoelennID.Add(item.ZitplaatsId);
+                item.ZitplaatsId = a;
+                try
+                {
+                    _dbContext.Add(item).State = EntityState.Added;
+                    await _dbContext.SaveChangesAsync();
+                    listStoelennID.Add(item.ZitplaatsId);
+                    itemAdded = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    a++;
+                }
             }
-            catch (Exception ex)
+            if (!itemAdded)
             {
-                Console.WriteLine(ex.ToString());
-                throw new Exception("ERROR IN DAO" + ex.Message);
+                throw new Exception("Alle zitplaatsen zijn bezet op je gekozen section en ring");
             }
         }
         return listStoelennID;

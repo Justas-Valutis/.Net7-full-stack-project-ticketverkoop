@@ -264,11 +264,11 @@ public partial class SoccerDbContext : DbContext
 
         modelBuilder.Entity<Zitplaat>(entity =>
         {
-            entity.HasKey(e => e.ZitplaatsId);
+            entity.HasKey(e => new { e.ZitplaatsId, e.SectionId });
 
             entity.Property(e => e.ZitplaatsId).HasColumnName("ZitplaatsID");
-            entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
             entity.Property(e => e.SectionId).HasColumnName("SectionID");
+            entity.Property(e => e.AbonnementId).HasColumnName("AbonnementID");
             entity.Property(e => e.TicketId).HasColumnName("TicketID");
 
             entity.HasOne(d => d.Abonnement).WithMany(p => p.Zitplaats)

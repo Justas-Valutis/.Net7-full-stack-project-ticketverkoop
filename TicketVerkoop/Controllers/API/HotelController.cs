@@ -4,8 +4,8 @@ using TicketVerkoop.ViewModels;
 
 namespace TicketVerkoop.Controllers.API
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class HotelController : Controller
     {
 
