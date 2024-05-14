@@ -198,6 +198,28 @@ namespace TicketVerkoop.Controllers
             return RedirectToAction("Index", "ShoppingCart");
         }
 
+        [HttpPost]
+        public IActionResult DeleteTicketItem(int id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            ShoppingCartVM shopping = HttpContext.Session.GetObject<ShoppingCartVM>("ShoppingCart");
+
+            var itemToDelete = shopping.Tickets.FirstOrDefault(item => item.Id == id);
+            if (itemToDelete == null)
+            {
+                return NotFound();
+            }
+            UpdatePrijs(decimal.Parse(itemToDelete.Prijs), shopping);
+            shopping.Tickets.Remove(itemToDelete);
+
+            HttpContext.Session.SetObject("ShoppingCart", shopping);
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
         private void UpdatePrijs(decimal? prijs, ShoppingCartVM shopping)
         {
             shopping.TotalPrijs -= prijs.Value;

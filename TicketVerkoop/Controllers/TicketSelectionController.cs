@@ -67,9 +67,11 @@ namespace TicketVerkoop.Controllers
             string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs,
             string RingNaam, int SectionId)
         {
+            ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
 
             var TicketVM = new TicketVM
             {
+                Id = shopping.Tickets.Count(),
                 MatchId = MatchId,
                 StadiumNaam = StadiumNaam,
                 Stad = Stad,
@@ -80,7 +82,6 @@ namespace TicketVerkoop.Controllers
                 Prijs = Prijs,
                 aantaZitPlaatsen = aantalZitPlaatsen
             };
-            ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
             shopping.Tickets.Add(TicketVM);
             shopping.TotalPrijs += decimal.Parse(Prijs);
         

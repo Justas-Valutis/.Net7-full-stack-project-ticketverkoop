@@ -4,21 +4,25 @@
     <p class="col-md-2">Ploegnaam</p>
     <p class="col-md-2">Stadianaam</p>
     <p class="col-md-2">Ring</p>
-    <p class="col-md-1">Section</p>
+    <p class="col-md-2">Section</p>
     <p class="col-md-1">Zitplaats</p>
     <p class="col-md-2">Prijs, Eur</p>
+    @if (Model.StoelId == null)
+    {
+        <p class="col-md-1">Delete?</p>
+    }
 </div>
 <br />
 <div class="row">
     <p class="col-md-2">@Html.DisplayFor(model => model.PloegNaam)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.StadiumNaam)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.SelectedRingNaam)</p>
-    <p class="col-md-1">@Html.DisplayFor(model => model.SelectedSectiondId)</p>
+    <p class="col-md-2">@Html.DisplayFor(model => model.SelectedSectiondId)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.StoelId)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.Prijs)</p>
     @if (Model.StoelId == null)
     {
-        <div class="col-md-2">
+        <div class="col-md-1">
             <form asp-action="DeleteAbonnementItem" method="post">
                 <input type="hidden" asp-for="@Model.Id" />
                 <button type="submit" class="btn btn-danger">Delete</button>

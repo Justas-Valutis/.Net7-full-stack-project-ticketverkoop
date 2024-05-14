@@ -2,6 +2,7 @@
 {
     public class TicketVM
     {
+        public int Id { get; set; }
         public int MatchId { get; set; }
         public string StadiumNaam { get; set; }
         public string Stad { get; set; }

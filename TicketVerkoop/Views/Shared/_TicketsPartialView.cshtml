@@ -5,10 +5,14 @@
     <p class="col-md-2">ThuisPloeg</p>
     <p class="col-md-2">UitPloeg</p>
     <p class="col-md-1">Tickets</p>
-    <p class="col-md-2">Ring</p>
+    <p class="col-md-1">Ring</p>
     <p class="col-md-1">Section</p>
     <p class="col-md-1">Zitplaats</p>
     <p class="col-md-1">Prijs, Eur</p>
+    @if (Model.Zitplaats == null)
+    {
+        <p class="col-md-1">Delete?</p>
+    }
 </div>
 <br />
 <div class="row">
@@ -16,8 +20,17 @@
     <p class="col-md-2">@Html.DisplayFor(model => model.ThuisPloegNaam)</p>
     <p class="col-md-2">@Html.DisplayFor(model => model.UitPloegNaam)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.aantaZitPlaatsen)</p>
-    <p class="col-md-2">@Html.DisplayFor(model => model.RingNaam)</p>
+    <p class="col-md-1">@Html.DisplayFor(model => model.RingNaam)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.SectionId)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.Zitplaats)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.Prijs)</p>
+    @if (Model.Zitplaats == null)
+    {
+        <div class="col-md-1">
+            <form asp-action="DeleteTicketItem" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    }
 </div>
