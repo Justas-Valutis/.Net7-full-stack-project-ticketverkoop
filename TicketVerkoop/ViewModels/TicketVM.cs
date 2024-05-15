@@ -14,7 +14,7 @@
         public string ThuisPloegNaam { get; set; }
         public string UitPloegNaam { get; set; }
         public string RingNaam {  get; set; }
-        public int SectionId { get; set; }
+        public int? SectionId { get; set; }
         public int aantaZitPlaatsen { get; set; }
         public string Prijs { get; set; }
         public int? BestellingId { get; set; }

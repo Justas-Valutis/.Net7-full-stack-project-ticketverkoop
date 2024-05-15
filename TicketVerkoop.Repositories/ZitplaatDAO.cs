@@ -18,14 +18,13 @@ public class ZitplaatDAO : IStoelDAO<Zitplaat>
     {
         Zitplaat zitplaat = await _dbContext.Zitplaats
             .Where(x => x.SectionId == sectionId && x.ZitplaatsId == zitPlaatsId
-                    && x.Ticket.Match.Datum > DateTime.Now
-                    && (x.Ticket.Match.Datum - DateTime.Now.AddDays(7)).TotalDays > 7)
+                    && x.Ticket.Match.Datum > DateTime.Now)
+                    //&& (x.Ticket.Match.Datum - DateTime.Now.AddDays(7)).TotalDays > 7)
             .FirstOrDefaultAsync();
 
         if (zitplaat != null)
         {
-            zitplaat.ZitplaatsId = zitplaat.ZitplaatsId - 5000;
-            _dbContext.Entry(zitplaat).State = EntityState.Modified;
+            _dbContext.Entry(zitplaat).State = EntityState.Deleted;
             try
             {
                 await _dbContext.SaveChangesAsync();

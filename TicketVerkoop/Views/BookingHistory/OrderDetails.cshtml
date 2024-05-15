@@ -7,7 +7,7 @@
     decimal total = 0;
 }
 <h1 class ="centered">OrderDetails</h1>
-
+<h3 class="centered">#@Model.BestellingId</h3>
 @if (Model == null || (Model.Tickets == null && Model.Abonnements == null))
 {
     <p>Your shopping cart is empty.</p>
@@ -29,11 +29,6 @@ else
                 }
             </div>
 
-@*             @if (item.Prijs != null)
-            {
-                total += decimal.Parse(item.Prijs);
-            } *@
-
         }
 
         @if (Model.Abonnements != null && Model.Abonnements.Count > 0)
@@ -48,13 +43,8 @@ else
                     @await Html.PartialAsync("_AbonnementenPartialView", item)
                 }
             </div>
-
-@*                     @if (item.Prijs.HasValue)
-                    {
-                        total += item.Prijs.Value;
-                    } *@
         }
-
+        <br />
         <p style="text-align: center; font-weight: bold;" id="totalePrijs"> Total: @Model.TotalPrijs Eur</p>
     </div>
 }

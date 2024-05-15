@@ -89,12 +89,15 @@ namespace TicketVerkoop.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> OrderDetails(int sectionId, int zitPlaatsId)
+        public async Task<IActionResult> OrderDetails(int sectionId, int zitPlaatsId, int BestellingId)
         {
             try
             {
                 await stoelService.DeleteZitplaats(Convert.ToInt16(sectionId), Convert.ToInt16(zitPlaatsId));
-                return RedirectToAction("Index", "BookingHistory");
+                BestellingenVM bestellingenVM = new BestellingenVM();
+                bestellingenVM.BestellingId = Convert.ToInt16(BestellingId);
+                bestellingenVM.TotalPrijs = bestellingService.FindById(Convert.ToInt16(BestellingId)).Result.TotalPrijs;
+                await OrderDetails(bestellingenVM);
             }
             catch (Exception ex)
             {
