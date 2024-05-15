@@ -19,18 +19,22 @@ namespace TicketVerkoop.Controllers
         private readonly IService<Bestelling> bestellingService;
         private readonly IBasketService<Ticket> ticketService;
         private readonly IBasketService<Abonnement> abonnementService;
+        private readonly IStoelService<Zitplaat> stoelService;
+
 
         public BookingHistoryController(IMapper mapper,
             IService<Bestelling> bestellingService,
             UserManager<IdentityUser> userManager,
             IBasketService<Ticket> ticketService,
-            IBasketService<Abonnement> abonnementService) 
+            IBasketService<Abonnement> abonnementService,
+            IStoelService<Zitplaat> stoelService) 
         {
             this.mapper = mapper;
             this.userManager = userManager;
             this.bestellingService = bestellingService;
             this.ticketService = ticketService;
             this.abonnementService = abonnementService;
+            this.stoelService = stoelService;
         }
 
         [AutoValidateAntiforgeryToken]
@@ -81,6 +85,23 @@ namespace TicketVerkoop.Controllers
                 Debug.WriteLine("Errorlog " + ex.Message);
             }
             return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> OrderDetails(int sectionId, int zitPlaatsId)
+        {
+            try
+            {
+                await stoelService.DeleteZitplaats(Convert.ToInt16(sectionId), Convert.ToInt16(zitPlaatsId));
+                return RedirectToAction("Index", "BookingHistory");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Errorlog " + ex.Message);
+            }
+            return View();
+
         }
     }
 }

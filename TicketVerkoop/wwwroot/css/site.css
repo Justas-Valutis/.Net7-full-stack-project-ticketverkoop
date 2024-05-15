@@ -42,3 +42,8 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
+.canceled {
+    color: red;
+    font-weight: bold;
+}

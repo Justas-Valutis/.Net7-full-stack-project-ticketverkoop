@@ -3,7 +3,7 @@
     public class TicketVM
     {
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int MatchId { get; set; }
         public DateTime DateTime { get; set; }
         public string Datum { get; set; }

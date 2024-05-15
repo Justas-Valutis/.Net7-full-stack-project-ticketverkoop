@@ -29,18 +29,44 @@
     </div>
     <p class="col-md-1">@Html.DisplayFor(model => model.RingNaam)</p>
     <p class="col-md-1">@Html.DisplayFor(model => model.SectionId)</p>
-        @if (Model.Zitplaats != null)
+
+    @if (Model.Zitplaats != null)
     {
-    <p class="col-md-1">@Html.DisplayFor(model => model.Zitplaats)</p>
+        @if (Model.Zitplaats.FirstOrDefault().ZitplaatsId >= 0)
+        {
+            <p class="col-md-1">@Html.DisplayFor(model => model.Zitplaats)</p>
+        } 
+        else
+        {
+            <p class="col-md-1" class="canceled">CANCELED</p>
+
+        }
+
     }
+
     <p class="col-md-1">@Html.DisplayFor(model => model.Prijs)</p>
-    @if (Model.Zitplaats == null)
+    @if (Model.Zitplaats == null && Model.Id != null)
     {
         <div class="col-md-1">
             <form asp-action="DeleteTicketItem" method="post">
                 <input type="hidden" asp-for="@Model.Id" />
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
+        </div>
+    }
+
+    @if (Model.Zitplaats != null && Model.Id == null 
+        && Model.DateTime > DateTime.Now 
+        && (Model.DateTime - DateTime.Now.AddDays(7)).TotalDays > 7)
+    {
+        <div class="col-md-1">
+            <form asp-controller="BookingHistory" method="post">
+                <input type="hidden" asp-for="@Model.SectionId" />
+                <input type="hidden" asp-for="@Model.Zitplaats" />
+                <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
+@*             <a class="btn btn-danger" asp-action="DeleteTicket"
+               asp-route-SectionId="@Model.SectionId" asp-route-ZitPlaatsId="@Model.Zitplaats">Cancel</a> *@
         </div>
     }
 </div>

@@ -12,6 +12,12 @@ public class ZitplaatService : IStoelService<Zitplaat>
     {
         this.stoelDAO = stoelDAO;
     }
+
+    public async Task DeleteZitplaats(int sectionId, int zitPlaatsId)
+    {
+        await stoelDAO.DeleteZitplaats(sectionId, zitPlaatsId);
+    }
+
     public async Task< List<int>> ReserveerStoelen(IEnumerable<Zitplaat> stoelen)
     {
        return await stoelDAO.ReserveerStoelen(stoelen);

@@ -9,5 +9,6 @@ namespace TicketVerkoop.Repositories.Interfaces
     public interface IStoelDAO<T> where T : class
     {
         Task<List<int>> ReserveerStoelen(IEnumerable<T> stoelen);
+        Task DeleteZitplaats(int sectionId, int zitPlaatsId);
     }
 }
