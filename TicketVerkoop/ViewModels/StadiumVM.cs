@@ -8,5 +8,6 @@ namespace TicketVerkoop.ViewModels
 
         public string? Naam { get; set; }
         public string? Stad { get; set; }
+        public int? Capaciteit { get; set; }
     }
 }

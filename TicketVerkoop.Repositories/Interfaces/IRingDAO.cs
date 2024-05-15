@@ -9,5 +9,7 @@ namespace TicketVerkoop.Repositories.Interfaces
     public interface IRingDAO<T> where T : class
     {
         Task<IEnumerable<T>?> GetRingsByStadiumId(int Id);
+        Task<int> GetStadiumCapacity(int StadiumId);
+
     }
 }

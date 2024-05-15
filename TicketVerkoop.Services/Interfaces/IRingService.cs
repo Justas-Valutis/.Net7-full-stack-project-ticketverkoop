@@ -9,5 +9,7 @@ namespace TicketVerkoop.Services.Interfaces
     public interface IRingService<T> where T : class
     {
         Task <IEnumerable<T>> GetRingsByStadiumId(int Id);
+        Task<int> GetStadiumCapacity(int StadiumId);
+
     }
 }

@@ -27,4 +27,32 @@ public class RingDAO : IRingDAO<Ring>
             throw new Exception("ERROR IN DAO" + ex.Message);
         }
     }
+
+    public async Task<int> GetStadiumCapacity(int StadiumId)
+    {
+        int stadiumCapaciteit = 0;
+        try
+        {
+            List<Ring> rings = await _context.Rings
+                .Where(r => r.StadiumId == StadiumId)
+                .Include(s => s.Sections)
+                .ToListAsync();
+
+            foreach (var item in rings)
+            {
+                foreach (var section in item.Sections)
+                {
+                    stadiumCapaciteit += section.AantalZitplaatsen;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            throw new Exception("ERROR IN DAO" + ex.Message);
+        }
+
+        return stadiumCapaciteit;
+    }
 }

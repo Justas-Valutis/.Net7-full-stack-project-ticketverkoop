@@ -17,4 +17,9 @@ public class RingService : IRingService<Ring>
     {
         return await _ringDAO.GetRingsByStadiumId(Id);
     }
+
+    public async Task<int> GetStadiumCapacity(int StadiumId)
+    {
+        return await _ringDAO.GetStadiumCapacity(StadiumId);
+    }
 }
