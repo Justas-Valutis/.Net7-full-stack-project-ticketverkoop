@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using TicketVerkoop.Services;
 using Microsoft.AspNetCore.Http;
+using TicketVerkoop.Data;
 
 namespace TicketVerkoop.Controllers
 {
@@ -24,7 +25,7 @@ namespace TicketVerkoop.Controllers
         private readonly IBasketService<Abonnement> abonnementService;
         private readonly IStoelService<Zitplaat> stoelService;
         private readonly IBasketService<Ticket> ticketService;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
 
         public ShoppingCartController(IEmailSend emailSend,
@@ -35,7 +36,7 @@ namespace TicketVerkoop.Controllers
             IBasketService<Abonnement> abonnementService,
             IStoelService<Zitplaat> stoelService,
             IBasketService<Ticket> ticketService,
-            UserManager<IdentityUser> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _createPDF = createPDF;
             _emailSender = emailSend;
