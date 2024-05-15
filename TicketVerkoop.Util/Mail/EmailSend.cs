@@ -26,7 +26,7 @@ namespace TicketVerkoop.Util.Mail
             var mail = new MailMessage(); 
             mail.To.Add(new MailAddress(email));
             mail.From = new
-            MailAddress("robsievandenbroucke@gmail.com"); 
+            MailAddress("fullstackticketverkoop@gmail.com"); 
             mail.Subject = subject;
             mail.Body = message;
             mail.Attachments.Add(new Attachment(attachmentStream, attachmentName));
