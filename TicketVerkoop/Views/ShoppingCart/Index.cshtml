@@ -46,7 +46,7 @@ else
     </div>
 }
 <br />
-@if (Model != null)
+@if (Model != null && Model.TotalPrijs > 0)
 {
     <form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
         <input type="hidden" id="totalPrijs" name="totalPrijs" value="@total" />
