@@ -32,7 +32,6 @@
                             </a>
                         </li>
                     </ul>
-                    @* @await Html.PartialAsync("_SelectCulture") *@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -55,14 +54,5 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
-        // $(document).ready(() => {
-        //     // Bind change event only to dropdown lists within the form with ID 'selectLanguageForm'
-        //     $("#selectLanguageForm .setLang").on("change", () => {
-        //         $("#selectLanguageForm").submit(); // Submit the form with ID 'selectLanguageForm'
-        //     });
-        // });
-
-    </script>
 </body>
 </html>
