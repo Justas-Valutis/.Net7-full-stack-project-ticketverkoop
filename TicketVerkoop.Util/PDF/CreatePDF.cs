@@ -62,7 +62,7 @@ namespace TicketVerkoop.Util.PDF
                     document.Add(new Paragraph("Ticketnummer: " + ticket.TicketId));
                     if (ticket.Match != null)
                     {
-                            string matchInfo = "Ploeg: ";
+                            string matchInfo = "Match: ";
                             if (ticket.Match.PloegThuis != null)
                             {
                                 matchInfo += ticket.Match.PloegThuis.Naam;
@@ -81,7 +81,7 @@ namespace TicketVerkoop.Util.PDF
                     // Loop through each zitplaats associated with the ticket
                     if(ticket.Zitplaats.Count == 0)
                     {
-                        document.Add(new Paragraph("Zitplaats: Geen zitplaats"));
+                        document.Add(new Paragraph("Aantal zitplaatsen: 1"));
                     }
                     foreach (var zitplaats in ticket.Zitplaats)
                     {

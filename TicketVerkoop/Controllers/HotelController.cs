@@ -10,13 +10,6 @@ namespace TicketVerkoop.Controllers.API
     public class HotelController : Controller
     {
 
-        private readonly Stadium Stadium;
-
-        public HotelController()
-        {
-            Stadium = new Stadium();
-        }
-
         public IActionResult Index()
         {
             return View();
