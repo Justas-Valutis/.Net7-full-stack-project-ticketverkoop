@@ -51,7 +51,7 @@ namespace TicketVerkoop.Controllers
 
                 ViewBag.lstRings = new SelectList(stadiumTicketVM.Rings, "RingId", "ZoneLocatie", RingId);
                 ViewBag.lstSections = new SelectList(await sectionService.GetAllBy(Convert.ToInt16(RingId)), "SectionId", "SectionId", sectionId);
-                List<int> numbers = new List<int> { 1, 2, 3, 4 };
+                List<int> numbers = new List<int> { 1 };
                 ViewBag.kiesAantalZitplaaatsen = new SelectList(numbers, selectedValue: stadiumTicketVM.chosenSeatNr);
 
                 return View(stadiumTicketVM);
@@ -65,7 +65,7 @@ namespace TicketVerkoop.Controllers
 
         public IActionResult AddTicket(int MatchId, string StadiumNaam, string Stad,
             string ThuisPloegNaam, string UitPloegNaam, int aantalZitPlaatsen, string Prijs,
-            string RingNaam, int SectionId)
+            string RingNaam, int SectionId, string Datum, string DayOfWeek, string Time)
         {
             ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
 
@@ -80,7 +80,10 @@ namespace TicketVerkoop.Controllers
                 RingNaam = RingNaam,
                 SectionId = SectionId,
                 Prijs = Prijs,
-                aantaZitPlaatsen = aantalZitPlaatsen
+                aantaZitPlaatsen = aantalZitPlaatsen,
+                Datum = Datum,
+                DayOfWeek = DayOfWeek,
+                Time = Time,
             };
             shopping.Tickets.Add(TicketVM);
             shopping.TotalPrijs += decimal.Parse(Prijs);

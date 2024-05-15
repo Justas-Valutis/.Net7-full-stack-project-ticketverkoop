@@ -16,5 +16,8 @@
         public string UitPloegNaam { get; set; } = null!;
         public int? chosenSeatNr { get; set; }
         public string? TotalePrijs { get; set; }
+        public string? Datum { get; set; }
+        public string? DayOfWeek { get; set; }
+        public string? Time { get; set; }
     }
 }

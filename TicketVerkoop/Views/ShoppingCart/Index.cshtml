@@ -41,14 +41,20 @@ else
                 }
             </div>
         }
+        <br />
         <p style="text-align: center; font-weight: bold;" id="totalePrijs">Total: @Model.TotalPrijs Eur</p>
     </div>
 }
 <br />
-<form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
-    <input type="hidden" id="totalPrijs" name="totalPrijs" value="@total" />
-    <button type="submit" class="btn-lg btn-primary">Checkout</button>
-</form><a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
+@if (Model != null)
+{
+    <form asp-controller="ShoppingCart" asp-action="Checkout" asp-method="post">
+        <input type="hidden" id="totalPrijs" name="totalPrijs" value="@total" />
+        <button type="submit" class="btn-lg btn-primary">Checkout</button>
+    </form>
+}
+
+<a asp-controller="Kalender" asp-action="Index" class="btn-lg btn-primary">Back to matches</a>
 
 @section Scripts {
     @{
