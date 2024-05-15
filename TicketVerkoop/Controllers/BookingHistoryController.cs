@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Abstractions;
 using System.Diagnostics;
+using TicketVerkoop.Data;
 using TicketVerkoop.Domains.Entities;
 using TicketVerkoop.Services.Interfaces;
 using TicketVerkoop.ViewModels;
@@ -15,7 +16,7 @@ namespace TicketVerkoop.Controllers
     {
 
         private readonly IMapper mapper;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IService<Bestelling> bestellingService;
         private readonly IBasketService<Ticket> ticketService;
         private readonly IBasketService<Abonnement> abonnementService;
@@ -24,7 +25,7 @@ namespace TicketVerkoop.Controllers
 
         public BookingHistoryController(IMapper mapper,
             IService<Bestelling> bestellingService,
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             IBasketService<Ticket> ticketService,
             IBasketService<Abonnement> abonnementService,
             IStoelService<Zitplaat> stoelService) 
