@@ -74,7 +74,7 @@ namespace TicketVerkoop.Controllers
                 return View("Fout");
             }
 
-            var TicketVM = new TicketVM
+            var ticketVM = new TicketVM
             {
                 Id = shopping.Tickets.Count(),
                 MatchId = MatchId,
@@ -91,7 +91,18 @@ namespace TicketVerkoop.Controllers
                 Time = Time,
             };
 
-            shopping.Tickets.Add(TicketVM);
+            if (shopping.Tickets.Count > 0)
+            {
+                foreach (var item in shopping.Tickets)
+                {
+                    if (ticketVM.Datum == item.Datum && item.MatchId != ticketVM.MatchId)
+                    {
+                        return View("Fout");
+                    }
+                }
+            }
+
+            shopping.Tickets.Add(ticketVM);
             shopping.TotalPrijs += decimal.Parse(Prijs);
         
             HttpContext.Session.SetObject("ShoppingCart", shopping);
