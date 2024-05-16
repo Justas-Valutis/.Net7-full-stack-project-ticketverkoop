@@ -69,6 +69,11 @@ namespace TicketVerkoop.Controllers
         {
             ShoppingCartVM shopping = ShopCartHelper.GetOrCreateShoppingCart(HttpContext);
 
+            if (shopping.Tickets.Count() > 3)
+            {
+                return View("Fout");
+            }
+
             var TicketVM = new TicketVM
             {
                 Id = shopping.Tickets.Count(),
@@ -85,6 +90,7 @@ namespace TicketVerkoop.Controllers
                 DayOfWeek = DayOfWeek,
                 Time = Time,
             };
+
             shopping.Tickets.Add(TicketVM);
             shopping.TotalPrijs += decimal.Parse(Prijs);
         
