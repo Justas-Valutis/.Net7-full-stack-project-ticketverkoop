@@ -67,7 +67,7 @@ namespace TicketVerkoop.Controllers
             var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToPage("/Account/Register", new { area = "Identity" });
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
 
             }
             else {
